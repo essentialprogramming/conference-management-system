@@ -1,0 +1,13 @@
+/*C1*/SET SCHEMA SYSTEM_LOBS
+INSERT INTO BLOCKS VALUES(0,2147483647,0)
+COMMIT
+/*C2*/SET SCHEMA PUBLIC
+create table if not exists proposal( id integer primary key identity, title varchar(255), content varchar(255) )
+alter table proposal alter column id restart with 1 
+DISCONNECT
+/*C3*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C4*/SET SCHEMA PUBLIC
+INSERT INTO PROPOSAL VALUES(1,' proposal','This is a new proposal.')
+COMMIT
+DISCONNECT
