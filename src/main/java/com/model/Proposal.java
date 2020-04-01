@@ -15,6 +15,6 @@ public class Proposal {
 
     private int id;
     private String title;
-    private String content;
+//    private String content;
 
 }
