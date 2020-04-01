@@ -72,7 +72,7 @@ public final class UndertowServer {
                 .addServlets(
                         servlet("jerseyServlet", ServletContainer.class)
                                 .addInitParam("javax.ws.rs.Application", ApplicationConfig.class.getName())
-                                .addMapping("/api/*")
+                               // .addMapping("/api/*")
                                 .setLoadOnStartup(1)
                                 .setAsyncSupported(true));
 
