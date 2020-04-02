@@ -9,7 +9,8 @@ public class ProposalMapper {
 
         return ProposalEntity.builder()
                 .title(proposal.getTitle())
-//                .content(proposal.getContent())
+                .content(proposal.getContent())
+//                .keywords(proposal.getKeywords())
                 .build();
     }
 
@@ -18,7 +19,8 @@ public class ProposalMapper {
         return Proposal.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
-//                .content(entity.getContent())
+                .content(entity.getContent())
+//                .keywords(entity.getKeywords())
                 .build();
     }
 }

@@ -2,6 +2,7 @@ package com.config;
 
 
 import com.api.resources.ProposalController;
+import com.api.resources.RecommendationController;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
@@ -15,12 +16,13 @@ import javax.ws.rs.ApplicationPath;
 @ApplicationPath("/api")
 public class ApplicationConfig extends ResourceConfig {
 
-	public ApplicationConfig() {
-		register(ProposalController.class);
-		register(JacksonJaxbJsonProvider.class);
+    public ApplicationConfig() {
+        register(ProposalController.class);
+        register(RecommendationController.class);
+        register(JacksonJaxbJsonProvider.class);
 
-		register(OpenApiResource.class);
-		register(AcceptHeaderOpenApiResource.class);
-	}
+        register(OpenApiResource.class);
+        register(AcceptHeaderOpenApiResource.class);
+    }
 
 }
