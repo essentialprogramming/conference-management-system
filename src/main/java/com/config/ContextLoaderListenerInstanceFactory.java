@@ -8,8 +8,7 @@ public class ContextLoaderListenerInstanceFactory implements
         InstanceFactory<ContextLoaderListener> {
 
     public InstanceHandle<ContextLoaderListener> createInstance() {
-        ContextLoaderListenerInstanceHandle contextLoaderListenerInstanceHandle = new ContextLoaderListenerInstanceHandle();
-        return contextLoaderListenerInstanceHandle;
+        return new ContextLoaderListenerInstanceHandle();
     }
 
     class ContextLoaderListenerInstanceHandle implements
@@ -25,7 +24,5 @@ public class ContextLoaderListenerInstanceFactory implements
         public void release() {
             // TODO Auto-generated method stub
         }
-
     }
-
 }

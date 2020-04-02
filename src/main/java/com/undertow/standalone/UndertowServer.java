@@ -87,29 +87,10 @@ public final class UndertowServer {
                 .addWelcomeFiles("index.html")
                 .setDirectoryListingEnabled(false);
 
-        //Websocket handler
-        final WebSocketProtocolHandshakeHandler chatHandler = websocket(new WebSocketConnectionCallback() {
-
-            @Override
-            public void onConnect(WebSocketHttpExchange exchange, WebSocketChannel channel) {
-                channel.getReceiveSetter().set(new AbstractReceiveListener() {
-
-                    @Override
-                    protected void onFullTextMessage(WebSocketChannel channel, BufferedTextMessage message) {
-                        final String messageData = message.getData();
-                        for (WebSocketChannel session : channel.getPeerConnections()) {
-                            WebSockets.sendText(messageData, session, null);
-                        }
-                    }
-                });
-                channel.resumeReceives();
-            }
-        });
 
         final PathHandler pathHandler = Handlers.path()
                 .addPrefixPath("/", servletHandler)
-                .addPrefixPath("apidoc", resourceHandler)
-                .addPrefixPath("/chat", chatHandler);
+                .addPrefixPath("apidoc", resourceHandler);
 
         return pathHandler;
     }
