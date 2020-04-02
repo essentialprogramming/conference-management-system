@@ -1,0 +1,6 @@
+package com.model;
+
+public enum Qualifier {
+
+    STRONG_ACCEPT, ACCEPT, WEAK_ACCEPT, BORDERLINE_PAPER, WEAK_PROJECT, REJECT, STRONG_REJECT
+}

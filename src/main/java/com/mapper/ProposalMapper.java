@@ -10,7 +10,7 @@ public class ProposalMapper {
         return ProposalEntity.builder()
                 .title(proposal.getTitle())
                 .content(proposal.getContent())
-//                .keywords(proposal.getKeywords())
+                .qualifiers(proposal.getQualifiers())
                 .build();
     }
 
@@ -20,7 +20,7 @@ public class ProposalMapper {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
-//                .keywords(entity.getKeywords())
+                .qualifiers(entity.getQualifiers())
                 .build();
     }
 }
