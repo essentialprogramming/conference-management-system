@@ -26,6 +26,8 @@ public class EventService {
     public Event addEvent(Event event) {
         EventEntity entity = EventMapper.eventToEntity(event);
         entity.setProgramCommittee(userRepository.findAllById(event.getProgramCommittee()));
+        entity.setParticipants(userRepository.findAllById(event.getParticipants()));
+        entity.setSpeakers(userRepository.findAllById(event.getSpeakers()));
 
         return EventMapper.entityToEvent(eventRepository.save(entity));
     }

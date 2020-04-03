@@ -30,4 +30,10 @@ public class UserEntity {
 
     @ManyToMany(mappedBy = "programCommittee")
     private List<EventEntity> events;
+
+    @ManyToMany(mappedBy = "participants")
+    private List<EventEntity> eventsParticipants;
+
+    @ManyToMany(mappedBy = "speakers")
+    private List<EventEntity> eventsSpeakers;
 }

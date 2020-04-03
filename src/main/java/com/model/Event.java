@@ -17,5 +17,7 @@ public class Event {
     private int id;
     private String name;
     private List<String> programCommittee;
+    private List<String> participants;
+    private List<String> speakers;
 
 }
