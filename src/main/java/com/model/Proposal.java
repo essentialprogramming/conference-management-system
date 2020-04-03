@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Builder
 @Data
@@ -17,5 +19,7 @@ public class Proposal {
     private String title;
     private String content;
     private Qualifier[] qualifiers;
+    private List<String> authors;
+    private List<String> reviewers;
 
 }

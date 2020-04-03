@@ -25,7 +25,7 @@ public class RecommendationEntity {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proposal_id")
     private ProposalEntity proposal;
 }

@@ -43,10 +43,25 @@ public class ProposalEntity {
     @Column(name = "content")
     private String content;
 
-    @OneToMany(mappedBy = "proposal")
+    @OneToMany(mappedBy = "proposal", fetch = FetchType.LAZY)
     private List<RecommendationEntity> recommendations;
 
     @Column(name = "qualifiers", columnDefinition = "qualifiers")
     private Qualifier[] qualifiers;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_proposal",
+            joinColumns = @JoinColumn(name = "proposal_id"),
+            inverseJoinColumns = @JoinColumn(name = "email"))
+    private List<UserEntity> authors;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_proposal",
+            joinColumns = @JoinColumn(name = "proposal_id"),
+            inverseJoinColumns = @JoinColumn(name = "email"))
+    private List<UserEntity>  reviewers;
+
 
 }

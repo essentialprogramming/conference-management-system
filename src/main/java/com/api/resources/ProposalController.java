@@ -4,10 +4,7 @@ import com.model.Proposal;
 import com.service.ProposalService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 
@@ -27,5 +24,12 @@ public class ProposalController {
     public Proposal addProposal(Proposal proposal) {
 
         return proposalService.addProposal(proposal);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Proposal findById(@PathParam("id") int id){
+        return proposalService.findById(id);
     }
 }
