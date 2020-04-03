@@ -27,4 +27,7 @@ public class UserEntity {
 
     @ManyToMany(mappedBy = "reviewers")
     private List<ProposalEntity> proposalEntitiesReviewers;
+
+    @ManyToMany(mappedBy = "programCommittee")
+    private List<EventEntity> events;
 }

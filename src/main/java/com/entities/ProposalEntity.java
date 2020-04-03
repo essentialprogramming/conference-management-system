@@ -49,7 +49,7 @@ public class ProposalEntity {
     @Column(name = "qualifiers", columnDefinition = "qualifiers")
     private Qualifier[] qualifiers;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_proposal",
             joinColumns = @JoinColumn(name = "proposal_id"),

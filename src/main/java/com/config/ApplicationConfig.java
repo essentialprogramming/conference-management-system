@@ -1,6 +1,7 @@
 package com.config;
 
 
+import com.api.resources.EventController;
 import com.api.resources.ProposalController;
 import com.api.resources.RecommendationController;
 import com.api.resources.UserController;
@@ -21,6 +22,7 @@ public class ApplicationConfig extends ResourceConfig {
         register(ProposalController.class);
         register(RecommendationController.class);
         register(UserController.class);
+        register(EventController.class);
         register(JacksonJaxbJsonProvider.class);
 
         register(OpenApiResource.class);
