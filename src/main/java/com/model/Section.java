@@ -14,4 +14,5 @@ public class Section {
     private int id;
     private String name;
     private int eventId;
+    private String supervisorEmail;
 }

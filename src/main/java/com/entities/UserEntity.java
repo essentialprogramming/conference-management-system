@@ -36,4 +36,7 @@ public class UserEntity {
 
     @ManyToMany(mappedBy = "speakers")
     private List<EventEntity> eventsSpeakers;
+
+    @OneToOne(mappedBy = "supervisor")
+    private SectionEntity section;
 }
