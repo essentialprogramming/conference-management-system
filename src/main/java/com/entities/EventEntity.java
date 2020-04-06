@@ -53,4 +53,7 @@ public class EventEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private LocationEntity location;
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    private List<SectionEntity> section;
 }

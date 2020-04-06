@@ -15,6 +15,7 @@ public class SectionMapper {
         return Section.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .eventId(entity.getEvent().getId())
                 .build();
     }
 }
