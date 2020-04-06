@@ -1,6 +1,7 @@
 package com.entities;
 
 
+import com.model.Program;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,4 +45,8 @@ public class EventEntity {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
     private List<UserEntity> speakers;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "program_id")
+    private ProgramEntity program;
 }

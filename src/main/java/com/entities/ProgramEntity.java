@@ -53,4 +53,7 @@ public class ProgramEntity {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDateTime biddingDeadline;
 
+    @OneToOne(mappedBy = "program")
+    private EventEntity eventEntity;
+
 }

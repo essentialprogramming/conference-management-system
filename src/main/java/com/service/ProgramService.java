@@ -20,8 +20,8 @@ public class ProgramService {
     }
 
     @Transactional
-    public Program addProgram(Program program){
-        ProgramEntity  entity = ProgramMapper.programToEntity(program);
+    public Program addProgram(Program program) {
+        ProgramEntity entity = ProgramMapper.programToEntity(program);
         return ProgramMapper.entityToProgram(programRepository.save(entity));
     }
 }
