@@ -39,4 +39,9 @@ public class UserEntity {
 
     @OneToOne(mappedBy = "supervisor")
     private SectionEntity section;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id")
+    private SectionEntity participantsSection;
+
 }

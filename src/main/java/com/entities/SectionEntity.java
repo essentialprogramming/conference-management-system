@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.List;
 
 
 @Builder
@@ -30,4 +32,8 @@ public class SectionEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "supervisor_email")
     private UserEntity supervisor;
+
+    @OneToMany(mappedBy = "participantsSection", fetch = FetchType.LAZY)
+    private List<UserEntity> participants;
+
 }
