@@ -49,4 +49,8 @@ public class EventEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "program_id")
     private ProgramEntity program;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
+    private LocationEntity location;
 }

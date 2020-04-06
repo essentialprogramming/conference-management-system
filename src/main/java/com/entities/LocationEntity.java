@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Data
@@ -25,6 +26,9 @@ public class LocationEntity {
 
     @Column(name = "city")
     private String city;
+
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+    private List<EventEntity> events;
 
 
 

@@ -21,7 +21,8 @@ public class EventMapper {
                 .programCommittee(entity.getProgramCommittee().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
                 .participants(entity.getParticipants().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
                 .speakers(entity.getSpeakers().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
-                .program(entity.getProgram().getId())
+                .programId(entity.getProgram().getId())
+                .locationId(entity.getLocation().getId())
                 .build();
     }
 }
