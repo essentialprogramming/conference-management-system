@@ -23,13 +23,13 @@ public class UserEntity {
     private String email;
 
     @ManyToMany(mappedBy = "authors")
-    private List<ProposalEntity> proposalEntities;
+    private List<ProposalEntity> proposalEntitiesAuthors;
 
     @ManyToMany(mappedBy = "reviewers")
     private List<ProposalEntity> proposalEntitiesReviewers;
 
     @ManyToMany(mappedBy = "programCommittee")
-    private List<EventEntity> events;
+    private List<EventEntity> eventsPC;
 
     @ManyToMany(mappedBy = "participants")
     private List<EventEntity> eventsParticipants;

@@ -1,10 +1,7 @@
 package com.config;
 
 
-import com.api.resources.EventController;
-import com.api.resources.ProposalController;
-import com.api.resources.RecommendationController;
-import com.api.resources.UserController;
+import com.api.resources.*;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
@@ -23,6 +20,7 @@ public class ApplicationConfig extends ResourceConfig {
         register(RecommendationController.class);
         register(UserController.class);
         register(EventController.class);
+        register(ProgramController.class);
         register(JacksonJaxbJsonProvider.class);
 
         register(OpenApiResource.class);

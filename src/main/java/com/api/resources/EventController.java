@@ -22,7 +22,7 @@ public class EventController {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Event addEvent(Event event) {
         return eventService.addEvent(event);
