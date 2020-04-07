@@ -10,12 +10,14 @@ public class UserMapper {
         return User.builder()
                 .email(entity.getEmail())
                 .participantsSectionId(entity.getParticipantsSection().getId())
+                .role(entity.getRole())
                 .build();
     }
 
     public static UserEntity userToEntity(User user) {
         return UserEntity.builder()
                 .email(user.getEmail())
+                .role(user.getRole())
                 .build();
     }
 }
