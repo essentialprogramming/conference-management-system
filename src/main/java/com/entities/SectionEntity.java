@@ -29,7 +29,7 @@ public class SectionEntity {
     @JoinColumn(name = "event_id")
     private EventEntity event;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supervisor_email")
     private UserEntity supervisor;
 
