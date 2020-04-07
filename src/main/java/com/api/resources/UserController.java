@@ -1,12 +1,11 @@
 package com.api.resources;
 
+import com.model.Role;
 import com.model.User;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 
@@ -26,4 +25,29 @@ public class UserController {
     public User addUser(User user) {
         return userService.addUser(user);
     }
+
+    @PUT
+    @Path("/{email}/{sectionId}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void updateSectionId(@PathParam("email") String email, @PathParam("sectionId") int id) {
+        userService.updateSection(email, id);
+    }
+
+    @GET
+    @Path("/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User findByEmail(@PathParam("email") String email) {
+        return userService.findByEmail(email);
+    }
+
+    @PUT
+    @Path("/{email}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void updateRole(@PathParam("email") String email, Role role) {
+        userService.updateRole(email, role);
+    }
+
+
 }

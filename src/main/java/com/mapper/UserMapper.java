@@ -9,8 +9,6 @@ public class UserMapper {
     public static User entityToUser(UserEntity entity) {
         return User.builder()
                 .email(entity.getEmail())
-                .participantsSectionId(entity.getParticipantsSection().getId())
-                .role(entity.getRole())
                 .build();
     }
 
@@ -20,4 +18,13 @@ public class UserMapper {
                 .role(user.getRole())
                 .build();
     }
+
+    public static User entityToUserWithSectionAndRole(UserEntity entity) {
+        return User.builder()
+                .email(entity.getEmail())
+                .participantsSectionId(entity.getParticipantsSection().getId())
+                .role(entity.getRole())
+                .build();
+    }
+
 }

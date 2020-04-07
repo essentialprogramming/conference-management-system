@@ -1,9 +1,7 @@
 package com.entities;
 
 
-import com.model.Qualifier;
 import com.model.Role;
-import com.vladmihalcea.hibernate.type.array.EnumArrayType;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;

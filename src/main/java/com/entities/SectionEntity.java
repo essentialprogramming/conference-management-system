@@ -30,7 +30,7 @@ public class SectionEntity {
     private EventEntity event;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supervisor_email")
+    @JoinColumn(name = "supervisor_email", unique = true)
     private UserEntity supervisor;
 
     @OneToMany(mappedBy = "participantsSection", fetch = FetchType.LAZY)

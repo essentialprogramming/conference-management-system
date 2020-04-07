@@ -4,6 +4,7 @@ package com.service;
 import com.entities.SectionEntity;
 import com.entities.UserEntity;
 import com.mapper.UserMapper;
+import com.model.Role;
 import com.model.User;
 import com.repository.SectionRepository;
 import com.repository.UserRepository;
@@ -30,11 +31,31 @@ public class UserService {
     @Transactional
     public User addUser(User user) {
 
-        Optional<SectionEntity> sectionEntity = sectionRepository.findById(user.getParticipantsSectionId());
-
         UserEntity entity = UserMapper.userToEntity(user);
-        entity.setParticipantsSection(sectionEntity.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section not found!")));
-
         return UserMapper.entityToUser(userRepository.save(entity));
+    }
+
+    @Transactional
+    public void updateSection(String email, int sectionId) {
+
+        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+        SectionEntity section = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section not found!"));
+
+        existingUser.setParticipantsSection(section);
+        userRepository.save(existingUser);
+    }
+
+    @Transactional
+    public void updateRole(String email, Role role) {
+        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+        existingUser.setRole(role);
+
+        userRepository.save(existingUser);
+    }
+
+    @Transactional
+    public User findByEmail(String email) {
+        UserEntity entity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+        return UserMapper.entityToUserWithSectionAndRole(entity);
     }
 }
