@@ -21,5 +21,7 @@ public class Proposal {
     private Qualifier[] qualifiers;
     private List<String> authors;
     private List<String> reviewers;
+    private List<String> topics;
+    private List<String> keywords;
 
 }

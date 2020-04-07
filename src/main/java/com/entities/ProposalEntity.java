@@ -2,6 +2,7 @@ package com.entities;
 
 import com.model.Qualifier;
 import com.vladmihalcea.hibernate.type.array.EnumArrayType;
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,10 @@ import java.util.List;
                 parameters = {
                         @org.hibernate.annotations.Parameter(name = EnumArrayType.SQL_ARRAY_TYPE, value = "qualifier")
                 }
+        ),
+        @TypeDef(
+                name = "list-array",
+                typeClass = ListArrayType.class
         )
 })
 public class ProposalEntity {
@@ -61,7 +66,15 @@ public class ProposalEntity {
             name = "user_proposal",
             joinColumns = @JoinColumn(name = "proposal_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
-    private List<UserEntity>  reviewers;
+    private List<UserEntity> reviewers;
+
+    @Type(type = "list-array")
+    @Column(name = "topics")
+    private List<String> topics;
+
+    @Type(type = "list-array")
+    @Column(name = "keywords")
+    private List<String> keywords;
 
 
 }
