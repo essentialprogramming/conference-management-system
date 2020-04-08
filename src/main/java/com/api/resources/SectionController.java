@@ -5,10 +5,7 @@ import com.model.Section;
 import com.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/section")
@@ -27,4 +24,18 @@ public class SectionController {
     public Section addSection(Section section) {
         return sectionService.addSection(section);
     }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteSection(@PathParam("id") int id) {
+        sectionService.deleteSection(id);
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Section findById(@PathParam("id") int id) {
+        return sectionService.findById(id);
+    }
+
 }

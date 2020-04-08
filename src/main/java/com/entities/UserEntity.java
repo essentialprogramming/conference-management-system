@@ -45,7 +45,7 @@ public class UserEntity {
     @ManyToMany(mappedBy = "speakers")
     private List<EventEntity> eventsSpeakers;
 
-    @OneToOne(mappedBy = "supervisor", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "supervisor")
     private SectionEntity section;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
