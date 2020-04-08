@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
@@ -44,16 +45,16 @@ public class UserEntity {
     @ManyToMany(mappedBy = "speakers")
     private List<EventEntity> eventsSpeakers;
 
-    @OneToOne(mappedBy = "supervisor")
+    @OneToOne(mappedBy = "supervisor", cascade = CascadeType.ALL)
     private SectionEntity section;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "section_id")
     private SectionEntity participantsSection;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "role")
-    @Type( type = "pgsql_enum" )
+    @Type(type = "pgsql_enum")
     private Role role;
 
 }

@@ -22,7 +22,7 @@ public enum Role {
     }
 
     @JsonCreator
-    public static Role fromJson(@JsonProperty("name") String name) {
-        return valueOf(name);
+    public static Role fromJson(@JsonProperty("role") String role) {
+        return valueOf(role);
     }
 }

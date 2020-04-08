@@ -38,7 +38,7 @@ public class UserService {
     @Transactional
     public void updateSection(String email, int sectionId) {
 
-        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+        UserEntity existingUser = findById(email);
         SectionEntity section = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section not found!"));
 
         existingUser.setParticipantsSection(section);
@@ -47,7 +47,7 @@ public class UserService {
 
     @Transactional
     public void updateRole(String email, Role role) {
-        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+        UserEntity existingUser = findById(email);
         existingUser.setRole(role);
 
         userRepository.save(existingUser);
@@ -55,7 +55,17 @@ public class UserService {
 
     @Transactional
     public User findByEmail(String email) {
-        UserEntity entity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+        UserEntity entity = findById(email);
         return UserMapper.entityToUserWithSectionAndRole(entity);
+    }
+
+    @Transactional
+    public void deleteUser(String email) {
+        UserEntity existingUser = findById(email);
+        userRepository.delete(existingUser);
+    }
+
+    public UserEntity findById(String email) {
+        return userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
     }
 }

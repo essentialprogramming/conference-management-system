@@ -49,5 +49,10 @@ public class UserController {
         userService.updateRole(email, role);
     }
 
+    @DELETE
+    @Path("/{email}")
+    public void deleteUser(@PathParam("email") String email) {
+        userService.deleteUser(email);
+    }
 
 }
