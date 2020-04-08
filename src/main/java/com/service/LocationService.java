@@ -5,8 +5,10 @@ import com.mapper.LocationMapper;
 import com.model.Location;
 import com.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -50,5 +52,16 @@ public class LocationService {
 
         Location result = LocationMapper.entityToLocation(locationRepository.save(entity));
         return weather(result);
+    }
+
+    @Transactional
+    public void deleteLocation(int id) {
+
+        LocationEntity existingLocation = findById(id);
+        locationRepository.delete(existingLocation);
+    }
+
+    private LocationEntity findById(int id) {
+        return locationRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "oLocation not found!"));
     }
 }
