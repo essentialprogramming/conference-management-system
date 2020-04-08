@@ -41,4 +41,15 @@ public class EventService {
 
         return EventMapper.entityToEvent(eventRepository.save(entity));
     }
+
+    @Transactional
+    public void deleteEvent(int id) {
+
+        EventEntity existingEntity = findById(id);
+        eventRepository.delete(existingEntity);
+    }
+
+    private EventEntity findById(int id) {
+        return eventRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
+    }
 }

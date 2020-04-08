@@ -54,6 +54,6 @@ public class EventEntity {
     @JoinColumn(name = "location_id")
     private LocationEntity location;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<SectionEntity> section;
 }
