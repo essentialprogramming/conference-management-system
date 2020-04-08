@@ -46,7 +46,7 @@ public class EventEntity {
             inverseJoinColumns = @JoinColumn(name = "email"))
     private List<UserEntity> speakers;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "program_id")
     private ProgramEntity program;
 
