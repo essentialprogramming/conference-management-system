@@ -2,6 +2,7 @@ package com.service;
 
 
 import com.entities.EventEntity;
+import com.entities.ProgramEntity;
 import com.mapper.EventMapper;
 import com.model.Event;
 import com.repository.EventRepository;
@@ -45,11 +46,28 @@ public class EventService {
     @Transactional
     public void deleteEvent(int id) {
 
-        EventEntity existingEntity = findById(id);
+        EventEntity existingEntity = findEntityById(id);
         eventRepository.delete(existingEntity);
     }
 
-    private EventEntity findById(int id) {
+    private EventEntity findEntityById(int id) {
         return eventRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
+    }
+
+    @Transactional
+    public Event findById(int id) {
+        EventEntity existingEvent = findEntityById(id);
+        return EventMapper.entityToEvent(existingEvent);
+    }
+
+    @Transactional
+    public Event updateProgram(int eventId, int programId) {
+        EventEntity existingEvent = findEntityById(eventId);
+        ProgramEntity existingProgram = programRepository.findById(programId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + programId + " not found!"));
+
+        existingEvent.setProgram(existingProgram);
+        eventRepository.save(existingEvent);
+
+        return EventMapper.entityToEvent(existingEvent);
     }
 }

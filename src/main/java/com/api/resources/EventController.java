@@ -30,4 +30,21 @@ public class EventController {
     public void deleteEvent(@PathParam("id") int id) {
         eventService.deleteEvent(id);
     }
+
+    @GET
+    @Path("/{id}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Event findById(@PathParam("id") int id) {
+        return eventService.findById(id);
+    }
+
+    @PUT
+    @Path("/{eventId}/{programId}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Event updateProgram(@PathParam("eventId") int eventId, @PathParam("programId") int programId) {
+        return eventService.updateProgram(eventId, programId);
+    }
+
 }
