@@ -62,7 +62,7 @@ public class UserService {
     @Transactional
     public void deleteUser(String email) {
         UserEntity existingUser = findById(email);
-        existingUser.setParticipantsSection(null);
+//        existingUser.setParticipantsSection(null);
         userRepository.delete(existingUser);
     }
 
