@@ -17,7 +17,7 @@ public class RecommendationMapper {
                 .id(entity.getId())
                 .text(entity.getText())
                 .email(entity.getEmail())
-                .proposalId(entity.getProposal().getId())
+                .paperId(entity.getPaper().getId())
                 .build();
     }
 }

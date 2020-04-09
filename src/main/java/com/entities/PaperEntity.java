@@ -21,7 +21,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "proposal")
+@Entity(name = "paper")
 @TypeDefs({
         @TypeDef(
                 typeClass = EnumArrayType.class,
@@ -35,7 +35,7 @@ import java.util.List;
                 typeClass = ListArrayType.class
         )
 })
-public class ProposalEntity {
+public class PaperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +48,7 @@ public class ProposalEntity {
     @Column(name = "content")
     private String content;
 
-    @OneToMany(mappedBy = "proposal", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
     private List<RecommendationEntity> recommendations;
 
     @Column(name = "qualifiers", columnDefinition = "qualifiers")
@@ -56,15 +56,15 @@ public class ProposalEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_proposal",
-            joinColumns = @JoinColumn(name = "proposal_id"),
+            name = "user_paper",
+            joinColumns = @JoinColumn(name = "paper_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
     private List<UserEntity> authors;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_proposal",
-            joinColumns = @JoinColumn(name = "proposal_id"),
+            name = "user_paper",
+            joinColumns = @JoinColumn(name = "paper_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
     private List<UserEntity> reviewers;
 

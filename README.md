@@ -81,7 +81,7 @@ ALTER TABLE public.program
 ```
 #### Proposal
 ```postgres-psql
-CREATE TABLE public.proposal
+CREATE TABLE public.paper
 (
     id bigint NOT NULL DEFAULT nextval('proposal_id_seq'::regclass),
     title character varying COLLATE pg_catalog."default",
@@ -94,7 +94,7 @@ CREATE TABLE public.proposal
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.proposal
+ALTER TABLE public.paper
     OWNER to postgres;
 ```
 
@@ -108,7 +108,7 @@ CREATE TABLE public.recommendation
     proposal_id bigint,
     CONSTRAINT recommendation_pkey PRIMARY KEY (id),
     CONSTRAINT proposal_id FOREIGN KEY (proposal_id)
-        REFERENCES public.proposal (id) MATCH SIMPLE
+        REFERENCES public.paper (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
@@ -236,7 +236,7 @@ CREATE TABLE public.user_proposal
         ON DELETE NO ACTION
         NOT VALID,
     CONSTRAINT proposal_id FOREIGN KEY (proposal_id)
-        REFERENCES public.proposal (id) MATCH SIMPLE
+        REFERENCES public.paper (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID

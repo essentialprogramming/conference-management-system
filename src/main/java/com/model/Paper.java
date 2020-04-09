@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Proposal {
+public class Paper {
 
     private int id;
     private String title;

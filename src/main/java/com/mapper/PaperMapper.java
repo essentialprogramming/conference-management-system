@@ -1,27 +1,27 @@
 package com.mapper;
 
-import com.entities.ProposalEntity;
+import com.entities.PaperEntity;
 import com.entities.UserEntity;
-import com.model.Proposal;
+import com.model.Paper;
 
 import java.util.stream.Collectors;
 
-public class ProposalMapper {
+public class PaperMapper {
 
-    public static ProposalEntity proposalToEntity(Proposal proposal) {
+    public static PaperEntity paperToEntity(Paper paper) {
 
-        return ProposalEntity.builder()
-                .title(proposal.getTitle())
-                .content(proposal.getContent())
-                .qualifiers(proposal.getQualifiers())
-                .topics(proposal.getTopics())
-                .keywords(proposal.getKeywords())
+        return PaperEntity.builder()
+                .title(paper.getTitle())
+                .content(paper.getContent())
+                .qualifiers(paper.getQualifiers())
+                .topics(paper.getTopics())
+                .keywords(paper.getKeywords())
                 .build();
     }
 
-    public static Proposal entityToProposal(ProposalEntity entity) {
+    public static Paper entityToPaper(PaperEntity entity) {
 
-        return Proposal.builder()
+        return Paper.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())

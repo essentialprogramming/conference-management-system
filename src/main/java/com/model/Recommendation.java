@@ -15,5 +15,5 @@ public class Recommendation {
     private int id;
     private String text;
     private String email;
-    private int proposalId;
+    private int paperId;
 }

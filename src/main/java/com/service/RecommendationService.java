@@ -1,11 +1,11 @@
 package com.service;
 
 
-import com.entities.ProposalEntity;
+import com.entities.PaperEntity;
 import com.entities.RecommendationEntity;
 import com.mapper.RecommendationMapper;
 import com.model.Recommendation;
-import com.repository.ProposalRepository;
+import com.repository.PaperRepository;
 import com.repository.RecommendationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,21 +19,21 @@ import java.util.Optional;
 public class RecommendationService {
 
     private RecommendationRepository recommendationRepository;
-    private ProposalRepository proposalRepository;
+    private PaperRepository paperRepository;
 
     @Autowired
-    public RecommendationService(RecommendationRepository recommendationRepository, ProposalRepository proposalRepository) {
+    public RecommendationService(RecommendationRepository recommendationRepository, PaperRepository paperRepository) {
         this.recommendationRepository = recommendationRepository;
-        this.proposalRepository = proposalRepository;
+        this.paperRepository = paperRepository;
     }
 
     @Transactional
     public Recommendation addRecommendation(Recommendation recommendation) {
 
-        Optional<ProposalEntity> proposalEntity = proposalRepository.findById(recommendation.getProposalId());
+        Optional<PaperEntity> paperEntity = paperRepository.findById(recommendation.getPaperId());
 
         RecommendationEntity entity = RecommendationMapper.recommendationToEntity(recommendation);
-        entity.setProposal(proposalEntity.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Proposal not found.")));
+        entity.setPaper(paperEntity.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper not found.")));
 
         return RecommendationMapper.entityToRecommendation(recommendationRepository.save(entity));
     }

@@ -16,7 +16,7 @@ import javax.ws.rs.ApplicationPath;
 public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig() {
-        register(ProposalController.class);
+        register(PaperController.class);
         register(RecommendationController.class);
         register(UserController.class);
         register(EventController.class);
