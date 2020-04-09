@@ -30,7 +30,7 @@ public class ProposalService {
 
         ProposalEntity entity = ProposalMapper.proposalToEntity(proposal);
         entity.setAuthors(userRepository.findAllById(proposal.getAuthors()));
-        entity.setReviewers(userRepository.findAllById(proposal.getReviewers()));
+//        entity.setReviewers(userRepository.findAllById(proposal.getReviewers()));
 
         return ProposalMapper.entityToProposal(proposalRepository.save(entity));
 

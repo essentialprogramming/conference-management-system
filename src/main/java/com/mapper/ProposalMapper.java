@@ -27,7 +27,7 @@ public class ProposalMapper {
                 .content(entity.getContent())
                 .qualifiers(entity.getQualifiers())
                 .authors(entity.getAuthors().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
-                .reviewers(entity.getReviewers().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
+//                .reviewers(entity.getReviewers().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
                 .topics(entity.getTopics())
                 .keywords(entity.getKeywords())
                 .build();
