@@ -3,6 +3,7 @@ package com.config;
 
 import com.api.resources.*;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -17,10 +18,9 @@ public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig() {
         register(PaperController.class);
-        register(RecommendationController.class);
         register(UserController.class);
         register(ConferenceManagementController.class);
-
+        register(ProgramCommitteeController.class);
 
         register(JacksonJaxbJsonProvider.class);
 
