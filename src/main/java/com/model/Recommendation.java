@@ -16,4 +16,10 @@ public class Recommendation {
     private String text;
     private String email;
     private int paperId;
+
+    public Recommendation(String text, String email, int paperId) {
+        this.text = text;
+        this.email = email;
+        this.paperId = paperId;
+    }
 }

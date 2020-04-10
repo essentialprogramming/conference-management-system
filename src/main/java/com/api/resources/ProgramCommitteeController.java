@@ -1,5 +1,6 @@
 package com.api.resources;
 
+import com.model.Qualifier;
 import com.model.Recommendation;
 import com.model.Role;
 import com.model.User;
@@ -49,5 +50,12 @@ public class ProgramCommitteeController {
     @Path("/user/paper/{paperId}/{email}")
     public void assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
         pcService.assignPaper(paperId, email);
+    }
+
+    @PUT
+    @Path("user/review/{paperId}/{email}")
+    @Consumes("application/json")
+    public String reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, Qualifier qualifier, @QueryParam("text") String recommendation) {
+        return pcService.reviewPaper(paperId, email, qualifier, recommendation);
     }
 }
