@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.security.PublicKey;
 
 
 @Path("/user")
@@ -37,6 +38,13 @@ public class UserController {
     @Path("/{email}")
     public void deleteUser(@PathParam("email") String email) {
         userService.deleteUser(email);
+    }
+
+    @PUT
+    @Path("/bid/{paperId}/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email) {
+        return userService.bidProposal(paperId, email);
     }
 
 }

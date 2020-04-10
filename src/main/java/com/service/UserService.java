@@ -1,11 +1,13 @@
 package com.service;
 
 
+import com.entities.PaperEntity;
 import com.entities.SectionEntity;
 import com.entities.UserEntity;
 import com.mapper.UserMapper;
 import com.model.Role;
 import com.model.User;
+import com.repository.PaperRepository;
 import com.repository.SectionRepository;
 import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,13 @@ public class UserService {
 
     private UserRepository userRepository;
     private SectionRepository sectionRepository;
+    private PaperRepository paperRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, SectionRepository sectionRepository) {
+    public UserService(UserRepository userRepository, SectionRepository sectionRepository, PaperRepository paperRepository) {
         this.userRepository = userRepository;
         this.sectionRepository = sectionRepository;
+        this.paperRepository = paperRepository;
     }
 
     @Transactional
@@ -54,5 +58,16 @@ public class UserService {
 
     public UserEntity findById(String email) {
         return userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+    }
+
+    @Transactional
+    public String bidProposal(int proposalId, String email) {
+        PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
+        UserEntity user = findById(email);
+
+        if (paperEntity.getReviewers().size() < 4) {
+            paperEntity.getReviewers().add(user);
+            return "You are allowed to review this paper.";
+        } else return "You are not allowed to review this paper.";
     }
 }

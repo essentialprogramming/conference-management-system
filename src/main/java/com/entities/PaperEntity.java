@@ -1,6 +1,7 @@
 package com.entities;
 
 import com.model.Qualifier;
+import com.service.MaxSizeConstraint;
 import com.vladmihalcea.hibernate.type.array.EnumArrayType;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
@@ -14,6 +15,7 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -66,7 +68,8 @@ public class PaperEntity {
             name = "user_paper",
             joinColumns = @JoinColumn(name = "paper_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
-    private List<UserEntity> reviewers;
+    @MaxSizeConstraint
+    private List<@Valid UserEntity> reviewers;
 
     @Type(type = "list-array")
     @Column(name = "topics")
