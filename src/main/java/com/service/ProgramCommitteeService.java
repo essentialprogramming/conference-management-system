@@ -62,4 +62,13 @@ public class ProgramCommitteeService {
         UserEntity entity = findUserEntityById(email);
         return UserMapper.entityToUserWithSectionAndRole(entity);
     }
+
+    @Transactional
+    public void assignPaper(int paperId, String email) {
+        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
+        UserEntity userEntity = findUserEntityById(email);
+        paperEntity.getReviewers().add(userEntity);
+
+        paperRepository.save(paperEntity);
+    }
 }

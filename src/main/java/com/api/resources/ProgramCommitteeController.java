@@ -44,4 +44,10 @@ public class ProgramCommitteeController {
     public User findUserByEmail(@PathParam("email") String email) {
         return pcService.findUserByEmail(email);
     }
+
+    @PUT
+    @Path("/user/paper/{paperId}/{email}")
+    public void assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
+        pcService.assignPaper(paperId, email);
+    }
 }
