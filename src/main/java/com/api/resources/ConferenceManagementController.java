@@ -1,10 +1,13 @@
 package com.api.resources;
 
 import com.model.Event;
+import com.model.Location;
 import com.model.Program;
 import com.model.Section;
 import com.service.ConferenceManagementService;
+import com.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -14,10 +17,12 @@ import java.util.List;
 public class ConferenceManagementController {
 
     private ConferenceManagementService conferenceService;
+    private LocationService locationService;
 
     @Autowired
-    public ConferenceManagementController(ConferenceManagementService conferenceService) {
+    public ConferenceManagementController(ConferenceManagementService conferenceService, LocationService locationService) {
         this.conferenceService = conferenceService;
+        this.locationService = locationService;
     }
 
     @POST
@@ -129,6 +134,30 @@ public class ConferenceManagementController {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Section> getAllSections() {
         return conferenceService.getAllSections();
+    }
+
+    // -------------------- location ---------------------------------
+
+    @POST
+    @Consumes("application/json")
+    @Path("/location")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Location addLocation(Location location) {
+
+        return locationService.addLocation(location);
+    }
+
+    @DELETE
+    @Path("/location/{id}")
+    public void deleteLocation(@PathParam("id") int id) {
+        locationService.deleteLocation(id);
+    }
+
+    @GET
+    @Path("/location")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Location> getAllLocations() {
+        return locationService.getAllLocations();
     }
 
 }

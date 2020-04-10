@@ -13,7 +13,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
@@ -62,6 +64,12 @@ public class LocationService {
     }
 
     private LocationEntity findById(int id) {
-        return locationRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "oLocation not found!"));
+        return locationRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Location not found!"));
     }
+
+    @Transactional
+    public List<Location> getAllLocations() {
+        return locationRepository.findAll().stream().map(LocationMapper::entityToLocation).collect(Collectors.toList());
+    }
+
 }

@@ -19,7 +19,6 @@ public class ApplicationConfig extends ResourceConfig {
         register(PaperController.class);
         register(RecommendationController.class);
         register(UserController.class);
-        register(LocationController.class);
         register(ConferenceManagementController.class);
 
 
