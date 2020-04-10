@@ -29,34 +29,20 @@ public class UserService {
     }
 
     @Transactional
-    public User addUser(User user) {
+    public User register(User user) {
 
         UserEntity entity = UserMapper.userToEntity(user);
         return UserMapper.entityToUser(userRepository.save(entity));
     }
 
     @Transactional
-    public void updateSection(String email, int sectionId) {
+    public void updateUserSection(String email, int sectionId) {
 
         UserEntity existingUser = findById(email);
         SectionEntity section = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section not found!"));
 
         existingUser.setParticipantsSection(section);
         userRepository.save(existingUser);
-    }
-
-    @Transactional
-    public void updateRole(String email, Role role) {
-        UserEntity existingUser = findById(email);
-        existingUser.setRole(role);
-
-        userRepository.save(existingUser);
-    }
-
-    @Transactional
-    public User findByEmail(String email) {
-        UserEntity entity = findById(email);
-        return UserMapper.entityToUserWithSectionAndRole(entity);
     }
 
     @Transactional

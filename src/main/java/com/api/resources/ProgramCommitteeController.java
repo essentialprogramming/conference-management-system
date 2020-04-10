@@ -1,12 +1,12 @@
 package com.api.resources;
 
 import com.model.Recommendation;
+import com.model.Role;
+import com.model.User;
 import com.service.ProgramCommitteeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 
@@ -26,5 +26,22 @@ public class ProgramCommitteeController {
     @Produces(MediaType.APPLICATION_JSON)
     public Recommendation addRecommendation(Recommendation recommendation) {
         return pcService.addRecommendation(recommendation);
+    }
+
+
+    @PUT
+    @Path("/user/{email}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void updateUserRole(@PathParam("email") String email, Role role) {
+
+        pcService.updateUserRole(email, role);
+    }
+
+    @GET
+    @Path("/user/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User findUserByEmail(@PathParam("email") String email) {
+        return pcService.findUserByEmail(email);
     }
 }
