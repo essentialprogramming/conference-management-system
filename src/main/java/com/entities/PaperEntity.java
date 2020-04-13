@@ -1,11 +1,8 @@
 package com.entities;
 
 import com.model.Qualifier;
-import com.service.MaxSizeConstraint;
 import com.vladmihalcea.hibernate.type.array.EnumArrayType;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
-import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -68,7 +65,6 @@ public class PaperEntity {
             name = "user_paper",
             joinColumns = @JoinColumn(name = "paper_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
-    @MaxSizeConstraint
     private List<@Valid UserEntity> reviewers;
 
     @Type(type = "list-array")
