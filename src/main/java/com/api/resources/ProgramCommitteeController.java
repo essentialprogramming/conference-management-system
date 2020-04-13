@@ -58,4 +58,11 @@ public class ProgramCommitteeController {
     public String reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, Qualifier qualifier, @QueryParam("text") String recommendation) {
         return pcService.reviewPaper(paperId, email, qualifier, recommendation);
     }
+
+    @PUT
+    @Path("section/supervisor/{sectionId}/{email}")
+    @Consumes("application/json")
+    public void updateSectionSupervisor(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
+        pcService.updateSectionSupervisor(sectionId, email);
+    }
 }

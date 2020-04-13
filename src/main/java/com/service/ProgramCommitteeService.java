@@ -2,6 +2,7 @@ package com.service;
 
 import com.entities.PaperEntity;
 import com.entities.RecommendationEntity;
+import com.entities.SectionEntity;
 import com.entities.UserEntity;
 import com.mapper.RecommendationMapper;
 import com.mapper.UserMapper;
@@ -11,6 +12,7 @@ import com.model.Role;
 import com.model.User;
 import com.repository.PaperRepository;
 import com.repository.RecommendationRepository;
+import com.repository.SectionRepository;
 import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,12 +31,14 @@ public class ProgramCommitteeService {
     private RecommendationRepository recommendationRepository;
     private PaperRepository paperRepository;
     private UserRepository userRepository;
+    private SectionRepository sectionRepository;
 
     @Autowired
-    public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository) {
+    public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository) {
         this.recommendationRepository = recommendationRepository;
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
+        this.sectionRepository = sectionRepository;
     }
 
     @Transactional
@@ -107,5 +111,14 @@ public class ProgramCommitteeService {
             return "You are not a reviewer of this paper. Ask here for permission to review the paper.";
         }
 
+    }
+
+    @Transactional
+    public void updateSectionSupervisor(int sectionId, String email) {
+        SectionEntity sectionEntity = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section wit id " + sectionId + " not found!"));
+        UserEntity userEntity = findUserEntityById(email);
+
+        sectionEntity.setSupervisor(userEntity);
+        sectionRepository.save(sectionEntity);
     }
 }
