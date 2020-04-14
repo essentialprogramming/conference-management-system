@@ -43,8 +43,8 @@ public class UserController {
     @GET
     @Path("/bid/{paperId}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email) {
-        return userService.bidProposal(paperId, email);
+    public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email) {
+        userService.bidProposal(paperId, email);
     }
 
 }

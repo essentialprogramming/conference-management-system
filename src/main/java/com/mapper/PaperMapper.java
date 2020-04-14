@@ -27,7 +27,8 @@ public class PaperMapper {
                 .content(entity.getContent())
                 .qualifiers(entity.getQualifiers())
                 .authors(entity.getAuthors().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
-//                .reviewers(entity.getReviewers().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
+                .reviewers(entity.getReviewers() != null ? entity.getReviewers().stream().map(UserEntity::getEmail).collect(Collectors.toList()) : null)
+                .bidders(entity.getBidders() != null ? entity.getBidders().stream().map(UserEntity::getEmail).collect(Collectors.toList()) : null)
                 .topics(entity.getTopics())
                 .keywords(entity.getKeywords())
                 .build();

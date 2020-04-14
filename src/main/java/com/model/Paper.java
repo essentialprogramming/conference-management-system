@@ -23,5 +23,6 @@ public class Paper {
     private List<String> reviewers;
     private List<String> topics;
     private List<String> keywords;
+    private List<String> bidders;
 
 }

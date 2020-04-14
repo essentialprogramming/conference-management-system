@@ -35,9 +35,9 @@ public class ProposalService {
 
         PaperEntity entity = PaperMapper.paperToEntity(paper);
         entity.setAuthors(userRepository.findAllById(paper.getAuthors()));
-//        entity.setReviewers(userRepository.findAllById(proposal.getReviewers()));
 
-        return PaperMapper.entityToPaper(paperRepository.save(entity));
+        paperRepository.save(entity);
+        return PaperMapper.entityToPaper(entity);
 
     }
 

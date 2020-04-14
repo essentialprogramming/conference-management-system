@@ -71,12 +71,18 @@ public class ProgramCommitteeService {
     }
 
     @Transactional
-    public void assignPaper(int paperId, String email) {
+    public String assignPaper(int paperId, String email) {
         PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
         UserEntity userEntity = findUserEntityById(email);
-        paperEntity.getReviewers().add(userEntity);
 
-        paperRepository.save(paperEntity);
+        if (paperEntity.getReviewers().size() < 4) {
+            paperEntity.getReviewers().add(userEntity);
+            paperRepository.save(paperEntity);
+            return "You are allowed to review this paper.";
+        }
+        else return "You are not allowed to review this paper.";
+
+
     }
 
     @Transactional

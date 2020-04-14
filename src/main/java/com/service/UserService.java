@@ -61,13 +61,10 @@ public class UserService {
     }
 
     @Transactional
-    public String bidProposal(int proposalId, String email) {
+    public void bidProposal(int proposalId, String email) {
         PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
         UserEntity user = findById(email);
 
-        if (paperEntity.getReviewers().size() < 4) {
-            paperEntity.getReviewers().add(user);
-            return "You are allowed to review this paper.";
-        } else return "You are not allowed to review this paper.";
+        paperEntity.getBidders().add(user);
     }
 }

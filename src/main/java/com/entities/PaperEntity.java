@@ -12,7 +12,6 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -65,7 +64,7 @@ public class PaperEntity {
             name = "user_paper",
             joinColumns = @JoinColumn(name = "paper_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
-    private List<@Valid UserEntity> reviewers;
+    private List<UserEntity> reviewers;
 
     @Type(type = "list-array")
     @Column(name = "topics")
@@ -74,6 +73,13 @@ public class PaperEntity {
     @Type(type = "list-array")
     @Column(name = "keywords")
     private List<String> keywords;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_paper",
+            joinColumns = @JoinColumn(name = "paper_id"),
+            inverseJoinColumns = @JoinColumn(name = "email"))
+    private List<UserEntity> bidders;
 
 
 }
