@@ -103,14 +103,11 @@ public class ProgramCommitteeService {
             return "Your review is added to paper.";
 
         } else {
-//            try {
-//                URL url = new URL("http://localhost:8080/api/user/bid/" +paperId +"/"+email);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-            return "You are not a reviewer of this paper. Ask here for permission to review the paper.";
-        }
+            String link = "<a href=\"http://localhost:8080/api/user/bid/\">here</a>";
+            String here = link.substring(9,43)+"/"+paperId + "/" + email;
 
+            return "You are not a reviewer of this paper. Ask " + here +" for permission to review this paper.";
+        }
     }
 
     @Transactional
