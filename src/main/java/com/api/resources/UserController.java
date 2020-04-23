@@ -40,11 +40,11 @@ public class UserController {
         userService.deleteUser(email);
     }
 
-//    @GET
-//    @Path("/bid/{paperId}/{email}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email) {
-//        userService.bidProposal(paperId, email);
-//    }
+    @GET
+    @Path("/bid/{paperId}/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email) {
+        userService.bidProposal(paperId, email);
+    }
 
 }

@@ -3,6 +3,7 @@ package com.service;
 import com.entities.*;
 import com.mapper.RecommendationMapper;
 import com.mapper.UserMapper;
+import com.model.Qualifier;
 import com.model.Recommendation;
 import com.model.Role;
 import com.model.User;
@@ -18,6 +19,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -80,37 +82,39 @@ public class ProgramCommitteeService {
         } else return "You are not allowed to review this paper.";
 
     }
-//
-//    @Transactional
-//    public String reviewPaper(int paperId, String email, Qualifier qualifier, String recommendation) {
-//        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
-//        UserEntity userEntity = findUserEntityById(email);
-//
-//        if (paperEntity.getReviewers().contains(userEntity)) {
-//
-//            if (paperEntity.getQualifiers() == null) {
-//                paperEntity.setQualifiers(new Qualifier[1]);
-//                paperEntity.getQualifiers()[0] = qualifier;
-//            } else {
-//                Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
-//
-//                System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
-//                qualifiers[paperEntity.getQualifiers().length] = qualifier;
-//                paperEntity.setQualifiers(qualifiers);
-//            }
-//
-//            Recommendation recommendation1 = new Recommendation(recommendation, email, paperId);
-//            addRecommendation(recommendation1);
-//
-//            return "Your review is added to paper.";
-//
-//        } else {
-//            String link = "<a href=\"http://localhost:8080/api/user/bid/\">here</a>";
-//            String here = link.substring(9,43)+"/"+paperId + "/" + email;
-//
-//            return "You are not a reviewer of this paper. Ask " + here +" for permission to review this paper.";
-//        }
-//    }
+
+    @Transactional
+    public String reviewPaper(int paperId, String email, Qualifier qualifier, String recommendation) {
+        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
+        UserEntity userEntity = findUserEntityById(email);
+
+        List<UserEntity> reviewers = paperEntity.getUsers().stream().filter(user->user.getType().equals("reviewer")).map(UserPaper::getUser).collect(Collectors.toList());
+
+        if (reviewers.contains(userEntity)) {
+
+            if (paperEntity.getQualifiers() == null) {
+                paperEntity.setQualifiers(new Qualifier[1]);
+                paperEntity.getQualifiers()[0] = qualifier;
+            } else {
+                Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
+
+                System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
+                qualifiers[paperEntity.getQualifiers().length] = qualifier;
+                paperEntity.setQualifiers(qualifiers);
+            }
+
+            Recommendation recommendation1 = new Recommendation(recommendation, email, paperId);
+            addRecommendation(recommendation1);
+
+            return "Your review is added to paper.";
+
+        } else {
+            String link = "<a href=\"http://localhost:8080/api/user/bid/\">here</a>";
+            String here = link.substring(9, 43) + "/" + paperId + "/" + email;
+
+            return "You are not a reviewer of this paper. Ask " + here + " for permission to review this paper.";
+        }
+    }
 
     @Transactional
     public void updateSectionSupervisor(int sectionId, String email) {

@@ -60,11 +60,11 @@ public class UserService {
         return userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
     }
 
-//    @Transactional
-//    public void bidProposal(int proposalId, String email) {
-//        PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
-//        UserEntity user = findById(email);
-//
-//        paperEntity.getBidders().add(user);
-//    }
+    @Transactional
+    public void bidProposal(int proposalId, String email) {
+        PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
+        UserEntity user = findById(email);
+
+        paperEntity.addUser(user,"bidder");
+    }
 }
