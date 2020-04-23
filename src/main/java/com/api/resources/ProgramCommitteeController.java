@@ -51,13 +51,13 @@ public class ProgramCommitteeController {
     public String assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
         return pcService.assignPaper(paperId, email);
     }
-
-    @PUT
-    @Path("user/review/{paperId}/{email}")
-    @Consumes("application/json")
-    public String reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, Qualifier qualifier, @QueryParam("text") String recommendation) {
-        return pcService.reviewPaper(paperId, email, qualifier, recommendation);
-    }
+//
+//    @PUT
+//    @Path("user/review/{paperId}/{email}")
+//    @Consumes("application/json")
+//    public String reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, Qualifier qualifier, @QueryParam("text") String recommendation) {
+//        return pcService.reviewPaper(paperId, email, qualifier, recommendation);
+//    }
 
     @PUT
     @Path("section/supervisor/{sectionId}/{email}")

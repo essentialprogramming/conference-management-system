@@ -3,19 +3,18 @@ package com.entities;
 
 import com.model.Role;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.List;
+import java.util.Objects;
+
 
 @Builder
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "user_entity")
@@ -42,4 +41,18 @@ public class UserEntity {
     @Type(type = "pgsql_enum")
     private Role role;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity entity = (UserEntity) o;
+        return Objects.equals(section, entity.section) &&
+                Objects.equals(participantsSection, entity.participantsSection) &&
+                role == entity.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(section, participantsSection, role);
+    }
 }

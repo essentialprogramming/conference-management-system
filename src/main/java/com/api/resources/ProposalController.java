@@ -10,12 +10,12 @@ import java.util.List;
 
 
 @Path("/paper")
-public class PaperController {
+public class ProposalController {
 
     private ProposalService proposalService;
 
     @Autowired
-    public PaperController(ProposalService proposalService) {
+    public ProposalController(ProposalService proposalService) {
         this.proposalService = proposalService;
     }
 

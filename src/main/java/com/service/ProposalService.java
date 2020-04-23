@@ -2,12 +2,11 @@ package com.service;
 
 
 import com.entities.PaperEntity;
+import com.entities.UserEntity;
 import com.mapper.PaperMapper;
 import com.model.Paper;
 import com.repository.PaperRepository;
 import com.repository.UserRepository;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -34,11 +33,14 @@ public class ProposalService {
     public Paper submitPaper(Paper paper) {
 
         PaperEntity entity = PaperMapper.paperToEntity(paper);
-        entity.setAuthors(userRepository.findAllById(paper.getAuthors()));
+        List<UserEntity> users = userRepository.findAllById(paper.getAuthors());
+
+        for (UserEntity user : users) {
+            entity.addUser(user, "author");
+        }
 
         paperRepository.save(entity);
         return PaperMapper.entityToPaper(entity);
-
     }
 
     @Transactional

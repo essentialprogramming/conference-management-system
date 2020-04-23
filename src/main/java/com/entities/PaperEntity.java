@@ -3,20 +3,18 @@ package com.entities;
 import com.model.Qualifier;
 import com.vladmihalcea.hibernate.type.array.EnumArrayType;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 
 @Builder
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "paper")
@@ -52,20 +50,6 @@ public class PaperEntity {
     @Column(name = "qualifiers", columnDefinition = "qualifiers")
     private Qualifier[] qualifiers;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_paper",
-            joinColumns = @JoinColumn(name = "paper_id"),
-            inverseJoinColumns = @JoinColumn(name = "email"))
-    private List<UserEntity> authors;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_paper",
-            joinColumns = @JoinColumn(name = "paper_id"),
-            inverseJoinColumns = @JoinColumn(name = "email"))
-    private List<UserEntity> reviewers;
-
     @Type(type = "list-array")
     @Column(name = "topics")
     private List<String> topics;
@@ -74,12 +58,35 @@ public class PaperEntity {
     @Column(name = "keywords")
     private List<String> keywords;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_paper",
-            joinColumns = @JoinColumn(name = "paper_id"),
-            inverseJoinColumns = @JoinColumn(name = "email"))
-    private List<UserEntity> bidders;
+    @OneToMany(mappedBy = "paper", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPaper> users;
 
+    public List<UserPaper> getUsers() {
+        return users;
+    }
 
+    public void addUser(UserEntity userEntity, String type) {
+        UserPaper userPaper = new UserPaper(userEntity, this, type);
+        users.add(userPaper);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PaperEntity)) return false;
+        PaperEntity that = (PaperEntity) o;
+        return title.equals(that.title) &&
+                content.equals(that.content) &&
+                recommendations.equals(that.recommendations) &&
+                Arrays.equals(qualifiers, that.qualifiers) &&
+                topics.equals(that.topics) &&
+                keywords.equals(that.keywords);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(title, content, recommendations, topics, keywords);
+        result = 31 * result + Arrays.hashCode(qualifiers);
+        return result;
+    }
 }
