@@ -61,7 +61,7 @@ public class UserService {
     }
 
     @Transactional
-    public void bidProposal(int proposalId, String email) {
+    public void bidProposal(int proposalId, String email) {  // -> only if user is not already an author or reviewer of this paper
         PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
         UserEntity user = findById(email);
 
