@@ -138,7 +138,6 @@ public class ConferenceManagementService {
     public Section addSection(Section section) {
         SectionEntity entity = SectionMapper.sectionToEntity(section);
         entity.setEvent(eventRepository.findById(section.getEventId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!")));
-        entity.setSupervisor(userRepository.findById(section.getSupervisorEmail()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User not found!")));
 
         return SectionMapper.entityToSection(sectionRepository.save(entity));
     }
@@ -163,5 +162,14 @@ public class ConferenceManagementService {
     @Transactional
     public List<Section> getAllSections() {
         return sectionRepository.findAll().stream().map(SectionMapper::entityToSection).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Section assignSupervisor(int sectionId, String email) {
+        SectionEntity existingSection = findEntityById(sectionId);
+        existingSection.setSupervisor(userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User not found!")));
+
+        sectionRepository.save(existingSection);
+        return SectionMapper.entityToSection(existingSection);
     }
 }

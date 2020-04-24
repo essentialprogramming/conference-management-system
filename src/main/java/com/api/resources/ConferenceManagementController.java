@@ -136,6 +136,13 @@ public class ConferenceManagementController {
         return conferenceService.getAllSections();
     }
 
+    @PUT
+    @Path("/section/supervisor/{sectionId}/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Section assignSection(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
+        return conferenceService.assignSupervisor(sectionId, email);
+    }
+
     // -------------------- location ---------------------------------
 
     @POST

@@ -16,7 +16,7 @@ public class SectionMapper {
                 .id(entity.getId())
                 .name(entity.getName())
                 .eventId(entity.getEvent().getId())
-                .supervisorEmail(entity.getSupervisor().getEmail())
+                .supervisorEmail(entity.getSupervisor() != null ? entity.getSupervisor().getEmail() : null)
                 .build();
     }
 }

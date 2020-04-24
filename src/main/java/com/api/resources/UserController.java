@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.security.PublicKey;
 
 
 @Path("/user")
@@ -31,7 +30,7 @@ public class UserController {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public void updateUserSectionId(@PathParam("email") String email, @PathParam("sectionId") int id) {
-        userService.updateUserSection(email, id);
+        userService.registerToSection(email, id);
     }
 
     @DELETE

@@ -40,7 +40,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserSection(String email, int sectionId) {
+    public void registerToSection(String email, int sectionId) {
 
         UserEntity existingUser = findById(email);
         SectionEntity section = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section not found!"));

@@ -15,10 +15,10 @@ import java.util.Objects;
 public class UserPaperId implements Serializable {
 
     private static final long serialVersionUID = -2600581264572898375L;
-    @Column(name = "paper_id")
+//    @Column(name = "paper_id")
     private int paperId;
 
-    @Column(name = "email")
+//    @Column(name = "email")
     private String userEmail;
 
     public UserPaperId() {
