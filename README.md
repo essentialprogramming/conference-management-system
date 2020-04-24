@@ -8,7 +8,7 @@ Now you can start the application by running Server class in your IDE or by runn
 `java -jar uber-conference-management-system-1.0-SNAPSHOT.jar`
 
 ### ❄ Project structure
-We have seven entities and two enums. Here is the class diagram that contain relations between them:
+We have nine entities and two enums. Here is the class diagram that contain relations between them:
 ![Class diagram](src/main/resources/img/CMS-Class_Diagram.png)
 
 ### 💎 Database schema
@@ -80,8 +80,9 @@ create table if not exists user_event
 
 create table if not exists user_paper
 (
-	email text,
-	paper_id smallint
+	user_email text,
+	paper_id smallint,
+        type text
 );
 
 CREATE TYPE qualifier AS ENUM
@@ -121,12 +122,12 @@ ALTER TABLE user_paper
 ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
 
 ALTER TABLE user_paper
-ADD FOREIGN KEY (email) REFERENCES user_entity(email);
+ADD FOREIGN KEY (user_email) REFERENCES user_entity(email);
 ```
 
 ##### Database tables:
 
-![DB table diagram](src/main/resources/img/CMS.png)
+![DB table diagram](src/main/resources/img/CMS-Database.png)
 
 ### 🚀 Use Postman to test the REST apis
 There are 4 main request URLs, depending on which controller is responsible to handle the request : 
