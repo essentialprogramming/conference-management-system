@@ -61,6 +61,10 @@ public class PaperEntity {
     @OneToMany(mappedBy = "paper", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPaper> users;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id")
+    private SectionEntity section;
+
     public List<UserPaper> getUsers() {
         return users;
     }

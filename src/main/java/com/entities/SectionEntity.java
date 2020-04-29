@@ -36,4 +36,7 @@ public class SectionEntity {
     @OneToMany(mappedBy = "participantsSection", fetch = FetchType.LAZY)
     private List<UserEntity> participants;
 
+    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY)
+    private List<PaperEntity> papers;
+
 }

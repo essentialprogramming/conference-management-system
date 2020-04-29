@@ -42,6 +42,7 @@ public class PaperMapper {
                         .collect(Collectors.toList()) : null)
                 .topics(entity.getTopics())
                 .keywords(entity.getKeywords())
+                .sectionId(entity.getSection() != null ? entity.getSection().getId() : 0)
                 .build();
     }
 }

@@ -1,12 +1,10 @@
 package com.service;
 
 import com.entities.*;
+import com.mapper.PaperMapper;
 import com.mapper.RecommendationMapper;
 import com.mapper.UserMapper;
-import com.model.Qualifier;
-import com.model.Recommendation;
-import com.model.Role;
-import com.model.User;
+import com.model.*;
 import com.repository.PaperRepository;
 import com.repository.RecommendationRepository;
 import com.repository.SectionRepository;
@@ -123,5 +121,14 @@ public class ProgramCommitteeService {
 
         sectionEntity.setSupervisor(userEntity);
         sectionRepository.save(sectionEntity);
+    }
+
+    @Transactional
+    public Paper setPaperSection(int paperId, int sectionId) {
+        PaperEntity existingPaper = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found"));
+        existingPaper.setSection(sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + sectionId + " not found.")));
+
+        paperRepository.save(existingPaper);
+        return PaperMapper.entityToPaper(existingPaper);
     }
 }

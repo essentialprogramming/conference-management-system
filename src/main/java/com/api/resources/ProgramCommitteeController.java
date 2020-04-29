@@ -1,9 +1,6 @@
 package com.api.resources;
 
-import com.model.Qualifier;
-import com.model.Recommendation;
-import com.model.Role;
-import com.model.User;
+import com.model.*;
 import com.service.ProgramCommitteeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -65,4 +62,12 @@ public class ProgramCommitteeController {
     public void updateSectionSupervisor(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
         pcService.updateSectionSupervisor(sectionId, email);
     }
+
+    @PUT
+    @Path("/paper/section/{paperId}/{sectionId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Paper setPaperSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
+        return pcService.setPaperSection(paperId, sectionId);
+    }
+
 }
