@@ -9,7 +9,7 @@ Now you can start the application by running Server class in your IDE or by runn
 
 ### ❄ Project structure
 We have nine entities and two enums. Here is the class diagram that contain relations between them:
-![Class diagram](src/main/resources/img/CMS-Class_Diagram.png)
+![Class diagram](src/main/resources/img/CMS-Class-Diagram.png)
 
 ### 💎 Database schema
 
@@ -37,6 +37,7 @@ create table if not exists paper
 	qualifiers text[],
 	topics text[],
 	keywords text[]
+    section_id smallint
 );
 
 create table if not exists program 
@@ -123,11 +124,14 @@ ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
 
 ALTER TABLE user_paper
 ADD FOREIGN KEY (user_email) REFERENCES user_entity(email);
+
+ALTER TABLE paper 
+ADD FOREIGN KEY (section_id) REFERENCES section(id);
 ```
 
 ##### Database tables:
 
-![DB table diagram](src/main/resources/img/CMS-Database.png)
+![DB table diagram](src/main/resources/img/CMS.png)
 
 ### 🚀 Use Postman to test the REST apis
 There are 4 main request URLs, depending on which controller is responsible to handle the request : 
