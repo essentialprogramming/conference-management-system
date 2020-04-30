@@ -42,7 +42,7 @@ public class UserService {
     @Transactional
     public void registerToSection(String email, int sectionId) {
 
-        UserEntity existingUser = findById(email);
+        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
         SectionEntity section = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section not found!"));
 
         existingUser.setParticipantsSection(section);
@@ -51,19 +51,15 @@ public class UserService {
 
     @Transactional
     public void deleteUser(String email) {
-        UserEntity existingUser = findById(email);
+        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
 //        existingUser.setParticipantsSection(null);
         userRepository.delete(existingUser);
-    }
-
-    public UserEntity findById(String email) {
-        return userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
     }
 
     @Transactional
     public void bidProposal(int proposalId, String email) {  // -> only if user is not already an author or reviewer of this paper
         PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
-        UserEntity user = findById(email);
+        UserEntity user = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
 
         paperEntity.addUser(user,"bidder");
     }

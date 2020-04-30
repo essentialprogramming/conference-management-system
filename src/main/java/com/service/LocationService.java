@@ -59,12 +59,8 @@ public class LocationService {
     @Transactional
     public void deleteLocation(int id) {
 
-        LocationEntity existingLocation = findById(id);
+        LocationEntity existingLocation = locationRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Location not found!"));
         locationRepository.delete(existingLocation);
-    }
-
-    private LocationEntity findById(int id) {
-        return locationRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Location not found!"));
     }
 
     @Transactional

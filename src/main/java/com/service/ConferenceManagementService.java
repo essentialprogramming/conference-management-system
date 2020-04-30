@@ -58,23 +58,19 @@ public class ConferenceManagementService {
     @Transactional
     public void deleteEvent(int id) {
 
-        EventEntity existingEntity = findEventEntityById(id);
+        EventEntity existingEntity = eventRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
         eventRepository.delete(existingEntity);
-    }
-
-    private EventEntity findEventEntityById(int id) {
-        return eventRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
     }
 
     @Transactional
     public Event findEventById(int id) {
-        EventEntity existingEvent = findEventEntityById(id);
+        EventEntity existingEvent = eventRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
         return EventMapper.entityToEvent(existingEvent);
     }
 
     @Transactional
     public Event updateEventProgram(int eventId, int programId) {
-        EventEntity existingEvent = findEventEntityById(eventId);
+        EventEntity existingEvent = eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
         ProgramEntity existingProgram = programRepository.findById(programId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + programId + " not found!"));
 
         existingEvent.setProgram(existingProgram);
@@ -99,17 +95,13 @@ public class ConferenceManagementService {
     @Transactional
     public void deleteProgram(int id) {
 
-        ProgramEntity existingProgram = findProgramEntityById(id);
+        ProgramEntity existingProgram = programRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + id + " not found!"));
         programRepository.delete(existingProgram);
-    }
-
-    private ProgramEntity findProgramEntityById(int id) {
-        return programRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + id + " not found!"));
     }
 
     @Transactional
     public Program findProgramById(int id) {
-        ProgramEntity existingProgram = findProgramEntityById(id);
+        ProgramEntity existingProgram = programRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + id + " not found!"));
         return ProgramMapper.entityToProgram(existingProgram);
     }
 
@@ -121,7 +113,7 @@ public class ConferenceManagementService {
     @Transactional
     public Program postponeProgramDate(int programId, String newDate) {
 
-        ProgramEntity existingProgram = findProgramEntityById(programId);
+        ProgramEntity existingProgram = programRepository.findById(programId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + programId + " not found!"));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(newDate, formatter);
@@ -145,18 +137,14 @@ public class ConferenceManagementService {
     @Transactional
     public void deleteSection(int id) {
 
-        SectionEntity existingSection = findEntityById(id);
+        SectionEntity existingSection = sectionRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + id + " not found!"));
         sectionRepository.delete(existingSection);
     }
 
     @Transactional
     public Section findSectionById(int id) {
-        SectionEntity entity = findEntityById(id);
+        SectionEntity entity = sectionRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + id + " not found!"));
         return SectionMapper.entityToSection(entity);
-    }
-
-    private SectionEntity findEntityById(int id) {
-        return sectionRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + id + " not found!"));
     }
 
     @Transactional
@@ -166,7 +154,7 @@ public class ConferenceManagementService {
 
     @Transactional
     public Section assignSupervisor(int sectionId, String email) {
-        SectionEntity existingSection = findEntityById(sectionId);
+        SectionEntity existingSection = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + sectionId + " not found!"));
         existingSection.setSupervisor(userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User not found!")));
 
         sectionRepository.save(existingSection);

@@ -49,26 +49,22 @@ public class ProgramCommitteeService {
 
     @Transactional
     public void updateUserRole(String email, Role role) {
-        UserEntity existingUser = findUserEntityById(email);
+        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
         existingUser.setRole(role);
 
         userRepository.save(existingUser);
     }
 
-    public UserEntity findUserEntityById(String email) {
-        return userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-    }
-
     @Transactional
     public User findUserByEmail(String email) {
-        UserEntity entity = findUserEntityById(email);
+        UserEntity entity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
         return UserMapper.entityToUserWithSectionAndRole(entity);
     }
 
     @Transactional
     public String assignPaper(int paperId, String email) {
         PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
-        UserEntity userEntity = findUserEntityById(email);
+        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
 
         long reviewers = paperEntity.getUsers().stream()
                 .filter(user -> user.getType().equals("reviewer"))
@@ -84,7 +80,7 @@ public class ProgramCommitteeService {
     @Transactional
     public String reviewPaper(int paperId, String email, Qualifier qualifier, String recommendation) {
         PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
-        UserEntity userEntity = findUserEntityById(email);
+        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
 
         List<UserEntity> reviewers = paperEntity.getUsers().stream().filter(user->user.getType().equals("reviewer")).map(UserPaper::getUser).collect(Collectors.toList());
 
@@ -117,7 +113,7 @@ public class ProgramCommitteeService {
     @Transactional
     public void updateSectionSupervisor(int sectionId, String email) {
         SectionEntity sectionEntity = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section wit id " + sectionId + " not found!"));
-        UserEntity userEntity = findUserEntityById(email);
+        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
 
         sectionEntity.setSupervisor(userEntity);
         sectionRepository.save(sectionEntity);
