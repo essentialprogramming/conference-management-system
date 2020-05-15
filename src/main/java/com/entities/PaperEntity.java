@@ -45,7 +45,7 @@ public class PaperEntity {
     private String content;
 
     @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
-    private List<RecommendationEntity> recommendations;
+    private List<EvaluationEntity> reviews;
 
     @Column(name = "qualifiers", columnDefinition = "qualifiers")
     private Qualifier[] qualifiers;
@@ -81,16 +81,13 @@ public class PaperEntity {
         PaperEntity that = (PaperEntity) o;
         return title.equals(that.title) &&
                 content.equals(that.content) &&
-                recommendations.equals(that.recommendations) &&
-                Arrays.equals(qualifiers, that.qualifiers) &&
                 topics.equals(that.topics) &&
                 keywords.equals(that.keywords);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(title, content, recommendations, topics, keywords);
-        result = 31 * result + Arrays.hashCode(qualifiers);
+        int result = Objects.hash(title, content, topics, keywords);
         return result;
     }
 }

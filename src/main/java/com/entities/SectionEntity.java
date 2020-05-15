@@ -31,7 +31,7 @@ public class SectionEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supervisor_email", unique = true)
-    private UserEntity supervisor;
+    private PCMemberEntity supervisor;
 
     @OneToMany(mappedBy = "participantsSection", fetch = FetchType.LAZY)
     private List<UserEntity> participants;

@@ -8,7 +8,6 @@ public class RecommendationMapper {
     public static RecommendationEntity recommendationToEntity(Recommendation recommendation) {
         return RecommendationEntity.builder()
                 .text(recommendation.getText())
-                .email(recommendation.getEmail())
                 .build();
     }
 
@@ -16,8 +15,6 @@ public class RecommendationMapper {
         return Recommendation.builder()
                 .id(entity.getId())
                 .text(entity.getText())
-                .email(entity.getEmail())
-                .paperId(entity.getPaper().getId())
                 .build();
     }
 }

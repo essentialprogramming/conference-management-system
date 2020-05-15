@@ -15,7 +15,6 @@ public class UserMapper {
     public static UserEntity userToEntity(User user) {
         return UserEntity.builder()
                 .email(user.getEmail())
-                .role(user.getRole())
                 .build();
     }
 
@@ -23,7 +22,6 @@ public class UserMapper {
         return User.builder()
                 .email(entity.getEmail())
                 .participantsSectionId(entity.getParticipantsSection().getId())
-                .role(entity.getRole())
                 .build();
     }
 

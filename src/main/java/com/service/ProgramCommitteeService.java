@@ -1,23 +1,17 @@
 package com.service;
 
 import com.entities.*;
+import com.mapper.EvaluationMapper;
 import com.mapper.PaperMapper;
 import com.mapper.RecommendationMapper;
 import com.mapper.UserMapper;
 import com.model.*;
-import com.repository.PaperRepository;
-import com.repository.RecommendationRepository;
-import com.repository.SectionRepository;
-import com.repository.UserRepository;
+import com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -27,33 +21,37 @@ public class ProgramCommitteeService {
     private PaperRepository paperRepository;
     private UserRepository userRepository;
     private SectionRepository sectionRepository;
+    private EvaluationRepository evaluationRepository;
+    private PCMemberRepository pcMemberRepository;
 
     @Autowired
-    public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository) {
+    public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository, EvaluationRepository evaluationRepository, PCMemberRepository pcMemberRepository) {
         this.recommendationRepository = recommendationRepository;
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
         this.sectionRepository = sectionRepository;
+        this.evaluationRepository = evaluationRepository;
+        this.pcMemberRepository = pcMemberRepository;
     }
 
-    @Transactional
-    public Recommendation addRecommendation(Recommendation recommendation) {
+//    @Transactional
+//    public Recommendation addRecommendation(Recommendation recommendation) {
+//
+//        Optional<PaperEntity> paperEntity = paperRepository.findById(recommendation.getPaperId());
+//
+//        RecommendationEntity recommendationEntity = RecommendationMapper.recommendationToEntity(recommendation);
+//        recommendationEntity.setPaper(paperEntity.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper not found.")));
+//
+//        return RecommendationMapper.entityToRecommendation(recommendationRepository.save(recommendationEntity));
+//    }
 
-        Optional<PaperEntity> paperEntity = paperRepository.findById(recommendation.getPaperId());
-
-        RecommendationEntity recommendationEntity = RecommendationMapper.recommendationToEntity(recommendation);
-        recommendationEntity.setPaper(paperEntity.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper not found.")));
-
-        return RecommendationMapper.entityToRecommendation(recommendationRepository.save(recommendationEntity));
-    }
-
-    @Transactional
-    public void updateUserRole(String email, Role role) {
-        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-        existingUser.setRole(role);
-
-        userRepository.save(existingUser);
-    }
+//    @Transactional
+//    public void updateUserRole(String email, Role role) {
+//        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+//        existingUser.setRole(role);
+//
+//        userRepository.save(existingUser);
+//    }
 
     @Transactional
     public User findUserByEmail(String email) {
@@ -77,47 +75,47 @@ public class ProgramCommitteeService {
 
     }
 
-    @Transactional
-    public String reviewPaper(int paperId, String email, Qualifier qualifier, String recommendation) {
-        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
-        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+//    @Transactional
+//    public String reviewPaper(int paperId, String email, Qualifier qualifier, String recommendation) {
+//        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
+//        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+//
+//        List<UserEntity> reviewers = paperEntity.getUsers().stream().filter(user->user.getType().equals("reviewer")).map(UserPaper::getUser).collect(Collectors.toList());
+//
+//        if (reviewers.contains(userEntity)) {
+//
+//            if (paperEntity.getQualifiers() == null) {
+//                paperEntity.setQualifiers(new Qualifier[1]);
+//                paperEntity.getQualifiers()[0] = qualifier;
+//            } else {
+//                Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
+//
+//                System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
+//                qualifiers[paperEntity.getQualifiers().length] = qualifier;
+//                paperEntity.setQualifiers(qualifiers);
+//            }
+//
+//            Recommendation recommendation1 = new Recommendation(recommendation, email, paperId);
+//            addRecommendation(recommendation1);
+//
+//            return "Your review is added to paper.";
+//
+//        } else {
+//            String link = "<a href=\"http://localhost:8080/api/user/bid/\">here</a>";
+//            String here = link.substring(9, 43) + "/" + paperId + "/" + email;
+//
+//            return "You are not a reviewer of this paper. Ask " + here + " for permission to review this paper.";
+//        }
+//    }
 
-        List<UserEntity> reviewers = paperEntity.getUsers().stream().filter(user->user.getType().equals("reviewer")).map(UserPaper::getUser).collect(Collectors.toList());
-
-        if (reviewers.contains(userEntity)) {
-
-            if (paperEntity.getQualifiers() == null) {
-                paperEntity.setQualifiers(new Qualifier[1]);
-                paperEntity.getQualifiers()[0] = qualifier;
-            } else {
-                Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
-
-                System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
-                qualifiers[paperEntity.getQualifiers().length] = qualifier;
-                paperEntity.setQualifiers(qualifiers);
-            }
-
-            Recommendation recommendation1 = new Recommendation(recommendation, email, paperId);
-            addRecommendation(recommendation1);
-
-            return "Your review is added to paper.";
-
-        } else {
-            String link = "<a href=\"http://localhost:8080/api/user/bid/\">here</a>";
-            String here = link.substring(9, 43) + "/" + paperId + "/" + email;
-
-            return "You are not a reviewer of this paper. Ask " + here + " for permission to review this paper.";
-        }
-    }
-
-    @Transactional
-    public void updateSectionSupervisor(int sectionId, String email) {
-        SectionEntity sectionEntity = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section wit id " + sectionId + " not found!"));
-        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-
-        sectionEntity.setSupervisor(userEntity);
-        sectionRepository.save(sectionEntity);
-    }
+//    @Transactional
+//    public void updateSectionSupervisor(int sectionId, String email) {
+//        SectionEntity sectionEntity = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section wit id " + sectionId + " not found!"));
+//        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+//
+//        sectionEntity.setSupervisor(userEntity);
+//        sectionRepository.save(sectionEntity);
+//    }
 
     @Transactional
     public Paper setPaperSection(int paperId, int sectionId) {
@@ -126,5 +124,35 @@ public class ProgramCommitteeService {
 
         paperRepository.save(existingPaper);
         return PaperMapper.entityToPaper(existingPaper);
+    }
+
+    @Transactional
+    public Evaluation reviewPaper(String email, Evaluation evaluation) {
+
+        EvaluationEntity entity = EvaluationMapper.evaluationToEntity(evaluation);
+        PaperEntity paperEntity = paperRepository.findById(evaluation.getPaperId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + evaluation.getPaperId() + " not found!"));
+        PCMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
+        RecommendationEntity recommendationEntity = RecommendationMapper.recommendationToEntity(new Recommendation(evaluation.getRecommendation()));
+        recommendationRepository.save(recommendationEntity);
+
+        if (paperEntity.getQualifiers() == null) {
+                paperEntity.setQualifiers(new Qualifier[1]);
+                paperEntity.getQualifiers()[0] = evaluation.getQualifier();
+            } else {
+                Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
+
+                System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
+                qualifiers[paperEntity.getQualifiers().length] = evaluation.getQualifier();
+                paperEntity.setQualifiers(qualifiers);
+            }
+
+        entity.setPaper(paperEntity);
+        entity.setQualifier(evaluation.getQualifier());
+        entity.setReviewer(pcMemberEntity);
+        entity.setRecommendation(recommendationEntity);
+
+        evaluationRepository.save(entity);
+
+        return EvaluationMapper.entityToEvaluation(entity);
     }
 }

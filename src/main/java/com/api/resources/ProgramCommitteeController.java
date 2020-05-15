@@ -18,23 +18,23 @@ public class ProgramCommitteeController {
         this.pcService = pcService;
     }
 
-    @POST
-    @Path("/recommendation")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Recommendation addRecommendation(Recommendation recommendation) {
-        return pcService.addRecommendation(recommendation);
-    }
+//    @POST
+//    @Path("/recommendation")
+//    @Consumes("application/json")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Recommendation addRecommendation(Recommendation recommendation) {
+//        return pcService.addRecommendation(recommendation);
+//    }
 
 
-    @PUT
-    @Path("/user/{email}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void updateUserRole(@PathParam("email") String email, Role role) {
-
-        pcService.updateUserRole(email, role);
-    }
+//    @PUT
+//    @Path("/user/{email}")
+//    @Consumes("application/json")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public void updateUserRole(@PathParam("email") String email, Role role) {
+//
+//        pcService.updateUserRole(email, role);
+//    }
 
     @GET
     @Path("/user/{email}")
@@ -49,25 +49,34 @@ public class ProgramCommitteeController {
         return pcService.assignPaper(paperId, email);
     }
 
-    @PUT
-    @Path("user/review/{paperId}/{email}")
-    @Consumes("application/json")
-    public String reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, Qualifier qualifier, @QueryParam("text") String recommendation) {
-        return pcService.reviewPaper(paperId, email, qualifier, recommendation);
-    }
+//    @PUT
+//    @Path("user/review/{paperId}/{email}")
+//    @Consumes("application/json")
+//    public String reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, Qualifier qualifier, @QueryParam("text") String recommendation) {
+//        return pcService.reviewPaper(paperId, email, qualifier, recommendation);
+//    }
 
-    @PUT
-    @Path("section/supervisor/{sectionId}/{email}")
-    @Consumes("application/json")
-    public void updateSectionSupervisor(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
-        pcService.updateSectionSupervisor(sectionId, email);
-    }
+//    @PUT
+//    @Path("section/supervisor/{sectionId}/{email}")
+//    @Consumes("application/json")
+//    public void updateSectionSupervisor(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
+//        pcService.updateSectionSupervisor(sectionId, email);
+//    }
 
     @PUT
     @Path("/paper/section/{paperId}/{sectionId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Paper setPaperSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
         return pcService.setPaperSection(paperId, sectionId);
+    }
+
+    @PUT
+    @Path("user/review/{email}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Evaluation reviewPaper(@PathParam("email") String email, Evaluation evaluation) {
+
+        return pcService.reviewPaper(email, evaluation);
     }
 
 }

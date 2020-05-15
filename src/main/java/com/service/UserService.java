@@ -1,12 +1,13 @@
 package com.service;
 
 
+import com.entities.PCMemberEntity;
 import com.entities.PaperEntity;
 import com.entities.SectionEntity;
 import com.entities.UserEntity;
 import com.mapper.UserMapper;
-import com.model.Role;
 import com.model.User;
+import com.repository.PCMemberRepository;
 import com.repository.PaperRepository;
 import com.repository.SectionRepository;
 import com.repository.UserRepository;
@@ -16,20 +17,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.Optional;
-
 @Service
 public class UserService {
 
     private UserRepository userRepository;
     private SectionRepository sectionRepository;
     private PaperRepository paperRepository;
+    private PCMemberRepository pcMemberRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, SectionRepository sectionRepository, PaperRepository paperRepository) {
+    public UserService(UserRepository userRepository, SectionRepository sectionRepository, PaperRepository paperRepository, PCMemberRepository pcMemberRepository) {
         this.userRepository = userRepository;
         this.sectionRepository = sectionRepository;
         this.paperRepository = paperRepository;
+        this.pcMemberRepository = pcMemberRepository;
     }
 
     @Transactional
@@ -61,6 +62,15 @@ public class UserService {
         PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
         UserEntity user = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
 
-        paperEntity.addUser(user,"bidder");
+        paperEntity.addUser(user, "bidder");
+    }
+
+    @Transactional
+    public User registerAsPcMember(User user) {
+
+        PCMemberEntity entity = new PCMemberEntity(user.getEmail());
+        pcMemberRepository.save(entity);
+
+        return UserMapper.entityToUser(entity);
     }
 }

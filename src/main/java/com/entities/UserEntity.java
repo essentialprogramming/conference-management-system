@@ -1,7 +1,6 @@
 package com.entities;
 
 
-import com.model.Role;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -18,10 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "user_entity")
-@TypeDef(
-        name = "pgsql_enum",
-        typeClass = PostgreSQLEnumType.class
-)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class UserEntity {
 
     @Id
@@ -29,30 +25,12 @@ public class UserEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @OneToOne(mappedBy = "supervisor")
-    private SectionEntity section;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "section_id")
     private SectionEntity participantsSection;
 
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "role")
-    @Type(type = "pgsql_enum")
-    private Role role;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserEntity)) return false;
-        UserEntity entity = (UserEntity) o;
-        return Objects.equals(section, entity.section) &&
-                Objects.equals(participantsSection, entity.participantsSection) &&
-                role == entity.role;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(section, participantsSection, role);
+    public UserEntity(@Email String email) {
+        this.email = email;
     }
 }

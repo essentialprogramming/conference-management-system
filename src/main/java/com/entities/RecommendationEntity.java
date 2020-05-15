@@ -22,10 +22,6 @@ public class RecommendationEntity {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "email")
-    private String email;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "paper_id")
-    private PaperEntity paper;
+    @OneToOne(mappedBy = "recommendation")
+    private EvaluationEntity evaluation;
 }

@@ -46,4 +46,12 @@ public class UserController {
         userService.bidProposal(paperId, email);
     }
 
+    @POST
+    @Path("/pcMember")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User registerAsPcMember(User user) {
+        return userService.registerAsPcMember(user);
+    }
+
 }

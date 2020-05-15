@@ -8,7 +8,7 @@ Now you can start the application by running Server class in your IDE or by runn
 `java -jar uber-conference-management-system-1.0-SNAPSHOT.jar`
 
 ### ❄ Project structure
-We have nine entities and two enums. Here is the class diagram that contain relations between them:
+We have twelve entities and one enum. Here is the class diagram that contain relations between them:
 ![Class diagram](src/main/resources/img/CMS-Class-Diagram.png)
 
 ### 💎 Database schema
@@ -53,9 +53,7 @@ create table if not exists program
 create table if not exists recommendation
 (
 	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
-	text text,
-	email text,
-	paper_id smallint
+	text text
 );
 
 create table if not exists section
@@ -69,8 +67,7 @@ create table if not exists section
 create table if not exists user_entity
 (
 	email text NOT NULL primary key,
-	section_id smallint,
-	role text
+	section_id smallint
 );
 
 create table if not exists user_event
@@ -86,11 +83,39 @@ create table if not exists user_paper
         type text
 );
 
+create table if not exists evaluation
+(
+    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	qualifier text,
+	reviewer text,
+    recommendation_id smallint,
+    paper_id smallint
+);
+
+create table if not exists pc_member
+(
+	email text NOT NULL primary key,
+	section_id smallint
+);
+
+create table if not exists author
+(
+	email text NOT NULL primary key,
+	section_id smallint
+);
+
+
+ALTER TABLE evaluation 
+ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
+
+ALTER TABLE evaluation 
+ADD FOREIGN KEY (recommendation_id) REFERENCES recommendation(id);
+
+ALTER TABLE evaluation 
+ADD FOREIGN KEY (reviewer) REFERENCES pc_member(email);
+
 CREATE TYPE qualifier AS ENUM
     ('WEAK_REJECT', 'WEAK_ACCEPT', 'STRONG_ACCEPT', 'REJECT', 'BORDERLINE_PAPER', 'ACCEPT', 'STRONG_REJECT');
-
-CREATE TYPE role AS ENUM
-    ('PARTICIPANT', 'SPEAKER', 'PROGRAM_COMMITTEE');
 
 ALTER TABLE event 
 ADD FOREIGN KEY (location_id) REFERENCES location(id);
@@ -98,14 +123,11 @@ ADD FOREIGN KEY (location_id) REFERENCES location(id);
 ALTER TABLE event 
 ADD FOREIGN KEY (program_id) REFERENCES program(id);
 
-ALTER TABLE recommendation
-ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
-
 ALTER TABLE section
 ADD FOREIGN KEY (event_id) REFERENCES event(id);
 
 ALTER TABLE section
-ADD FOREIGN KEY (supervisor_email) REFERENCES user_entity(email);
+ADD FOREIGN KEY (supervisor_email) REFERENCES pc_member(email);
 
 ALTER TABLE section
 ADD CONSTRAINT supervisor_unique UNIQUE(supervisor_email);
