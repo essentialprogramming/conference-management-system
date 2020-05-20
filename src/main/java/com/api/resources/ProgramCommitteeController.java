@@ -43,11 +43,11 @@ public class ProgramCommitteeController {
         return pcService.findUserByEmail(email);
     }
 
-    @PUT
-    @Path("/user/paper/{paperId}/{email}")
-    public String assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
-        return pcService.assignPaper(paperId, email);
-    }
+//    @PUT
+//    @Path("/user/paper/{paperId}/{email}")
+//    public String assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
+//        return pcService.assignPaper(paperId, email);
+//    }
 
 //    @PUT
 //    @Path("user/review/{paperId}/{email}")

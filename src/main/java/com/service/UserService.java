@@ -1,16 +1,10 @@
 package com.service;
 
 
-import com.entities.PCMemberEntity;
-import com.entities.PaperEntity;
-import com.entities.SectionEntity;
-import com.entities.UserEntity;
+import com.entities.*;
 import com.mapper.UserMapper;
 import com.model.User;
-import com.repository.PCMemberRepository;
-import com.repository.PaperRepository;
-import com.repository.SectionRepository;
-import com.repository.UserRepository;
+import com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,13 +18,15 @@ public class UserService {
     private SectionRepository sectionRepository;
     private PaperRepository paperRepository;
     private PCMemberRepository pcMemberRepository;
+    private BidRepository bidRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, SectionRepository sectionRepository, PaperRepository paperRepository, PCMemberRepository pcMemberRepository) {
+    public UserService(UserRepository userRepository, SectionRepository sectionRepository, PaperRepository paperRepository, PCMemberRepository pcMemberRepository, BidRepository bidRepository) {
         this.userRepository = userRepository;
         this.sectionRepository = sectionRepository;
         this.paperRepository = paperRepository;
         this.pcMemberRepository = pcMemberRepository;
+        this.bidRepository = bidRepository;
     }
 
     @Transactional
@@ -57,13 +53,13 @@ public class UserService {
         userRepository.delete(existingUser);
     }
 
-    @Transactional
-    public void bidProposal(int proposalId, String email) {  // -> only if user is not already an author or reviewer of this paper
-        PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
-        UserEntity user = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-
-        paperEntity.addUser(user, "bidder");
-    }
+//    @Transactional
+//    public void bidProposal(int proposalId, String email) {  // -> only if user is not already an author or reviewer of this paper
+//        PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
+//        UserEntity user = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+//
+//        paperEntity.addUser(user, "bidder");
+//    }
 
     @Transactional
     public User registerAsPcMember(User user) {
@@ -73,4 +69,15 @@ public class UserService {
 
         return UserMapper.entityToUser(entity);
     }
+
+    @Transactional
+    public void bidProposal(int proposalId, String email) {  // -> only if user is not already an author or reviewer of this paper
+        PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
+        PCMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
+        BidEntity bidEntity = new BidEntity(paperEntity, pcMemberEntity);
+
+        paperEntity.addBidder(pcMemberEntity);
+        bidRepository.save(bidEntity);
+    }
+
 }

@@ -59,21 +59,21 @@ public class ProgramCommitteeService {
         return UserMapper.entityToUserWithSectionAndRole(entity);
     }
 
-    @Transactional
-    public String assignPaper(int paperId, String email) {
-        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
-        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-
-        long reviewers = paperEntity.getUsers().stream()
-                .filter(user -> user.getType().equals("reviewer"))
-                .count();
-
-        if (reviewers < 4) {
-            paperEntity.addUser(userEntity, "reviewer");
-            return "You are allowed to review this paper.";
-        } else return "You are not allowed to review this paper.";
-
-    }
+//    @Transactional
+//    public String assignPaper(int paperId, String email) {
+//        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
+//        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
+//
+//        long reviewers = paperEntity.getUsers().stream()
+//                .filter(user -> user.getType().equals("reviewer"))
+//                .count();
+//
+//        if (reviewers < 4) {
+//            paperEntity.addUser(userEntity, "reviewer");
+//            return "You are allowed to review this paper.";
+//        } else return "You are not allowed to review this paper.";
+//
+//    }
 
 //    @Transactional
 //    public String reviewPaper(int paperId, String email, Qualifier qualifier, String recommendation) {

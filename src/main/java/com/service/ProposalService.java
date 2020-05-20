@@ -29,19 +29,19 @@ public class ProposalService {
         this.userRepository = userRepository;
     }
 
-    @Transactional
-    public Paper submitPaper(Paper paper) {
-
-        PaperEntity entity = PaperMapper.paperToEntity(paper);
-        List<UserEntity> users = userRepository.findAllById(paper.getAuthors());
-
-        for (UserEntity user : users) {
-            entity.addUser(user, "author");
-        }
-
-        paperRepository.save(entity);
-        return PaperMapper.entityToPaper(entity);
-    }
+//    @Transactional
+//    public Paper submitPaper(Paper paper) {
+//
+//        PaperEntity entity = PaperMapper.paperToEntity(paper);
+//        List<UserEntity> users = userRepository.findAllById(paper.getAuthors());
+//
+//        for (UserEntity user : users) {
+//            entity.addUser(user, "author");
+//        }
+//
+//        paperRepository.save(entity);
+//        return PaperMapper.entityToPaper(entity);
+//    }
 
     @Transactional
     public Paper findById(int id) {

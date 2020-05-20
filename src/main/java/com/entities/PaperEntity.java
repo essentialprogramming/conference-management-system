@@ -58,20 +58,20 @@ public class PaperEntity {
     @Column(name = "keywords")
     private List<String> keywords;
 
-    @OneToMany(mappedBy = "paper", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserPaper> users;
+    @OneToMany(mappedBy = "paper")
+    private List<BidEntity> bids;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
     private SectionEntity section;
 
-    public List<UserPaper> getUsers() {
-        return users;
+    public List<BidEntity> getBids() {
+        return bids;
     }
 
-    public void addUser(UserEntity userEntity, String type) {
-        UserPaper userPaper = new UserPaper(userEntity, this, type);
-        users.add(userPaper);
+    public void addBidder(PCMemberEntity pcMemberEntity) {
+        BidEntity bidEntity = new BidEntity(pcMemberEntity);
+        bids.add(bidEntity);
     }
 
     @Override

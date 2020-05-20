@@ -19,13 +19,13 @@ public class ProposalController {
         this.proposalService = proposalService;
     }
 
-    @POST
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Paper submitPaper(Paper paper) {
-
-        return proposalService.submitPaper(paper);
-    }
+//    @POST
+//    @Consumes("application/json")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Paper submitPaper(Paper paper) {
+//
+//        return proposalService.submitPaper(paper);
+//    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
