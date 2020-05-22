@@ -1,12 +1,12 @@
 package com.entities;
 
+import com.model.Paper;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -18,11 +18,12 @@ public class PCMemberEntity extends UserEntity {
     @OneToOne(mappedBy = "supervisor")
     private SectionEntity section;
 
-    @OneToMany(mappedBy = "reviewer")
-    private List<EvaluationEntity> evaluation;
+    @ManyToMany(mappedBy = "bidders")
+    @MapKeyJoinColumn(name = "bid_id")
+    private Map<BidEntity, PaperEntity> papers;
 
-    @OneToOne(mappedBy = "pcMember")
-    private BidEntity bidEntity;
+//    @OneToMany(mappedBy = "reviewer")
+//    private List<EvaluationEntity> evaluation;
 
     @Override
     public @Email String getEmail() {

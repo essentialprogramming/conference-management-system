@@ -1,14 +1,21 @@
 package com.entities;
 
+import com.model.Status;
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
-
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "bid")
+@TypeDef(
+        name = "pgsql_enum",
+        typeClass = PostgreSQLEnumType.class
+)
 public class BidEntity {
 
     @Id
@@ -16,20 +23,8 @@ public class BidEntity {
     @Column(name = "id", nullable = false, unique = true)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "paper_id")
-    private PaperEntity paper;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pc_member")
-    private PCMemberEntity pcMember;
-
-    public BidEntity(PCMemberEntity pcMember) {
-        this.pcMember = pcMember;
-    }
-
-    public BidEntity(PaperEntity paper, PCMemberEntity pcMember) {
-        this.paper = paper;
-        this.pcMember = pcMember;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "status")
+    @Type(type = "pgsql_enum")
+    private Status status;
 }

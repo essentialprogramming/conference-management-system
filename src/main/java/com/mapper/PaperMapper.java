@@ -1,9 +1,11 @@
 package com.mapper;
 
+import com.entities.PCMemberEntity;
 import com.entities.PaperEntity;
 import com.model.Paper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 
@@ -17,8 +19,7 @@ public class PaperMapper {
 //                .qualifiers(paper.getQualifiers())
                 .topics(paper.getTopics())
                 .keywords(paper.getKeywords())
-                .bids(new ArrayList<>())
-//                .users(new ArrayList<>())
+                .bidders(new HashMap<>())
                 .build();
     }
 
@@ -28,7 +29,9 @@ public class PaperMapper {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
-                .bidders(entity.getBids().stream().map(bid->bid.getPcMember().getEmail()).collect(Collectors.toList()))
+                .bidders(entity.getBids().values().stream().map(PCMemberEntity::getEmail).collect(Collectors.toList()))
+                //.reviewers(entity.getReviewers().values().stream().map(PCMemberEntity::getEmail).collect(Collectors.toList()))
+
 //                .qualifiers(entity.getQualifiers())
 //                .authors(entity.getUsers() != null ? entity.getUsers().stream()
 //                        .filter(userPaperEntity -> userPaperEntity.getType().equals("author"))

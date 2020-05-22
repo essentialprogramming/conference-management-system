@@ -11,7 +11,6 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.*;
 import java.util.*;
 
-
 @Builder
 @Getter
 @Setter
@@ -44,8 +43,8 @@ public class PaperEntity {
     @Column(name = "content")
     private String content;
 
-    @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
-    private List<EvaluationEntity> reviews;
+//    @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
+//    private List<EvaluationEntity> reviews;
 
     @Column(name = "qualifiers", columnDefinition = "qualifiers")
     private Qualifier[] qualifiers;
@@ -58,20 +57,19 @@ public class PaperEntity {
     @Column(name = "keywords")
     private List<String> keywords;
 
-    @OneToMany(mappedBy = "paper")
-    private List<BidEntity> bids;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "paper_pcmember",
+            joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "email", referencedColumnName = "email")})
+    @MapKeyJoinColumn(name = "bid_id")
+    private Map<BidEntity, PCMemberEntity> bidders;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
     private SectionEntity section;
 
-    public List<BidEntity> getBids() {
-        return bids;
-    }
-
-    public void addBidder(PCMemberEntity pcMemberEntity) {
-        BidEntity bidEntity = new BidEntity(pcMemberEntity);
-        bids.add(bidEntity);
+    public Map<BidEntity, PCMemberEntity> getBids() {
+        return bidders;
     }
 
     @Override

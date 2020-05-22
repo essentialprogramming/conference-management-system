@@ -69,14 +69,14 @@ public class ProgramCommitteeController {
     public Paper setPaperSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
         return pcService.setPaperSection(paperId, sectionId);
     }
-
-    @PUT
-    @Path("user/review/{email}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Evaluation reviewPaper(@PathParam("email") String email, Evaluation evaluation) {
-
-        return pcService.reviewPaper(email, evaluation);
-    }
+//
+//    @PUT
+//    @Path("user/review/{email}")
+//    @Consumes("application/json")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Evaluation reviewPaper(@PathParam("email") String email, Evaluation evaluation) {
+//
+//        return pcService.reviewPaper(email, evaluation);
+//    }
 
 }

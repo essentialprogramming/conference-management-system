@@ -1,5 +1,6 @@
 package com.api.resources;
 
+import com.model.Status;
 import com.model.User;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,8 @@ public class UserController {
     @GET
     @Path("/bid/{paperId}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email) {
-        userService.bidProposal(paperId, email);
+    public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email, Status status) {
+        userService.bidProposal(paperId, email, status);
     }
 
     @POST

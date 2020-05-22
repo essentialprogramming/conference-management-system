@@ -8,7 +8,7 @@ Now you can start the application by running Server class in your IDE or by runn
 `java -jar uber-conference-management-system-1.0-SNAPSHOT.jar`
 
 ### ❄ Project structure
-We have twelve entities and one enum. Here is the class diagram that contain relations between them:
+We have twelve entities and two enums. Here is the class diagram that contain relations between them:
 ![Class diagram](src/main/resources/img/CMS-Class-Diagram.png)
 
 ### 💎 Database schema
@@ -36,7 +36,7 @@ create table if not exists paper
 	content text,
 	qualifiers text[],
 	topics text[],
-	keywords text[]
+	keywords text[],
     section_id smallint
 );
 
@@ -76,26 +76,19 @@ create table if not exists user_event
 	event_id smallint
 );
 
-create table if not exists user_paper
-(
-	user_email text,
-	paper_id smallint,
-        type text
-);
-
 create table if not exists evaluation
 (
-    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
-	qualifier text,
-	reviewer text,
+    paper_id smallint,
     recommendation_id smallint,
-    paper_id smallint
+    reviewer text,
+    qualifier text
 );
 
 create table if not exists pc_member
 (
 	email text NOT NULL primary key,
-	section_id smallint
+	section_id smallint,
+        bid_id smallint
 );
 
 create table if not exists author
@@ -104,6 +97,25 @@ create table if not exists author
 	section_id smallint
 );
 
+create table if not exists bid 
+(
+	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	status text
+);
+create table if not exists paper_pcmember 
+(
+	paper_id smallint,
+	bid_id smallint,
+        email text
+);
+ALTER TABLE paper_pcmember 
+ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
+
+ALTER TABLE paper_pcmember 
+ADD FOREIGN KEY (bid_id) REFERENCES bid(id);
+
+ALTER TABLE paper_pcmember 
+ADD FOREIGN KEY (email) REFERENCES pc_member(email);
 
 ALTER TABLE evaluation 
 ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
@@ -141,19 +153,13 @@ ADD FOREIGN KEY (event_id) REFERENCES event(id);
 ALTER TABLE user_event
 ADD FOREIGN KEY (email) REFERENCES user_entity(email);
 
-ALTER TABLE user_paper
-ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
-
-ALTER TABLE user_paper
-ADD FOREIGN KEY (user_email) REFERENCES user_entity(email);
-
 ALTER TABLE paper 
 ADD FOREIGN KEY (section_id) REFERENCES section(id);
 ```
 
 ##### Database tables:
 
-![DB table diagram](src/main/resources/img/CMS.png)
+![DB table diagram](src/main/resources/img/database-schema.png)
 
 ### 🚀 Use Postman to test the REST apis
 There are 4 main request URLs, depending on which controller is responsible to handle the request : 

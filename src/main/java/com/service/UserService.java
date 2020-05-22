@@ -3,8 +3,10 @@ package com.service;
 
 import com.entities.*;
 import com.mapper.UserMapper;
+import com.model.Status;
 import com.model.User;
 import com.repository.*;
+import org.hibernate.engine.transaction.jta.platform.internal.BitronixJtaPlatform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -53,14 +55,6 @@ public class UserService {
         userRepository.delete(existingUser);
     }
 
-//    @Transactional
-//    public void bidProposal(int proposalId, String email) {  // -> only if user is not already an author or reviewer of this paper
-//        PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
-//        UserEntity user = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-//
-//        paperEntity.addUser(user, "bidder");
-//    }
-
     @Transactional
     public User registerAsPcMember(User user) {
 
@@ -71,13 +65,18 @@ public class UserService {
     }
 
     @Transactional
-    public void bidProposal(int proposalId, String email) {  // -> only if user is not already an author or reviewer of this paper
+    public void bidProposal(int proposalId, String email, Status status) {  // -> only if user is not already an author or reviewer of this paper
         PaperEntity paperEntity = paperRepository.findById(proposalId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + proposalId + " not found!"));
         PCMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
-        BidEntity bidEntity = new BidEntity(paperEntity, pcMemberEntity);
 
-        paperEntity.addBidder(pcMemberEntity);
+        BidEntity bidEntity = new BidEntity();
+        bidEntity.setStatus(status);
+
+        paperEntity.getBids().put(bidEntity, pcMemberEntity);
+        pcMemberEntity.getPapers().values().forEach(paper -> System.out.println(paper.getTitle()));
+
         bidRepository.save(bidEntity);
+        paperRepository.save(paperEntity);
     }
 
 }
