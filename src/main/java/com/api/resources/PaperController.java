@@ -18,13 +18,14 @@ public class PaperController {
         this.paperService = paperService;
     }
 
-//    @POST
-//    @Consumes("application/json")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Paper submitPaper(Paper paper) {
-//
-//        return paperService.submitPaper(paper);
-//    }
+    @POST
+    @Path("paper")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Paper submitPaper(Paper paper) {
+
+        return paperService.submitPaper(paper);
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

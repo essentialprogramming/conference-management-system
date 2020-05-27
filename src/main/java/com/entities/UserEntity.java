@@ -18,7 +18,7 @@ import javax.validation.constraints.Email;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
         discriminatorType = DiscriminatorType.STRING,
-        name = "role",
+        name = "type",
         columnDefinition = "text"
 )
 public class UserEntity {

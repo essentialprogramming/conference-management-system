@@ -1,6 +1,7 @@
 package com.service;
 
 
+import com.entities.CommitteeMemberEntity;
 import com.entities.EventEntity;
 import com.entities.ProgramEntity;
 import com.entities.SectionEntity;
@@ -31,13 +32,15 @@ public class ConferenceManagementService {
     private PCMemberRepository userRepository;
     private LocationRepository locationRepository;
     private SectionRepository sectionRepository;
+    private PCMemberRepository pcMemberRepository;
 
     @Autowired
-    public ConferenceManagementService(ConferenceRepository eventRepository, PCMemberRepository userRepository, LocationRepository locationRepository, SectionRepository sectionRepository) {
+    public ConferenceManagementService(ConferenceRepository eventRepository, PCMemberRepository userRepository, LocationRepository locationRepository, SectionRepository sectionRepository, PCMemberRepository pcMemberRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;
         this.sectionRepository = sectionRepository;
+        this.pcMemberRepository = pcMemberRepository;
     }
 
     // ------------------------------  Event management ------------------------------
@@ -83,9 +86,6 @@ public class ConferenceManagementService {
     // ------------------------------  Program management ------------------------------
 
 
-
-
-
     @Transactional
     public Program changeProposalDeadline(int eventId, String newDate) {
 
@@ -124,5 +124,13 @@ public class ConferenceManagementService {
 
         sectionRepository.save(existingSection);
         return SectionMapper.entityToSection(existingSection);
+    }
+
+    @Transactional
+    public void addProgramCommittee(String email) {
+        CommitteeMemberEntity committeeMemberEntity = new CommitteeMemberEntity(email);
+
+
+        pcMemberRepository.save(committeeMemberEntity);
     }
 }

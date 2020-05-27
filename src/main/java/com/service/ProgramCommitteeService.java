@@ -26,12 +26,13 @@ public class ProgramCommitteeService {
     private PCMemberRepository pcMemberRepository;
 
     @Autowired
-    public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository, EvaluationRepository evaluationRepository) {
+    public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository, EvaluationRepository evaluationRepository, PCMemberRepository pcMemberRepository) {
         this.recommendationRepository = recommendationRepository;
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
         this.sectionRepository = sectionRepository;
         this.evaluationRepository = evaluationRepository;
+        this.pcMemberRepository = pcMemberRepository;
     }
 
 //    @Transactional
@@ -122,22 +123,24 @@ public class ProgramCommitteeService {
     @Transactional
     public Evaluation reviewPaper(String email, Evaluation evaluation) {
 
+        System.out.println(">>>>>>>>>>>" + email);
+
         EvaluationEntity entity = EvaluationMapper.evaluationToEntity(evaluation);
         PaperEntity paperEntity = paperRepository.findById(evaluation.getPaperId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + evaluation.getPaperId() + " not found!"));
         CommitteeMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
         RecommendationEntity recommendationEntity = RecommendationMapper.recommendationToEntity(new Recommendation(evaluation.getRecommendation()));
         recommendationRepository.save(recommendationEntity);
 
-        if (paperEntity.getQualifiers() == null) {
-            paperEntity.setQualifiers(new Qualifier[1]);
-            paperEntity.getQualifiers()[0] = evaluation.getQualifier();
-        } else {
-            Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
-
-            System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
-            qualifiers[paperEntity.getQualifiers().length] = evaluation.getQualifier();
-            paperEntity.setQualifiers(qualifiers);
-        }
+//        if (paperEntity.getQualifiers() == null) {
+//            paperEntity.setQualifiers(new Qualifier[1]);
+//            paperEntity.getQualifiers()[0] = evaluation.getQualifier();
+//        } else {
+//            Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
+//
+//            System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
+//            qualifiers[paperEntity.getQualifiers().length] = evaluation.getQualifier();
+//            paperEntity.setQualifiers(qualifiers);
+//        }
 
         entity.setPaper(paperEntity);
         entity.setQualifier(evaluation.getQualifier());
@@ -148,4 +151,6 @@ public class ProgramCommitteeService {
 
         return EvaluationMapper.entityToEvaluation(entity);
     }
+
+
 }

@@ -56,6 +56,7 @@ create table if not exists paper
 
 create table if not exists evaluation
 (
+    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
     paper_id smallint,
     recommendation_id smallint,
     reviewer text,
@@ -97,8 +98,24 @@ create table if not exists paper_pcmember
         email text
 );
 
+create table if not exists paper_author
+(
+	paper_id smallint,
+	bid_id smallint,
+        email text
+);
+
 CREATE TYPE  qualifier AS ENUM
     ('WEAK_REJECT', 'WEAK_ACCEPT', 'STRONG_ACCEPT', 'REJECT', 'BORDERLINE_PAPER', 'ACCEPT', 'STRONG_REJECT');
+
+ALTER TABLE paper_author
+ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
+
+ALTER TABLE paper_author
+ADD FOREIGN KEY (bid_id) REFERENCES bid(id);
+
+ALTER TABLE paper_author
+ADD FOREIGN KEY (email) REFERENCES account(email);
 
 ALTER TABLE paper_pcmember
 ADD FOREIGN KEY (paper_id) REFERENCES paper(id);

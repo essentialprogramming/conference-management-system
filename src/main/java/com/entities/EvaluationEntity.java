@@ -25,17 +25,15 @@ public class EvaluationEntity {
     //@EmbeddedId
     //private EvaluationKey id;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    //@MapsId("reviewer")
+    @JoinColumn(name = "reviewer")
     private CommitteeMemberEntity reviewer;
 
-    //    @MapsId("paperId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paper_id")
     private PaperEntity paper;

@@ -18,13 +18,13 @@ import java.util.*;
 @AllArgsConstructor
 @Entity(name = "paper")
 @TypeDefs({
-        @TypeDef(
-                typeClass = EnumArrayType.class,
-                defaultForType = Qualifier[].class,
-                parameters = {
-                        @org.hibernate.annotations.Parameter(name = EnumArrayType.SQL_ARRAY_TYPE, value = "qualifier")
-                }
-        ),
+//        @TypeDef(
+//                typeClass = EnumArrayType.class,
+//                defaultForType = Qualifier[].class,
+//                parameters = {
+//                        @org.hibernate.annotations.Parameter(name = EnumArrayType.SQL_ARRAY_TYPE, value = "qualifier")
+//                }
+//        ),
         @TypeDef(
                 name = "list-array",
                 typeClass = ListArrayType.class
@@ -46,8 +46,8 @@ public class PaperEntity {
     @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
     private List<EvaluationEntity> reviews;
 
-    @Column(name = "qualifiers", columnDefinition = "qualifiers")
-    private Qualifier[] qualifiers;
+//    @Column(name = "qualifiers", columnDefinition = "qualifiers")
+//    private Qualifier[] qualifiers;
 
     @Type(type = "list-array")
     @Column(name = "topics")
@@ -68,8 +68,22 @@ public class PaperEntity {
     @JoinColumn(name = "section_id")
     private SectionEntity section;
 
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "paper_author",
+            joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "email", referencedColumnName = "email")})
+    private List<AuthorEntity> authors;
+
     public Map<BidEntity, CommitteeMemberEntity> getBids() {
+
         return bidders;
+    }
+
+    public void addAuthor(AuthorEntity author) {
+        if (authors == null) {
+            authors = new ArrayList<>();
+        }
+        authors.add(author);
     }
 
     @Override
