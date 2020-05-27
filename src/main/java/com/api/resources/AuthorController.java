@@ -9,22 +9,17 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 
-@Path("/user")
-public class UserController {
+@Path("/reviewer")
+public class ReviewerController {
 
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public ReviewerController(UserService userService) {
         this.userService = userService;
     }
 
-    @POST
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public User register(User user) {
-        return userService.register(user);
-    }
+
 
     @PUT
     @Path("/{email}/{sectionId}")
@@ -34,11 +29,6 @@ public class UserController {
         userService.registerToSection(email, id);
     }
 
-    @DELETE
-    @Path("/{email}")
-    public void deleteUser(@PathParam("email") String email) {
-        userService.deleteUser(email);
-    }
 
     @GET
     @Path("/bid/{paperId}/{email}")
@@ -47,12 +37,5 @@ public class UserController {
         userService.bidProposal(paperId, email, status);
     }
 
-    @POST
-    @Path("/pcMember")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public User registerAsPcMember(User user) {
-        return userService.registerAsPcMember(user);
-    }
 
 }

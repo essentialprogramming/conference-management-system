@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class ProposalService {
+public class PaperService {
 
     private PaperRepository paperRepository;
     private UserRepository userRepository;
 
     @Autowired
-    public ProposalService(PaperRepository paperRepository, UserRepository userRepository) {
+    public PaperService(PaperRepository paperRepository, UserRepository userRepository) {
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
     }

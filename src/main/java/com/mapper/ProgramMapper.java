@@ -25,4 +25,13 @@ public class ProgramMapper {
                 .biddingDeadline(entity.getBiddingDeadline())
                 .build();
     }
+
+    public static ProgramEntity updateProgram(ProgramEntity entity, Program program){
+        entity.setDate(program.getDate());
+        entity.setInterval(program.getInterval());
+        entity.setAbstractDeadline(program.getAbstractDeadline());
+        entity.setProposalDeadline(program.getProposalDeadline());
+        entity.setBiddingDeadline(program.getBiddingDeadline());
+        return entity;
+    }
 }

@@ -1,0 +1,147 @@
+DROP TABLE IF EXISTS event CASCADE;
+DROP TABLE IF EXISTS location CASCADE;
+DROP TABLE IF EXISTS program CASCADE ;
+DROP TABLE IF EXISTS section CASCADE ;
+DROP TABLE IF EXISTS paper CASCADE ;
+DROP TABLE IF EXISTS evaluation CASCADE ;
+DROP TABLE IF EXISTS recommendation CASCADE ;
+DROP TABLE IF EXISTS bid CASCADE ;
+DROP TABLE IF EXISTS account CASCADE ;
+DROP TABLE IF EXISTS paper_pcmember CASCADE ;
+DROP TYPE IF EXISTS qualifier;
+
+create table if not exists event
+(
+	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	name text,
+	program_id smallint,
+	location_id smallint
+);
+
+create table if not exists program
+(
+	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	date DATE,
+	interval text,
+	abstract_deadline DATE,
+	proposal_deadline DATE,
+	bidding_deadline DATE
+);
+
+create table if not exists location
+(
+	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	country text,
+	city text
+);
+
+create table if not exists section
+(
+	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	name text,
+	event_id smallint,
+	supervisor_email text
+);
+
+
+create table if not exists paper
+(
+	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	title text,
+	content text,
+	topics text[],
+	keywords text[],
+    section_id smallint
+);
+
+create table if not exists evaluation
+(
+    paper_id smallint,
+    recommendation_id smallint,
+    reviewer text,
+    qualifier text
+);
+
+
+create table if not exists recommendation
+(
+	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	text text
+);
+
+create table if not exists bid
+(
+	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
+	status text
+);
+
+create table if not exists account
+(
+	email text NOT NULL primary key,
+	type VARCHAR (10),
+	section_id smallint
+);
+
+create table if not exists user_event
+(
+	email text,
+	event_id smallint
+);
+
+
+
+create table if not exists paper_pcmember
+(
+	paper_id smallint,
+	bid_id smallint,
+        email text
+);
+
+CREATE TYPE  qualifier AS ENUM
+    ('WEAK_REJECT', 'WEAK_ACCEPT', 'STRONG_ACCEPT', 'REJECT', 'BORDERLINE_PAPER', 'ACCEPT', 'STRONG_REJECT');
+
+ALTER TABLE paper_pcmember
+ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
+
+ALTER TABLE paper_pcmember
+ADD FOREIGN KEY (bid_id) REFERENCES bid(id);
+
+ALTER TABLE paper_pcmember
+ADD FOREIGN KEY (email) REFERENCES account(email);
+
+ALTER TABLE evaluation
+ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
+
+ALTER TABLE evaluation
+ADD FOREIGN KEY (recommendation_id) REFERENCES recommendation(id);
+
+ALTER TABLE evaluation
+ADD FOREIGN KEY (reviewer) REFERENCES account(email);
+
+
+ALTER TABLE event
+ADD FOREIGN KEY (location_id) REFERENCES location(id);
+
+ALTER TABLE event
+ADD FOREIGN KEY (program_id) REFERENCES program(id);
+
+ALTER TABLE section
+ADD FOREIGN KEY (event_id) REFERENCES event(id);
+
+ALTER TABLE section
+ADD FOREIGN KEY (supervisor_email) REFERENCES account(email);
+
+ALTER TABLE section
+ADD CONSTRAINT supervisor_unique UNIQUE(supervisor_email);
+
+ALTER TABLE account
+ADD FOREIGN KEY (section_id) REFERENCES section(id);
+
+ALTER TABLE user_event
+ADD FOREIGN KEY (event_id) REFERENCES event(id);
+
+ALTER TABLE user_event
+ADD FOREIGN KEY (email) REFERENCES account(email);
+
+ALTER TABLE paper
+ADD FOREIGN KEY (section_id) REFERENCES section(id);

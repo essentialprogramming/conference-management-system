@@ -1,11 +1,9 @@
 package com.entities;
 
-import com.model.Paper;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -13,7 +11,8 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "pc_member")
-public class PCMemberEntity extends UserEntity {
+@DiscriminatorValue("1")
+public class CommitteeMemberEntity extends UserEntity {
 
     @OneToOne(mappedBy = "supervisor")
     private SectionEntity section;
@@ -30,7 +29,7 @@ public class PCMemberEntity extends UserEntity {
         return super.getEmail();
     }
 
-    public PCMemberEntity(@Email String email) {
+    public CommitteeMemberEntity(@Email String email) {
         super(email);
     }
 }

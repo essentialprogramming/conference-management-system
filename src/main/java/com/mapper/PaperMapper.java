@@ -1,11 +1,9 @@
 package com.mapper;
 
-import com.entities.PCMemberEntity;
+import com.entities.ComiteeMemberEntity;
 import com.entities.PaperEntity;
 import com.model.Paper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.stream.Collectors;
 
 
@@ -16,10 +14,8 @@ public class PaperMapper {
         return PaperEntity.builder()
                 .title(paper.getTitle())
                 .content(paper.getContent())
-//                .qualifiers(paper.getQualifiers())
                 .topics(paper.getTopics())
                 .keywords(paper.getKeywords())
-                .bidders(new HashMap<>())
                 .build();
     }
 
@@ -29,7 +25,7 @@ public class PaperMapper {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
-                .bidders(entity.getBids().values().stream().map(PCMemberEntity::getEmail).collect(Collectors.toList()))
+                .bidders(entity.getBids().values().stream().map(ComiteeMemberEntity::getEmail).collect(Collectors.toList()))
                 //.reviewers(entity.getReviewers().values().stream().map(PCMemberEntity::getEmail).collect(Collectors.toList()))
 
 //                .qualifiers(entity.getQualifiers())
@@ -47,7 +43,6 @@ public class PaperMapper {
 //                        .collect(Collectors.toList()) : null)
                 .topics(entity.getTopics())
                 .keywords(entity.getKeywords())
-                .sectionId(entity.getSection() != null ? entity.getSection().getId() : 0)
                 .build();
     }
 }

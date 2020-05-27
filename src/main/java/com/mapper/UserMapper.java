@@ -18,11 +18,5 @@ public class UserMapper {
                 .build();
     }
 
-    public static User entityToUserWithSectionAndRole(UserEntity entity) {
-        return User.builder()
-                .email(entity.getEmail())
-                .participantsSectionId(entity.getParticipantsSection().getId())
-                .build();
-    }
 
 }
