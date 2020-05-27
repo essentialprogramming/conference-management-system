@@ -62,13 +62,13 @@ public class PaperEntity {
             joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "email", referencedColumnName = "email")})
     @MapKeyJoinColumn(name = "bid_id")
-    private Map<BidEntity, PCMemberEntity> bidders;
+    private Map<BidEntity, CommitteeMemberEntity> bidders;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
     private SectionEntity section;
 
-    public Map<BidEntity, PCMemberEntity> getBids() {
+    public Map<BidEntity, CommitteeMemberEntity> getBids() {
         return bidders;
     }
 

@@ -2,6 +2,7 @@ package com.api.resources;
 
 import com.model.*;
 import com.service.ProgramCommitteeService;
+import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -12,12 +13,20 @@ import javax.ws.rs.core.MediaType;
 public class ProgramCommitteeController {
 
     private ProgramCommitteeService pcService;
+    private UserService userService;
 
     @Autowired
     public ProgramCommitteeController(ProgramCommitteeService pcService) {
         this.pcService = pcService;
     }
 
+
+    @GET
+    @Path("/bid/{paperId}/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email, Status status) {
+        userService.bidProposal(paperId, email, status);
+    }
 //    @POST
 //    @Path("/recommendation")
 //    @Consumes("application/json")
@@ -27,21 +36,6 @@ public class ProgramCommitteeController {
 //    }
 
 
-//    @PUT
-//    @Path("/user/{email}")
-//    @Consumes("application/json")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public void updateUserRole(@PathParam("email") String email, Role role) {
-//
-//        pcService.updateUserRole(email, role);
-//    }
-
-    @GET
-    @Path("/user/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public User findUserByEmail(@PathParam("email") String email) {
-        return pcService.findUserByEmail(email);
-    }
 
 //    @PUT
 //    @Path("/user/paper/{paperId}/{email}")

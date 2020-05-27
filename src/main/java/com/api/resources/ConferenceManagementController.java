@@ -12,8 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-
-@Path("/conference")
+@Path("/")
 public class ConferenceManagementController {
 
     private ConferenceManagementService conferenceService;
@@ -26,22 +25,22 @@ public class ConferenceManagementController {
     }
 
     @POST
-    @Path("/event")
+    @Path("event")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Event addEvent(Event event) {
+    public Event addEvent( Event event) {
 
         return conferenceService.addEvent(event);
     }
 
     @DELETE
-    @Path("/event/{id}")
+    @Path("event/{id}")
     public void deleteEvent(@PathParam("id") int id) {
         conferenceService.deleteEvent(id);
     }
 
     @GET
-    @Path("/event/{id}")
+    @Path("event/{id}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public Event findEventById(@PathParam("id") int id) {
@@ -49,16 +48,16 @@ public class ConferenceManagementController {
     }
 
     @PUT
-    @Path("/event/{eventId}/{programId}")
+    @Path("event/program/{eventId}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Event updateProgram(@PathParam("eventId") int eventId, @PathParam("programId") int programId) {
-        return conferenceService.updateEventProgram(eventId, programId);
+    public Event updateProgram(@PathParam("eventId") int eventId, Program program) {
+        return conferenceService.updateEventProgram(eventId, program);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/event")
+    @Path("events")
     public List<Event> getAllEvents() {
         return conferenceService.getAllEvents();
     }
@@ -66,105 +65,54 @@ public class ConferenceManagementController {
 
     // ----------------------- program --------------------------------
 
-    @POST
-    @Path("/program")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Program addProgram(Program program) {
 
-        return conferenceService.addProgram(program);
-    }
 
-    @DELETE
-    @Path("/program/{id}")
-    public void deleteProgram(@PathParam("id") int id) {
-        conferenceService.deleteProgram(id);
-    }
 
-    @GET
-    @Path("/program/{id}")
-    @Consumes("application/json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Program findProgramById(@PathParam("id") int id) {
-        return conferenceService.findProgramById(id);
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/program")
-    public List<Program> getAllPrograms() {
-        return conferenceService.getAllPrograms();
-    }
 
     @PUT
-    @Path("/program/postpone/{programId}")
+    @Path("event/program/postpone/{eventId}")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Program postponeProgramDate(@PathParam("programId") int id, String newDate) {
-        return conferenceService.postponeProgramDate(id, newDate);
+    public Program changeProposalDeadline(@PathParam("eventId") int eventId, String newDate) {
+        return conferenceService.changeProposalDeadline(eventId, newDate);
     }
 
 
     // -------------------- section ---------------------------------
 
     @POST
-    @Path("/section")
+    @Path("event/section/{eventId}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Section addSection(Section section) {
+    public Section addSection(@PathParam("eventId") int eventId, Section section) {
 
-        return conferenceService.addSection(section);
+        return conferenceService.addSection(eventId, section);
     }
 
     @DELETE
-    @Path("/section/{id}")
-    public void deleteSection(@PathParam("id") int id) {
-        conferenceService.deleteSection(id);
+    @Path("event/section/{sectionId}")
+    public void deleteSection(@PathParam("sectionId") int sectionId) {
+        conferenceService.deleteSection(sectionId);
     }
 
-    @GET
-    @Path("/section/{id}")
+
+    @PUT
+    @Path("event/section/supervisor/{sectionId}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Section findSectionById(@PathParam("id") int id) {
-        return conferenceService.findSectionById(id);
+    public Section assignSupervisor(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
+        return conferenceService.assignSupervisor(sectionId, email);
     }
-
-    @GET
-    @Path("/section")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Section> getAllSections() {
-        return conferenceService.getAllSections();
-    }
-
-//    @PUT
-//    @Path("/section/supervisor/{sectionId}/{email}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Section assignSection(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
-//        return conferenceService.assignSupervisor(sectionId, email);
-//    }
 
     // -------------------- location ---------------------------------
 
     @POST
     @Consumes("application/json")
-    @Path("/location")
+    @Path("event/location/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Location addLocation(Location location) {
+    public Location addLocation(@PathParam("eventId") int eventId, Location location) {
 
-        return locationService.addLocation(location);
+        return locationService.addLocation(eventId, location);
     }
 
-    @DELETE
-    @Path("/location/{id}")
-    public void deleteLocation(@PathParam("id") int id) {
-        locationService.deleteLocation(id);
-    }
-
-    @GET
-    @Path("/location")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Location> getAllLocations() {
-        return locationService.getAllLocations();
-    }
 
 }

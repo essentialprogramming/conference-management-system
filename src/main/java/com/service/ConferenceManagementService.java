@@ -5,6 +5,7 @@ import com.entities.EventEntity;
 import com.entities.ProgramEntity;
 import com.entities.SectionEntity;
 import com.mapper.EventMapper;
+import com.mapper.LocationMapper;
 import com.mapper.ProgramMapper;
 import com.mapper.SectionMapper;
 import com.model.Event;
@@ -26,17 +27,15 @@ import java.util.stream.Collectors;
 @Service
 public class ConferenceManagementService {
 
-    private EventRepository eventRepository;
+    private ConferenceRepository eventRepository;
     private UserRepository userRepository;
-    private ProgramRepository programRepository;
     private LocationRepository locationRepository;
     private SectionRepository sectionRepository;
 
     @Autowired
-    public ConferenceManagementService(EventRepository eventRepository, UserRepository userRepository, ProgramRepository programRepository, LocationRepository locationRepository, SectionRepository sectionRepository) {
+    public ConferenceManagementService(ConferenceRepository eventRepository, UserRepository userRepository, LocationRepository locationRepository, SectionRepository sectionRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
-        this.programRepository = programRepository;
         this.locationRepository = locationRepository;
         this.sectionRepository = sectionRepository;
     }
@@ -46,11 +45,8 @@ public class ConferenceManagementService {
     @Transactional
     public Event addEvent(Event event) {
         EventEntity entity = EventMapper.eventToEntity(event);
-        entity.setProgramCommittee(userRepository.findAllById(event.getProgramCommittee()));
-        entity.setParticipants(userRepository.findAllById(event.getParticipants()));
-        entity.setSpeakers(userRepository.findAllById(event.getSpeakers()));
-        entity.setProgram(programRepository.findById(event.getProgramId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program not found!")));
-        entity.setLocation(locationRepository.findById(event.getLocationId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Location not found!")));
+        entity.setProgram(ProgramMapper.programToEntity(event.getProgram()));
+        entity.setLocation(LocationMapper.locationToEntity(event.getLocation()));
 
         return EventMapper.entityToEvent(eventRepository.save(entity));
     }
@@ -69,10 +65,10 @@ public class ConferenceManagementService {
     }
 
     @Transactional
-    public Event updateEventProgram(int eventId, int programId) {
+    public Event updateEventProgram(int eventId, Program program) {
         EventEntity existingEvent = eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
-        ProgramEntity existingProgram = programRepository.findById(programId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + programId + " not found!"));
-
+        ProgramEntity existingProgram = existingEvent.getProgram();
+        ProgramMapper.updateProgram(existingProgram, program);
         existingEvent.setProgram(existingProgram);
         eventRepository.save(existingEvent);
 
@@ -86,52 +82,31 @@ public class ConferenceManagementService {
 
     // ------------------------------  Program management ------------------------------
 
-    @Transactional
-    public Program addProgram(Program program) {
-        ProgramEntity entity = ProgramMapper.programToEntity(program);
-        return ProgramMapper.entityToProgram(programRepository.save(entity));
-    }
+
+
+
 
     @Transactional
-    public void deleteProgram(int id) {
+    public Program changeProposalDeadline(int eventId, String newDate) {
 
-        ProgramEntity existingProgram = programRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + id + " not found!"));
-        programRepository.delete(existingProgram);
-    }
-
-    @Transactional
-    public Program findProgramById(int id) {
-        ProgramEntity existingProgram = programRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + id + " not found!"));
-        return ProgramMapper.entityToProgram(existingProgram);
-    }
-
-    @Transactional
-    public List<Program> getAllPrograms() {
-        return programRepository.findAll().stream().map(ProgramMapper::entityToProgram).collect(Collectors.toList());
-    }
-
-    @Transactional
-    public Program postponeProgramDate(int programId, String newDate) {
-
-        ProgramEntity existingProgram = programRepository.findById(programId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program with id " + programId + " not found!"));
-
+        EventEntity event = eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
+        ProgramEntity program = event.getProgram();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(newDate, formatter);
-        existingProgram.setDate(dateTime);
+        program.setDate(dateTime);
 
-        programRepository.save(existingProgram);
 
-        return ProgramMapper.entityToProgram(existingProgram);
+        return ProgramMapper.entityToProgram(program);
     }
 
     // ------------------------------  Section management ------------------------------
 
     @Transactional
-    public Section addSection(Section section) {
-        SectionEntity entity = SectionMapper.sectionToEntity(section);
-        entity.setEvent(eventRepository.findById(section.getEventId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!")));
+    public Section addSection(int eventId, Section section) {
+        SectionEntity sectionEntity = SectionMapper.sectionToEntity(section);
+        sectionEntity.setEvent(eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!")));
 
-        return SectionMapper.entityToSection(sectionRepository.save(entity));
+        return SectionMapper.entityToSection(sectionRepository.save(sectionEntity));
     }
 
     @Transactional
@@ -141,23 +116,13 @@ public class ConferenceManagementService {
         sectionRepository.delete(existingSection);
     }
 
-    @Transactional
-    public Section findSectionById(int id) {
-        SectionEntity entity = sectionRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + id + " not found!"));
-        return SectionMapper.entityToSection(entity);
-    }
 
     @Transactional
-    public List<Section> getAllSections() {
-        return sectionRepository.findAll().stream().map(SectionMapper::entityToSection).collect(Collectors.toList());
-    }
+    public Section assignSupervisor(int sectionId, String email) {
+        SectionEntity existingSection = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + sectionId + " not found!"));
+        existingSection.setSupervisor(userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User not found!")));
 
-//    @Transactional
-//    public Section assignSupervisor(int sectionId, String email) {
-//        SectionEntity existingSection = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + sectionId + " not found!"));
-//        existingSection.setSupervisor(userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User not found!")));
-//
-//        sectionRepository.save(existingSection);
-//        return SectionMapper.entityToSection(existingSection);
-//    }
+        sectionRepository.save(existingSection);
+        return SectionMapper.entityToSection(existingSection);
+    }
 }

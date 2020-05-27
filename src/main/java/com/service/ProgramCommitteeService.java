@@ -22,16 +22,14 @@ public class ProgramCommitteeService {
     private UserRepository userRepository;
     private SectionRepository sectionRepository;
     private EvaluationRepository evaluationRepository;
-    private PCMemberRepository pcMemberRepository;
 
     @Autowired
-    public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository, EvaluationRepository evaluationRepository, PCMemberRepository pcMemberRepository) {
+    public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository, EvaluationRepository evaluationRepository) {
         this.recommendationRepository = recommendationRepository;
         this.paperRepository = paperRepository;
         this.userRepository = userRepository;
         this.sectionRepository = sectionRepository;
         this.evaluationRepository = evaluationRepository;
-        this.pcMemberRepository = pcMemberRepository;
     }
 
 //    @Transactional
@@ -45,18 +43,11 @@ public class ProgramCommitteeService {
 //        return RecommendationMapper.entityToRecommendation(recommendationRepository.save(recommendationEntity));
 //    }
 
-//    @Transactional
-//    public void updateUserRole(String email, Role role) {
-//        UserEntity existingUser = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-//        existingUser.setRole(role);
-//
-//        userRepository.save(existingUser);
-//    }
 
     @Transactional
     public User findUserByEmail(String email) {
         UserEntity entity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-        return UserMapper.entityToUserWithSectionAndRole(entity);
+        return UserMapper.entityToUser(entity);
     }
 
 //    @Transactional

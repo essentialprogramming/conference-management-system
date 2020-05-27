@@ -1,14 +1,11 @@
 package com.entities;
 
 
-import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.Objects;
+
 
 
 @Builder
@@ -16,8 +13,14 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "user_entity")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity(name = "account")
+@Table(name = "account")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+        discriminatorType = DiscriminatorType.STRING,
+        name = "role",
+        columnDefinition = "text"
+)
 public class UserEntity {
 
     @Id
@@ -27,7 +30,7 @@ public class UserEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "section_id")
-    private SectionEntity participantsSection;
+    private SectionEntity section;
 
 
     public UserEntity(@Email String email) {

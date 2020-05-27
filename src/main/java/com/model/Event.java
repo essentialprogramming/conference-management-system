@@ -16,10 +16,9 @@ public class Event {
 
     private int id;
     private String name;
+    private Program program;
+    private Location location;
     private List<String> programCommittee;
     private List<String> participants;
     private List<String> speakers;
-    private int programId;
-    private int locationId;
-
 }

@@ -1,22 +1,21 @@
 package com.api.resources;
 
 import com.model.Paper;
-import com.service.ProposalService;
+import com.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+@Path("/")
+public class PaperController {
 
-@Path("/paper")
-public class ProposalController {
-
-    private ProposalService proposalService;
+    private PaperService paperService;
 
     @Autowired
-    public ProposalController(ProposalService proposalService) {
-        this.proposalService = proposalService;
+    public PaperController(PaperService paperService) {
+        this.paperService = paperService;
     }
 
 //    @POST
@@ -24,27 +23,29 @@ public class ProposalController {
 //    @Produces(MediaType.APPLICATION_JSON)
 //    public Paper submitPaper(Paper paper) {
 //
-//        return proposalService.submitPaper(paper);
+//        return paperService.submitPaper(paper);
 //    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
-    public Paper findById(@PathParam("id") int id) {
-        return proposalService.findById(id);
+    @Path("paper/{paperId}")
+    public Paper findById(@PathParam("paperId") int id) {
+        return paperService.findById(id);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("papers")
     public List<Paper> getAll() {
-        return proposalService.getAll();
+
+        return paperService.getAll();
     }
 
     @PUT
-    @Path("/{paperId}")
+    @Path("paper/{paperId}")
     @Consumes(MediaType.TEXT_PLAIN)
     public void updatePaper(@PathParam("paperId") int paperId, String newContent) {
-        proposalService.updatePaper(paperId, newContent);
+        paperService.updatePaper(paperId, newContent);
     }
 
 

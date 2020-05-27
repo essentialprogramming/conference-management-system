@@ -12,5 +12,4 @@ import lombok.*;
 public class User {
 
     private String email;
-    private int participantsSectionId;
 }

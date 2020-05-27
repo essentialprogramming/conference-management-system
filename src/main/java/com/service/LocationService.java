@@ -1,8 +1,10 @@
 package com.service;
 
+import com.entities.EventEntity;
 import com.entities.LocationEntity;
 import com.mapper.LocationMapper;
 import com.model.Location;
+import com.repository.ConferenceRepository;
 import com.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,14 +15,13 @@ import org.springframework.web.client.HttpClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
 
     private LocationRepository locationRepository;
+    private ConferenceRepository eventRepository;
 
     @Autowired
     public LocationService(LocationRepository locationRepository) {
@@ -49,23 +50,14 @@ public class LocationService {
     }
 
     @Transactional
-    public Location addLocation(Location location) {
-        LocationEntity entity = LocationMapper.locationToEntity(location);
-
-        Location result = LocationMapper.entityToLocation(locationRepository.save(entity));
+    public Location addLocation(int eventId, Location location) {
+        EventEntity event = eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
+        LocationEntity locationEntity = LocationMapper.locationToEntity(location);
+        Location result = LocationMapper.entityToLocation(locationRepository.save(locationEntity));
+        event.setLocation(locationEntity);
         return weather(result);
     }
 
-    @Transactional
-    public void deleteLocation(int id) {
 
-        LocationEntity existingLocation = locationRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Location not found!"));
-        locationRepository.delete(existingLocation);
-    }
-
-    @Transactional
-    public List<Location> getAllLocations() {
-        return locationRepository.findAll().stream().map(LocationMapper::entityToLocation).collect(Collectors.toList());
-    }
 
 }

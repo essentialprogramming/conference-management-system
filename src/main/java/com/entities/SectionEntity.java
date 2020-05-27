@@ -31,10 +31,10 @@ public class SectionEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supervisor_email", unique = true)
-    private PCMemberEntity supervisor;
+    private CommitteeMemberEntity supervisor;
 
-    @OneToMany(mappedBy = "participantsSection", fetch = FetchType.LAZY)
-    private List<UserEntity> participants;
+    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY)
+    private List<UserEntity> attendees;
 
     @OneToMany(mappedBy = "section", fetch = FetchType.LAZY)
     private List<PaperEntity> papers;

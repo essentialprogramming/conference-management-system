@@ -1,6 +1,6 @@
 package com.mapper;
 
-import com.entities.ComiteeMemberEntity;
+import com.entities.CommitteeMemberEntity;
 import com.entities.PaperEntity;
 import com.model.Paper;
 
@@ -25,7 +25,7 @@ public class PaperMapper {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
-                .bidders(entity.getBids().values().stream().map(ComiteeMemberEntity::getEmail).collect(Collectors.toList()))
+                .bidders(entity.getBids().values().stream().map(CommitteeMemberEntity::getEmail).collect(Collectors.toList()))
                 //.reviewers(entity.getReviewers().values().stream().map(PCMemberEntity::getEmail).collect(Collectors.toList()))
 
 //                .qualifiers(entity.getQualifiers())

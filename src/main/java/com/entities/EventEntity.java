@@ -31,7 +31,7 @@ public class EventEntity {
             inverseJoinColumns = @JoinColumn(name = "email"))
     private List<UserEntity> programCommittee;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY )
     @JoinTable(
             name = "user_event",
             joinColumns = @JoinColumn(name = "event_id"),
@@ -45,11 +45,11 @@ public class EventEntity {
             inverseJoinColumns = @JoinColumn(name = "email"))
     private List<UserEntity> speakers;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "program_id")
     private ProgramEntity program;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id")
     private LocationEntity location;
 

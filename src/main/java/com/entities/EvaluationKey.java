@@ -11,7 +11,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Embeddable
-public class PaperPcMemberId implements Serializable {
+public class EvaluationKey implements Serializable {
 
     private static final long serialVersionUID = -2600581264572898375L;
 
@@ -19,10 +19,10 @@ public class PaperPcMemberId implements Serializable {
 
     private String email;
 
-    public PaperPcMemberId() {
+    public EvaluationKey() {
     }
 
-    public PaperPcMemberId(int paperId, String email) {
+    public EvaluationKey(int paperId, String email) {
         this.paperId = paperId;
         this.email = email;
     }
@@ -30,8 +30,8 @@ public class PaperPcMemberId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PaperPcMemberId)) return false;
-        PaperPcMemberId that = (PaperPcMemberId) o;
+        if (!(o instanceof EvaluationKey)) return false;
+        EvaluationKey that = (EvaluationKey) o;
         return paperId == that.paperId &&
                 email.equals(that.email);
     }

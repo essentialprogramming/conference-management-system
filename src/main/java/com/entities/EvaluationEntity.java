@@ -23,13 +23,13 @@ import java.util.Objects;
 public class EvaluationEntity {
 
     @EmbeddedId
-    private PaperPcMemberId id;
+    private EvaluationKey id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("reviewer")
-    private PCMemberEntity reviewer;
+    private CommitteeMemberEntity reviewer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("paperId")
     private PaperEntity paper;
 
@@ -38,16 +38,16 @@ public class EvaluationEntity {
     @Column(name = "qualifier")
     private Qualifier qualifier;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "recommendation_id")
     private RecommendationEntity recommendation;
 
-    public EvaluationEntity(Qualifier qualifier, PCMemberEntity reviewer, RecommendationEntity recommendation, PaperEntity paper) {
+    public EvaluationEntity(Qualifier qualifier, CommitteeMemberEntity reviewer, RecommendationEntity recommendation, PaperEntity paper) {
         this.qualifier = qualifier;
         this.reviewer = reviewer;
         this.recommendation = recommendation;
         this.paper = paper;
-        this.id = new PaperPcMemberId(paper.getId(), reviewer.getEmail());
+        this.id = new EvaluationKey(paper.getId(), reviewer.getEmail());
     }
 
     @Override
