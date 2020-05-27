@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -21,8 +22,8 @@ public class CommitteeMemberEntity extends UserEntity {
     @MapKeyJoinColumn(name = "bid_id")
     private Map<BidEntity, PaperEntity> papers;
 
-//    @OneToMany(mappedBy = "reviewer")
-//    private List<EvaluationEntity> evaluation;
+    @OneToMany(mappedBy = "reviewer")
+    private List<EvaluationEntity> evaluation;
 
     @Override
     public @Email String getEmail() {

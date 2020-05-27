@@ -6,12 +6,11 @@ import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 
-//@Builder
+@Builder
 @Getter
 @Setter
 @Entity(name = "evaluation")
@@ -20,17 +19,25 @@ import java.util.Objects;
         typeClass = PostgreSQLEnumType.class
 )
 @NoArgsConstructor
+@AllArgsConstructor
 public class EvaluationEntity {
 
-    @EmbeddedId
-    private EvaluationKey id;
+    //@EmbeddedId
+    //private EvaluationKey id;
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("reviewer")
+    //@MapsId("reviewer")
     private CommitteeMemberEntity reviewer;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("paperId")
+    //    @MapsId("paperId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paper_id")
     private PaperEntity paper;
 
     @Enumerated(EnumType.STRING)
@@ -47,7 +54,7 @@ public class EvaluationEntity {
         this.reviewer = reviewer;
         this.recommendation = recommendation;
         this.paper = paper;
-        this.id = new EvaluationKey(paper.getId(), reviewer.getEmail());
+        //this.id = new EvaluationKey(paper.getId(), reviewer.getEmail());
     }
 
     @Override
@@ -66,4 +73,5 @@ public class EvaluationEntity {
     public int hashCode() {
         return Objects.hash(qualifier, reviewer, recommendation, paper);
     }
+
 }

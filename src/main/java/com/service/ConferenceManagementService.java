@@ -28,12 +28,12 @@ import java.util.stream.Collectors;
 public class ConferenceManagementService {
 
     private ConferenceRepository eventRepository;
-    private UserRepository userRepository;
+    private PCMemberRepository userRepository;
     private LocationRepository locationRepository;
     private SectionRepository sectionRepository;
 
     @Autowired
-    public ConferenceManagementService(ConferenceRepository eventRepository, UserRepository userRepository, LocationRepository locationRepository, SectionRepository sectionRepository) {
+    public ConferenceManagementService(ConferenceRepository eventRepository, PCMemberRepository userRepository, LocationRepository locationRepository, SectionRepository sectionRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.locationRepository = locationRepository;

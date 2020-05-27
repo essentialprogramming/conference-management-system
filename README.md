@@ -78,6 +78,7 @@ create table if not exists user_event
 
 create table if not exists evaluation
 (
+    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
     paper_id smallint,
     recommendation_id smallint,
     reviewer text,

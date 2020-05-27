@@ -2,6 +2,7 @@ package com.service;
 
 import com.entities.*;
 //import com.mapper.EvaluationMapper;
+import com.mapper.EvaluationMapper;
 import com.mapper.PaperMapper;
 import com.mapper.RecommendationMapper;
 import com.mapper.UserMapper;
@@ -22,6 +23,7 @@ public class ProgramCommitteeService {
     private UserRepository userRepository;
     private SectionRepository sectionRepository;
     private EvaluationRepository evaluationRepository;
+    private PCMemberRepository pcMemberRepository;
 
     @Autowired
     public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository, EvaluationRepository evaluationRepository) {
@@ -117,33 +119,33 @@ public class ProgramCommitteeService {
         return PaperMapper.entityToPaper(existingPaper);
     }
 
-//    @Transactional
-//    public Evaluation reviewPaper(String email, Evaluation evaluation) {
-//
-//        EvaluationEntity entity = EvaluationMapper.evaluationToEntity(evaluation);
-//        PaperEntity paperEntity = paperRepository.findById(evaluation.getPaperId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + evaluation.getPaperId() + " not found!"));
-//        PCMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
-//        RecommendationEntity recommendationEntity = RecommendationMapper.recommendationToEntity(new Recommendation(evaluation.getRecommendation()));
-//        recommendationRepository.save(recommendationEntity);
-//
-//        if (paperEntity.getQualifiers() == null) {
-//                paperEntity.setQualifiers(new Qualifier[1]);
-//                paperEntity.getQualifiers()[0] = evaluation.getQualifier();
-//            } else {
-//                Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
-//
-//                System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
-//                qualifiers[paperEntity.getQualifiers().length] = evaluation.getQualifier();
-//                paperEntity.setQualifiers(qualifiers);
-//            }
-//
-//        entity.setPaper(paperEntity);
-//        entity.setQualifier(evaluation.getQualifier());
-//        entity.setReviewer(pcMemberEntity);
-//        entity.setRecommendation(recommendationEntity);
-//
-//        evaluationRepository.save(entity);
-//
-//        return EvaluationMapper.entityToEvaluation(entity);
-//    }
+    @Transactional
+    public Evaluation reviewPaper(String email, Evaluation evaluation) {
+
+        EvaluationEntity entity = EvaluationMapper.evaluationToEntity(evaluation);
+        PaperEntity paperEntity = paperRepository.findById(evaluation.getPaperId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + evaluation.getPaperId() + " not found!"));
+        CommitteeMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
+        RecommendationEntity recommendationEntity = RecommendationMapper.recommendationToEntity(new Recommendation(evaluation.getRecommendation()));
+        recommendationRepository.save(recommendationEntity);
+
+        if (paperEntity.getQualifiers() == null) {
+            paperEntity.setQualifiers(new Qualifier[1]);
+            paperEntity.getQualifiers()[0] = evaluation.getQualifier();
+        } else {
+            Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
+
+            System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
+            qualifiers[paperEntity.getQualifiers().length] = evaluation.getQualifier();
+            paperEntity.setQualifiers(qualifiers);
+        }
+
+        entity.setPaper(paperEntity);
+        entity.setQualifier(evaluation.getQualifier());
+        entity.setReviewer(pcMemberEntity);
+        entity.setRecommendation(recommendationEntity);
+
+        evaluationRepository.save(entity);
+
+        return EvaluationMapper.entityToEvaluation(entity);
+    }
 }
