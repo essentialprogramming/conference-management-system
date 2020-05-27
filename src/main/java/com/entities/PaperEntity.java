@@ -43,8 +43,8 @@ public class PaperEntity {
     @Column(name = "content")
     private String content;
 
-//    @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
-//    private List<EvaluationEntity> reviews;
+    @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
+    private List<EvaluationEntity> reviews;
 
     @Column(name = "qualifiers", columnDefinition = "qualifiers")
     private Qualifier[] qualifiers;

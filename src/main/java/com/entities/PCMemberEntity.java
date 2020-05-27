@@ -22,8 +22,8 @@ public class PCMemberEntity extends UserEntity {
     @MapKeyJoinColumn(name = "bid_id")
     private Map<BidEntity, PaperEntity> papers;
 
-//    @OneToMany(mappedBy = "reviewer")
-//    private List<EvaluationEntity> evaluation;
+    @OneToMany(mappedBy = "reviewer")
+    private List<EvaluationEntity> evaluation;
 
     @Override
     public @Email String getEmail() {

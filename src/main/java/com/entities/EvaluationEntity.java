@@ -6,12 +6,10 @@ import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-
 import javax.persistence.*;
-import java.util.Objects;
 
 
-//@Builder
+@Builder
 @Getter
 @Setter
 @Entity(name = "evaluation")
@@ -20,17 +18,25 @@ import java.util.Objects;
         typeClass = PostgreSQLEnumType.class
 )
 @NoArgsConstructor
+@AllArgsConstructor
 public class EvaluationEntity {
 
-    @EmbeddedId
-    private PaperPcMemberId id;
+//    @EmbeddedId
+//    private PaperPcMemberId id;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    private int id;
+
+    //    @MapsId("reviewer")
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("reviewer")
+    @JoinColumn(name = "reviewer")
     private PCMemberEntity reviewer;
 
+    //    @MapsId("paperId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("paperId")
+    @JoinColumn(name = "paper_id")
     private PaperEntity paper;
 
     @Enumerated(EnumType.STRING)
@@ -42,28 +48,4 @@ public class EvaluationEntity {
     @JoinColumn(name = "recommendation_id")
     private RecommendationEntity recommendation;
 
-    public EvaluationEntity(Qualifier qualifier, PCMemberEntity reviewer, RecommendationEntity recommendation, PaperEntity paper) {
-        this.qualifier = qualifier;
-        this.reviewer = reviewer;
-        this.recommendation = recommendation;
-        this.paper = paper;
-        this.id = new PaperPcMemberId(paper.getId(), reviewer.getEmail());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EvaluationEntity)) return false;
-        EvaluationEntity entity = (EvaluationEntity) o;
-        return
-                qualifier == entity.qualifier &&
-                reviewer.equals(entity.reviewer) &&
-                recommendation.equals(entity.recommendation) &&
-                paper.equals(entity.paper);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(qualifier, reviewer, recommendation, paper);
-    }
 }
