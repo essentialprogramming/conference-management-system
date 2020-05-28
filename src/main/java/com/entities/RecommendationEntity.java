@@ -14,6 +14,10 @@ import javax.persistence.*;
 @Entity(name = "recommendation")
 public class RecommendationEntity {
 
+    public RecommendationEntity(String text) {
+        this.text = text;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)

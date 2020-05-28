@@ -29,7 +29,7 @@ public class PaperMapper {
                 .content(entity.getContent())
                 .authors(entity.getAuthors()!=null ? entity.getAuthors().stream().map(AuthorEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
 //                .bidders(entity.getBids().values().stream().map(CommitteeMemberEntity::getEmail).collect(Collectors.toList()))
-                //.reviewers(entity.getReviewers().values().stream().map(PCMemberEntity::getEmail).collect(Collectors.toList()))
+                .reviewers(entity.getReviews().stream().map(input -> input.getReviewer().getEmail()).collect(Collectors.toList()))
 
 //                .qualifiers(entity.getQualifiers())
 //                .authors(entity.getUsers() != null ? entity.getUsers().stream()

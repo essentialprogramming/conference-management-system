@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 
-@Builder
+//@Builder
 @Getter
 @Setter
 @Entity(name = "evaluation")
@@ -22,19 +22,17 @@ import java.util.Objects;
 @AllArgsConstructor
 public class EvaluationEntity {
 
-    //@EmbeddedId
-    //private EvaluationKey id;
+    @EmbeddedId
+    private EvaluationKey id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("reviewer")
     @JoinColumn(name = "reviewer")
     private CommitteeMemberEntity reviewer;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("paperId")
     @JoinColumn(name = "paper_id")
     private PaperEntity paper;
 

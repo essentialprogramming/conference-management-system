@@ -1,5 +1,6 @@
 package com.entities;
 
+import com.model.Qualifier;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,8 +23,12 @@ public class CommitteeMemberEntity extends UserEntity {
     @MapKeyJoinColumn(name = "bid_id")
     private Map<BidEntity, PaperEntity> papers;
 
-    @OneToMany(mappedBy = "reviewer")
-    private List<EvaluationEntity> evaluation;
+    @OneToMany(
+            mappedBy = "reviewer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<EvaluationEntity> evaluations;
 
     @Override
     public @Email String getEmail() {
@@ -32,5 +37,12 @@ public class CommitteeMemberEntity extends UserEntity {
 
     public CommitteeMemberEntity(@Email String email) {
         super(email);
+    }
+
+    public EvaluationEntity addReview(PaperEntity paper, Qualifier qualifier, RecommendationEntity recommendation) {
+        EvaluationEntity review = new EvaluationEntity(qualifier, this, recommendation,  paper);
+        evaluations.add(review);
+        paper.getReviews().add(review);
+        return review;
     }
 }

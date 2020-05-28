@@ -123,34 +123,14 @@ public class ProgramCommitteeService {
     @Transactional
     public Evaluation reviewPaper(String email, Evaluation evaluation) {
 
-        System.out.println(">>>>>>>>>>>" + email);
-
-        EvaluationEntity entity = EvaluationMapper.evaluationToEntity(evaluation);
         PaperEntity paperEntity = paperRepository.findById(evaluation.getPaperId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + evaluation.getPaperId() + " not found!"));
         CommitteeMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
-        RecommendationEntity recommendationEntity = RecommendationMapper.recommendationToEntity(new Recommendation(evaluation.getRecommendation()));
-        recommendationRepository.save(recommendationEntity);
+        RecommendationEntity recommendation = new RecommendationEntity(evaluation.getRecommendation());
+        recommendationRepository.save(recommendation);
 
-//        if (paperEntity.getQualifiers() == null) {
-//            paperEntity.setQualifiers(new Qualifier[1]);
-//            paperEntity.getQualifiers()[0] = evaluation.getQualifier();
-//        } else {
-//            Qualifier[] qualifiers = new Qualifier[paperEntity.getQualifiers().length + 1];
-//
-//            System.arraycopy(paperEntity.getQualifiers(), 0, qualifiers, 0, paperEntity.getQualifiers().length);
-//            qualifiers[paperEntity.getQualifiers().length] = evaluation.getQualifier();
-//            paperEntity.setQualifiers(qualifiers);
-//        }
+        EvaluationEntity review = pcMemberEntity.addReview(paperEntity, evaluation.getQualifier(), recommendation );
 
-        entity.setPaper(paperEntity);
-        entity.setQualifier(evaluation.getQualifier());
-        entity.setReviewer(pcMemberEntity);
-        entity.setRecommendation(recommendationEntity);
-
-        evaluationRepository.save(entity);
-
-        return EvaluationMapper.entityToEvaluation(entity);
+        return EvaluationMapper.entityToEvaluation(review);
     }
-
 
 }

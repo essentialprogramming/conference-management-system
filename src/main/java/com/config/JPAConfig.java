@@ -31,9 +31,9 @@ public class JPAConfig {
        config.setValidationTimeout(TimeUnit.SECONDS.toMillis(2));
        config.setDriverClassName(org.postgresql.Driver.class.getName());
 
-       config.setJdbcUrl("jdbc:postgresql://localhost:5432/conferenceManagement");
-       config.setUsername("postgres");
-       config.setPassword("postgres");
+       config.setJdbcUrl("jdbc:postgresql://hansken.db.elephantsql.com:5432/vdluthit");
+       config.setUsername("vdluthit");
+       config.setPassword("mnVSaAV3BLB49DMwTZ1myGJnyrIz7ZZ-");
 
        return new HikariDataSource(config);
    }
