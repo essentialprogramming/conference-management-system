@@ -11,10 +11,10 @@
         var redirectUrl = oauth2.redirectUrl;
         var isValid, qp, arr;
 
-        if (/code|token|error/.test(window.location.hash)) {
-            qp = window.location.hash.substring(1);
+        if (/code|token|error/.test(window.locationInput.hash)) {
+            qp = window.locationInput.hash.substring(1);
         } else {
-            qp = location.search.substring(1);
+            qp = locationInput.search.substring(1);
         }
 
         arr = qp.split("&")

@@ -1,9 +1,8 @@
 package com.mapper;
 
 import com.entities.AuthorEntity;
-import com.entities.CommitteeMemberEntity;
 import com.entities.PaperEntity;
-import com.model.Paper;
+import com.model.PaperInput;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -11,19 +10,19 @@ import java.util.stream.Collectors;
 
 public class PaperMapper {
 
-    public static PaperEntity paperToEntity(Paper paper) {
+    public static PaperEntity paperToEntity(PaperInput paperInput) {
 
         return PaperEntity.builder()
-                .title(paper.getTitle())
-                .content(paper.getContent())
-                .topics(paper.getTopics())
-                .keywords(paper.getKeywords())
+                .title(paperInput.getTitle())
+                .content(paperInput.getContent())
+                .topics(paperInput.getTopics())
+                .keywords(paperInput.getKeywords())
                 .build();
     }
 
-    public static Paper entityToPaper(PaperEntity entity) {
+    public static PaperInput entityToPaper(PaperEntity entity) {
 
-        return Paper.builder()
+        return PaperInput.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())

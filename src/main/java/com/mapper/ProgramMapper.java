@@ -1,22 +1,23 @@
 package com.mapper;
 
 import com.entities.ProgramEntity;
-import com.model.Program;
+import com.model.ProgramInput;
+import com.output.ProgramJSON;
 
 public class ProgramMapper {
 
-    public static ProgramEntity programToEntity(Program program){
+    public static ProgramEntity programToEntity(ProgramInput programInput){
         return ProgramEntity.builder()
-                .date(program.getDate())
-                .interval(program.getInterval())
-                .abstractDeadline(program.getAbstractDeadline())
-                .proposalDeadline(program.getProposalDeadline())
-                .biddingDeadline(program.getBiddingDeadline())
+                .date(programInput.getDate())
+                .interval(programInput.getInterval())
+                .abstractDeadline(programInput.getAbstractDeadline())
+                .proposalDeadline(programInput.getProposalDeadline())
+                .biddingDeadline(programInput.getBiddingDeadline())
                 .build();
     }
 
-    public static Program entityToProgram(ProgramEntity entity){
-        return Program.builder()
+    public static ProgramJSON entityToProgram(ProgramEntity entity){
+        return ProgramJSON.builder()
                 .id(entity.getId())
                 .date(entity.getDate())
                 .interval(entity.getInterval())
@@ -26,12 +27,12 @@ public class ProgramMapper {
                 .build();
     }
 
-    public static ProgramEntity updateProgram(ProgramEntity entity, Program program){
-        entity.setDate(program.getDate());
-        entity.setInterval(program.getInterval());
-        entity.setAbstractDeadline(program.getAbstractDeadline());
-        entity.setProposalDeadline(program.getProposalDeadline());
-        entity.setBiddingDeadline(program.getBiddingDeadline());
+    public static ProgramEntity updateProgram(ProgramEntity entity, ProgramInput programInput){
+        entity.setDate(programInput.getDate());
+        entity.setInterval(programInput.getInterval());
+        entity.setAbstractDeadline(programInput.getAbstractDeadline());
+        entity.setProposalDeadline(programInput.getProposalDeadline());
+        entity.setBiddingDeadline(programInput.getBiddingDeadline());
         return entity;
     }
 }

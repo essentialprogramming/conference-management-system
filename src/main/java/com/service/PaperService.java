@@ -3,19 +3,16 @@ package com.service;
 
 import com.entities.AuthorEntity;
 import com.entities.PaperEntity;
-import com.entities.UserEntity;
 import com.mapper.PaperMapper;
-import com.model.Paper;
+import com.model.PaperInput;
 import com.repository.AuthorRepository;
 import com.repository.PaperRepository;
-import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +30,7 @@ public class PaperService {
     }
 
     @Transactional
-    public Paper submitPaper(Paper paperInput) {
+    public PaperInput submitPaper(PaperInput paperInput) {
 
         PaperEntity entity = PaperMapper.paperToEntity(paperInput);
 //        List<UserEntity> users = userRepository.findAllById(paper.getAuthors());
@@ -55,14 +52,14 @@ public class PaperService {
     }
 
     @Transactional
-    public Paper findById(int id) {
+    public PaperInput findById(int id) {
 
         PaperEntity entity = paperRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + id + " not found"));
         return PaperMapper.entityToPaper(entity);
     }
 
     @Transactional
-    public List<Paper> getAll() {
+    public List<PaperInput> getAll() {
         return paperRepository.findAll().stream().map(PaperMapper::entityToPaper).collect(Collectors.toList());
     }
 

@@ -1,18 +1,18 @@
 package com.mapper;
 
 import com.entities.SectionEntity;
-import com.model.Section;
+import com.model.SectionInput;
 
 public class SectionMapper {
 
-    public static SectionEntity sectionToEntity(Section section) {
+    public static SectionEntity sectionToEntity(SectionInput sectionInput) {
         return SectionEntity.builder()
-                .name(section.getName())
+                .name(sectionInput.getName())
                 .build();
     }
 
-    public static Section entityToSection(SectionEntity entity) {
-        return Section.builder()
+    public static SectionInput entityToSection(SectionEntity entity) {
+        return SectionInput.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .eventId(entity.getEvent().getId())

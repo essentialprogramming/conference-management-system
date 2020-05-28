@@ -1,6 +1,7 @@
 package com.api.resources;
 
 import com.model.*;
+import com.output.EvaluationJSON;
 import com.service.ProgramCommitteeService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,6 @@ public class ProgramCommitteeController {
 //    }
 
 
-
 //    @PUT
 //    @Path("/user/paper/{paperId}/{email}")
 //    public String assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
@@ -60,17 +60,17 @@ public class ProgramCommitteeController {
     @PUT
     @Path("/paper/section/{paperId}/{sectionId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Paper setPaperSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
+    public PaperInput setPaperSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
         return pcService.setPaperSection(paperId, sectionId);
     }
 
     @PUT
-    @Path("user/review/{email}")
+    @Path("user/review/{paperId}/{email}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Evaluation reviewPaper(@PathParam("email") String email, Evaluation evaluation) {
+    public EvaluationJSON reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, EvaluationInput evaluationInput) {
 
-        return pcService.reviewPaper(email, evaluation);
+        return pcService.reviewPaper(paperId, email, evaluationInput);
     }
 
 }

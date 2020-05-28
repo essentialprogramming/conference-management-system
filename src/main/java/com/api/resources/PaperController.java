@@ -1,6 +1,6 @@
 package com.api.resources;
 
-import com.model.Paper;
+import com.model.PaperInput;
 import com.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,22 +22,22 @@ public class PaperController {
     @Path("paper")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Paper submitPaper(Paper paper) {
+    public PaperInput submitPaper(PaperInput paperInput) {
 
-        return paperService.submitPaper(paper);
+        return paperService.submitPaper(paperInput);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("paper/{paperId}")
-    public Paper findById(@PathParam("paperId") int id) {
+    public PaperInput findById(@PathParam("paperId") int id) {
         return paperService.findById(id);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("papers")
-    public List<Paper> getAll() {
+    public List<PaperInput> getAll() {
 
         return paperService.getAll();
     }

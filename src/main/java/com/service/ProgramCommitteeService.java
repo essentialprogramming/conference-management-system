@@ -7,6 +7,7 @@ import com.mapper.PaperMapper;
 import com.mapper.RecommendationMapper;
 import com.mapper.UserMapper;
 import com.model.*;
+import com.output.EvaluationJSON;
 import com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,7 @@ public class ProgramCommitteeService {
 
 
     @Transactional
-    public User findUserByEmail(String email) {
+    public UserInput findUserByEmail(String email) {
         UserEntity entity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
         return UserMapper.entityToUser(entity);
     }
@@ -112,7 +113,7 @@ public class ProgramCommitteeService {
 //    }
 
     @Transactional
-    public Paper setPaperSection(int paperId, int sectionId) {
+    public PaperInput setPaperSection(int paperId, int sectionId) {
         PaperEntity existingPaper = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found"));
         existingPaper.setSection(sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + sectionId + " not found.")));
 
@@ -121,16 +122,23 @@ public class ProgramCommitteeService {
     }
 
     @Transactional
-    public Evaluation reviewPaper(String email, Evaluation evaluation) {
+    public EvaluationJSON reviewPaper(int paperId, String email, EvaluationInput evaluationInput) {
 
-        PaperEntity paperEntity = paperRepository.findById(evaluation.getPaperId()).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + evaluation.getPaperId() + " not found!"));
+        EvaluationEntity evaluationEntity = EvaluationMapper.evaluationToEntity(evaluationInput);
+        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
         CommitteeMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
-        RecommendationEntity recommendation = new RecommendationEntity(evaluation.getRecommendation());
-        recommendationRepository.save(recommendation);
+        RecommendationEntity recommendationEntity = RecommendationMapper.recommendationToEntity(new RecommendationInput(evaluationInput.getRecommendation()));
+        recommendationRepository.save(recommendationEntity);
 
-        EvaluationEntity review = pcMemberEntity.addReview(paperEntity, evaluation.getQualifier(), recommendation );
+        evaluationEntity.setPaper(paperEntity);
+        evaluationEntity.setQualifier(evaluationInput.getQualifier());
+        evaluationEntity.setReviewer(pcMemberEntity);
+        evaluationEntity.setRecommendation(recommendationEntity);
 
-        return EvaluationMapper.entityToEvaluation(review);
+        evaluationRepository.save(evaluationEntity);
+
+        return EvaluationMapper.entityToEvaluation(evaluationEntity);
     }
+
 
 }

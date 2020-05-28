@@ -1,6 +1,8 @@
-package com.model;
+package com.output;
 
 
+import com.model.LocationInput;
+import com.model.ProgramInput;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +14,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Event {
+public class EventJSON {
 
     private int id;
     private String name;
-    private Program program;
-    private Location location;
+    private ProgramJSON program;
+    private LocationJSON location;
     private List<String> programCommittee;
     private List<String> participants;
     private List<String> speakers;

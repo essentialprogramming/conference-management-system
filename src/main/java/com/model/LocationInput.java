@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Location {
+public class LocationInput {
 
-    private int id;
     private String country;
     private String city;
-    private String weather;
 }

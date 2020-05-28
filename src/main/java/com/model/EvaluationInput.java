@@ -8,13 +8,10 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Evaluation {
+public class EvaluationInput {
 
-    private int id;
     private Qualifier qualifier;
-    private String reviewer;
     private String recommendation;
-    private int paperId;
 
 }
 

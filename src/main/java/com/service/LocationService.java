@@ -3,7 +3,8 @@ package com.service;
 import com.entities.EventEntity;
 import com.entities.LocationEntity;
 import com.mapper.LocationMapper;
-import com.model.Location;
+import com.model.LocationInput;
+import com.output.LocationJSON;
 import com.repository.ConferenceRepository;
 import com.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +25,18 @@ public class LocationService {
     private ConferenceRepository eventRepository;
 
     @Autowired
-    public LocationService(LocationRepository locationRepository) {
+    public LocationService(LocationRepository locationRepository, ConferenceRepository eventRepository) {
         this.locationRepository = locationRepository;
+        this.eventRepository = eventRepository;
     }
 
-    private Location weather(Location location) {
+    public static String weather(LocationInput locationInput) {
         String REST_URI = "http://api.weatherstack.com/current?access_key=7d6080ab5727f0fe0479c1a898b780ec";
 
         Client client = ClientBuilder.newClient();
         Map result = client
                 .target(REST_URI)
-                .queryParam("query", location.getCity())
+                .queryParam("query", locationInput.getCity())
                 .request(MediaType.APPLICATION_JSON)
                 .get(Map.class);
 
@@ -44,20 +46,18 @@ public class LocationService {
                 ", Description: " + currentValues.get("weather_descriptions") +
                 ", feels like: " + currentValues.get("feelslike");
 
-        location.setWeather(weather);
-
-        return location;
+        return weather;
     }
 
     @Transactional
-    public Location addLocation(int eventId, Location location) {
+    public LocationJSON addLocation(int eventId, LocationInput locationInput) {
         EventEntity event = eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
-        LocationEntity locationEntity = LocationMapper.locationToEntity(location);
-        Location result = LocationMapper.entityToLocation(locationRepository.save(locationEntity));
-        event.setLocation(locationEntity);
-        return weather(result);
-    }
+        LocationEntity locationEntity = LocationMapper.locationToEntity(locationInput);
 
+        locationRepository.save(locationEntity);
+        event.setLocation(locationEntity);
+        return LocationMapper.entityToLocation(locationEntity);
+    }
 
 
 }
