@@ -56,13 +56,6 @@ public class ConferenceManagementService {
     }
 
     @Transactional
-    public void deleteEvent(int id) {
-
-        EventEntity existingEntity = eventRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
-        eventRepository.delete(existingEntity);
-    }
-
-    @Transactional
     public EventJSON findEventById(int id) {
         EventEntity existingEvent = eventRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
         return EventMapper.entityToEvent(existingEvent);
@@ -84,21 +77,6 @@ public class ConferenceManagementService {
         return eventRepository.findAll().stream().map(EventMapper::entityToEvent).collect(Collectors.toList());
     }
 
-    // ------------------------------  Program management ------------------------------
-
-
-    @Transactional
-    public ProgramJSON changeProposalDeadline(int eventId, String newDate) {
-
-        EventEntity event = eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
-        ProgramEntity program = event.getProgram();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(newDate, formatter);
-        program.setDate(dateTime);
-
-
-        return ProgramMapper.entityToProgram(program);
-    }
 
     // ------------------------------  Section management ------------------------------
 
@@ -130,7 +108,6 @@ public class ConferenceManagementService {
     @Transactional
     public void addProgramCommittee(String email) {
         CommitteeMemberEntity committeeMemberEntity = new CommitteeMemberEntity(email);
-
 
         pcMemberRepository.save(committeeMemberEntity);
     }

@@ -6,11 +6,11 @@ import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 
-//@Builder
 @Getter
 @Setter
 @Entity(name = "evaluation")
@@ -50,7 +50,7 @@ public class EvaluationEntity {
         this.reviewer = reviewer;
         this.recommendation = recommendation;
         this.paper = paper;
-        //this.id = new EvaluationKey(paper.getId(), reviewer.getEmail());
+        this.id = new EvaluationKey(paper.getId(), reviewer.getEmail());
     }
 
     @Override
@@ -60,9 +60,9 @@ public class EvaluationEntity {
         EvaluationEntity entity = (EvaluationEntity) o;
         return
                 qualifier == entity.qualifier &&
-                reviewer.equals(entity.reviewer) &&
-                recommendation.equals(entity.recommendation) &&
-                paper.equals(entity.paper);
+                        reviewer.equals(entity.reviewer) &&
+                        recommendation.equals(entity.recommendation) &&
+                        paper.equals(entity.paper);
     }
 
     @Override

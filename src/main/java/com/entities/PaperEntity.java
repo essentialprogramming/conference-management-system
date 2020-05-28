@@ -17,19 +17,10 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "paper")
-@TypeDefs({
-//        @TypeDef(
-//                typeClass = EnumArrayType.class,
-//                defaultForType = Qualifier[].class,
-//                parameters = {
-//                        @org.hibernate.annotations.Parameter(name = EnumArrayType.SQL_ARRAY_TYPE, value = "qualifier")
-//                }
-//        ),
-        @TypeDef(
-                name = "list-array",
-                typeClass = ListArrayType.class
-        )
-})
+@TypeDef(
+        name = "list-array",
+        typeClass = ListArrayType.class
+)
 public class PaperEntity {
 
     @Id
@@ -40,14 +31,14 @@ public class PaperEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
-    private String content;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "file_name")
+    private String fileName;
 
     @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
-    private List<EvaluationEntity> reviews = new ArrayList<>();;
-
-//    @Column(name = "qualifiers", columnDefinition = "qualifiers")
-//    private Qualifier[] qualifiers;
+    private List<EvaluationEntity> reviews = new ArrayList<>();
 
     @Type(type = "list-array")
     @Column(name = "topics")
@@ -92,14 +83,15 @@ public class PaperEntity {
         if (!(o instanceof PaperEntity)) return false;
         PaperEntity that = (PaperEntity) o;
         return title.equals(that.title) &&
-                content.equals(that.content) &&
+                description.equals(that.description) &&
                 topics.equals(that.topics) &&
-                keywords.equals(that.keywords);
+                keywords.equals(that.keywords)
+                && fileName.equals(that.fileName);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(title, content, topics, keywords);
+        int result = Objects.hash(title, description, topics, keywords, fileName);
         return result;
     }
 }

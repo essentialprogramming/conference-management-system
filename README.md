@@ -33,7 +33,8 @@ create table if not exists paper
 (
 	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
 	title text,
-	content text,
+	description text,
+    file_name text,
 	qualifiers text[],
 	topics text[],
 	keywords text[],

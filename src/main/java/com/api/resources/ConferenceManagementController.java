@@ -37,12 +37,6 @@ public class ConferenceManagementController {
         return conferenceService.addEvent(eventInput);
     }
 
-    @DELETE
-    @Path("event/{id}")
-    public void deleteEvent(@PathParam("id") int id) {
-        conferenceService.deleteEvent(id);
-    }
-
     @GET
     @Path("event/{id}")
     @Consumes("application/json")
@@ -65,22 +59,6 @@ public class ConferenceManagementController {
     public List<EventJSON> getAllEvents() {
         return conferenceService.getAllEvents();
     }
-
-
-    // ----------------------- program --------------------------------
-
-
-
-
-
-    @PUT
-    @Path("event/program/postpone/{eventId}")
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public ProgramJSON changeProposalDeadline(@PathParam("eventId") int eventId, String newDate) {
-        return conferenceService.changeProposalDeadline(eventId, newDate);
-    }
-
 
     // -------------------- section ---------------------------------
 

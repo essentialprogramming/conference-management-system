@@ -11,7 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 public class EvaluationJSON {
 
-    private int id;
     private Qualifier qualifier;
     private String reviewer;
     private String recommendation;

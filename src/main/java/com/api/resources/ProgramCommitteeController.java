@@ -2,6 +2,7 @@ package com.api.resources;
 
 import com.model.*;
 import com.output.EvaluationJSON;
+import com.output.PaperJSON;
 import com.service.ProgramCommitteeService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class ProgramCommitteeController {
     @PUT
     @Path("/paper/section/{paperId}/{sectionId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public PaperInput setPaperSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
+    public PaperJSON setPaperSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
         return pcService.setPaperSection(paperId, sectionId);
     }
 

@@ -1,8 +1,12 @@
 package com.mapper;
 
 import com.entities.AuthorEntity;
+import com.entities.CommitteeMemberEntity;
+import com.entities.EvaluationEntity;
 import com.entities.PaperEntity;
 import com.model.PaperInput;
+import com.model.Qualifier;
+import com.output.PaperJSON;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -14,35 +18,24 @@ public class PaperMapper {
 
         return PaperEntity.builder()
                 .title(paperInput.getTitle())
-                .content(paperInput.getContent())
+                .description(paperInput.getDescription())
+                .fileName(paperInput.getFileName())
                 .topics(paperInput.getTopics())
                 .keywords(paperInput.getKeywords())
                 .build();
     }
 
-    public static PaperInput entityToPaper(PaperEntity entity) {
+    public static PaperJSON entityToPaper(PaperEntity entity) {
 
-        return PaperInput.builder()
+        return PaperJSON.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
-                .content(entity.getContent())
-                .authors(entity.getAuthors()!=null ? entity.getAuthors().stream().map(AuthorEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
-//                .bidders(entity.getBids().values().stream().map(CommitteeMemberEntity::getEmail).collect(Collectors.toList()))
-                .reviewers(entity.getReviews().stream().map(input -> input.getReviewer().getEmail()).collect(Collectors.toList()))
-
-//                .qualifiers(entity.getQualifiers())
-//                .authors(entity.getUsers() != null ? entity.getUsers().stream()
-//                        .filter(userPaperEntity -> userPaperEntity.getType().equals("author"))
-//                        .map(user -> user.getUser().getEmail())
-//                        .collect(Collectors.toList()) : null)
-//                .reviewers(entity.getUsers() != null ? entity.getUsers().stream()
-//                        .filter(userPaperEntity -> userPaperEntity.getType().equals("reviewer"))
-//                        .map(userPaperEntity -> userPaperEntity.getUser().getEmail())
-//                        .collect(Collectors.toList()) : null)
-//                .bidders(entity.getUsers() != null ? entity.getUsers().stream()
-//                        .filter(userPaperEntity -> userPaperEntity.getType().equals("bidder"))
-//                        .map(userPaperEntity -> userPaperEntity.getUser().getEmail())
-//                        .collect(Collectors.toList()) : null)
+                .description(entity.getDescription())
+                .fileName(entity.getFileName())
+                .authors(entity.getAuthors() != null ? entity.getAuthors().stream().map(AuthorEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
+                .bidders(entity.getBids() != null ? entity.getBids().values().stream().map(CommitteeMemberEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
+                .reviewers(entity.getReviews() != null ? entity.getReviews().stream().map(input -> input.getReviewer().getEmail()).collect(Collectors.toList()) : new ArrayList<>())
+                .qualifiers(entity.getReviews() != null ? entity.getReviews().stream().map(EvaluationEntity::getQualifier).collect(Collectors.toList()) : new ArrayList<>())
                 .topics(entity.getTopics())
                 .keywords(entity.getKeywords())
                 .build();
