@@ -106,9 +106,12 @@ public class ConferenceManagementService {
     }
 
     @Transactional
-    public void addProgramCommittee(String email) {
+    public void addProgramCommittee(String email, int eventId) {
+
+        EventEntity existingEvent = eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
         CommitteeMemberEntity committeeMemberEntity = new CommitteeMemberEntity(email);
 
+        existingEvent.getProgramCommittee().add(committeeMemberEntity);
         pcMemberRepository.save(committeeMemberEntity);
     }
 }

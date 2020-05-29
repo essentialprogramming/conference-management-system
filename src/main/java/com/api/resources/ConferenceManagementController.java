@@ -97,10 +97,10 @@ public class ConferenceManagementController {
     }
 
     @PUT
-    @Path("event/committee/{email}")
+    @Path("event/committee/{email}/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JsonResponse addProgramCommittee(@PathParam("email") String email){
-        conferenceService.addProgramCommittee(email);
+    public JsonResponse addProgramCommittee(@PathParam("email") String email, @PathParam("eventId") int eventId) {
+        conferenceService.addProgramCommittee(email, eventId);
         return new JsonResponse().with("Response", "OK");
     }
 
