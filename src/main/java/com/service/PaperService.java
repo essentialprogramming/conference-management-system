@@ -66,7 +66,28 @@ public class PaperService {
     @Transactional
     public void updatePaper(int paperId, PaperInput paperInput) {
 
-//        paperRepository.findById(paperId).ifPresent(paperEntity -> paperEntity.(newContent));
+        PaperEntity existingPaper = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found"));
+        existingPaper.setTitle(paperInput.getTitle());
+        existingPaper.setDescription(paperInput.getDescription());
+        existingPaper.setFileName(paperInput.getFileName());
+        existingPaper.setTopics(paperInput.getTopics());
+        existingPaper.setKeywords(paperInput.getKeywords());
+
+        for (String email : paperInput.getAuthors()) {
+            Optional<AuthorEntity> author = authorRepository.findById(email);
+
+            if (author.isPresent()) {
+                if (!existingPaper.getAuthors().contains(author.get())) {
+                    existingPaper.addAuthor(author.get());
+                }
+            } else {
+                AuthorEntity newAuthor = new AuthorEntity(email);
+                authorRepository.save(newAuthor);
+                existingPaper.addAuthor(newAuthor);
+            }
+
+        }
+        paperRepository.save(existingPaper);
     }
 
 }
