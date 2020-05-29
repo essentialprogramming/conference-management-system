@@ -23,7 +23,7 @@ public class ProgramCommitteeController {
     }
 
 
-    @GET
+    @POST
     @Path("/bid/{paperId}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email, Status status) {

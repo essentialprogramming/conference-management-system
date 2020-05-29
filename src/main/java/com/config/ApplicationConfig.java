@@ -20,6 +20,7 @@ public class ApplicationConfig extends ResourceConfig {
         register(AuthorController.class);
         register(ConferenceManagementController.class);
         register(ProgramCommitteeController.class);
+        register(AuthenticationController.class);
 
         register(JacksonJaxbJsonProvider.class);
 

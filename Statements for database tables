@@ -9,6 +9,17 @@ DROP TABLE IF EXISTS bid CASCADE ;
 DROP TABLE IF EXISTS account CASCADE ;
 DROP TABLE IF EXISTS paper_pcmember CASCADE ;
 DROP TYPE IF EXISTS qualifier;
+DROP TYPE IF EXISTS role;
+DROP TABLE IF EXISTS profile CASCADE ;
+
+create table if not exists profile
+(
+	username text NOT NULL primary key,
+	password text,
+	first_name text,
+	last_name text,
+	roles text[]
+);
 
 create table if not exists event
 (
@@ -57,7 +68,6 @@ create table if not exists paper
 
 create table if not exists evaluation
 (
-    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
     paper_id smallint,
     recommendation_id smallint,
     reviewer text,
