@@ -38,21 +38,18 @@ public class ProgramCommitteeService {
     }
 
 
-//    @Transactional
-//    public String assignPaper(int paperId, String email) {
-//        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
-//        UserEntity userEntity = userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User with email " + email + " not found!"));
-//
-//        long reviewers = paperEntity.getUsers().stream()
-//                .filter(user -> user.getType().equals("reviewer"))
-//                .count();
-//
-//        if (reviewers < 4) {
-//            paperEntity.addUser(userEntity, "reviewer");
-//            return "You are allowed to review this paper.";
-//        } else return "You are not allowed to review this paper.";
-//
-//    }
+    @Transactional
+    public String assignPaper(int paperId, String email) {
+        PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
+        CommitteeMemberEntity committeeMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program committee with email " + email + " not found!"));
+
+        if (paperEntity.getReviews().size() < 4) {
+
+            committeeMemberEntity.addReview(paperEntity);
+            return "You are allowed to review this paper.";
+        } else return "You are not allowed to review this paper.";
+
+    }
 
     @Transactional
     public PaperJSON setPaperSection(int paperId, int sectionId) {
@@ -72,9 +69,17 @@ public class ProgramCommitteeService {
         RecommendationEntity recommendationEntity = new RecommendationEntity(evaluationInput.getRecommendation());
         recommendationRepository.save(recommendationEntity);
 
-        EvaluationEntity review = pcMemberEntity.addReview(paperEntity, evaluationInput.getQualifier(), recommendationEntity);
+        EvaluationJSON result = new EvaluationJSON();
 
-        return EvaluationMapper.entityToEvaluation(review);
+        for (EvaluationEntity evaluation : paperEntity.getReviews()) {
+            if (evaluation.getReviewer().equals(pcMemberEntity)) {
+                evaluation.setQualifier(evaluationInput.getQualifier());
+                evaluation.setRecommendation(recommendationEntity);
+                result = EvaluationMapper.entityToEvaluation(evaluation);
+            }
+        }
+
+        return result;
     }
 
 

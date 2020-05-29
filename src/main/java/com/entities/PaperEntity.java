@@ -38,7 +38,7 @@ public class PaperEntity {
     private String fileName;
 
     @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
-    private List<EvaluationEntity> reviews = new ArrayList<>();
+    private List<EvaluationEntity> reviews;
 
     @Type(type = "list-array")
     @Column(name = "topics")
@@ -75,6 +75,17 @@ public class PaperEntity {
             authors = new ArrayList<>();
         }
         authors.add(author);
+    }
+
+    public void addReview(EvaluationEntity evaluationEntity) {
+        if (reviews == null) {
+            reviews = new ArrayList<>();
+        }
+        reviews.add(evaluationEntity);
+    }
+
+    public List<EvaluationEntity> getReviews() {
+        return reviews;
     }
 
     @Override

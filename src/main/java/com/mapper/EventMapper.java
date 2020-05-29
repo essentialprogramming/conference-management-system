@@ -1,8 +1,12 @@
 package com.mapper;
 
+import com.entities.CommitteeMemberEntity;
 import com.entities.EventEntity;
+import com.entities.UserEntity;
 import com.model.EventInput;
 import com.output.EventJSON;
+
+import java.util.stream.Collectors;
 
 public class EventMapper {
 
@@ -16,7 +20,7 @@ public class EventMapper {
         return EventJSON.builder()
                 .id(entity.getId())
                 .name(entity.getName())
-//                .programCommittee(entity.getProgramCommittee().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
+                .programCommittee(entity.getProgramCommittee().stream().map(CommitteeMemberEntity::getEmail).collect(Collectors.toList()))
                 //.participants(entity.getParticipants().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
                 //.speakers(entity.getSpeakers().stream().map(UserEntity::getEmail).collect(Collectors.toList()))
                 .program(ProgramMapper.entityToProgram(entity.getProgram()))

@@ -45,10 +45,8 @@ public class EvaluationEntity {
     @JoinColumn(name = "recommendation_id")
     private RecommendationEntity recommendation;
 
-    public EvaluationEntity(Qualifier qualifier, CommitteeMemberEntity reviewer, RecommendationEntity recommendation, PaperEntity paper) {
-        this.qualifier = qualifier;
+    public EvaluationEntity(CommitteeMemberEntity reviewer, PaperEntity paper) {
         this.reviewer = reviewer;
-        this.recommendation = recommendation;
         this.paper = paper;
         this.id = new EvaluationKey(paper.getId(), reviewer.getEmail());
     }

@@ -29,7 +29,7 @@ public class EventEntity {
             name = "user_event",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
-    private List<UserEntity> programCommittee;
+    private List<CommitteeMemberEntity> programCommittee;
 
     @ManyToMany(fetch = FetchType.LAZY )
     @JoinTable(

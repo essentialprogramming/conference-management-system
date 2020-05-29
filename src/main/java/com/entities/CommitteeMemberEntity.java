@@ -39,8 +39,8 @@ public class CommitteeMemberEntity extends UserEntity {
         super(email);
     }
 
-    public EvaluationEntity addReview(PaperEntity paper, Qualifier qualifier, RecommendationEntity recommendation) {
-        EvaluationEntity review = new EvaluationEntity(qualifier, this, recommendation,  paper);
+    public EvaluationEntity addReview(PaperEntity paper) {
+        EvaluationEntity review = new EvaluationEntity(this,  paper);
         evaluations.add(review);
         paper.getReviews().add(review);
         return review;

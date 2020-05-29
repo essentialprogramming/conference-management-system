@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
+import javax.lang.model.util.AbstractElementVisitor7;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -85,8 +86,17 @@ public class PaperService {
                 authorRepository.save(newAuthor);
                 existingPaper.addAuthor(newAuthor);
             }
-
         }
+
+        List<String> authors = existingPaper.getAuthors().stream().map(AuthorEntity::getEmail).collect(Collectors.toList());
+
+        for (String email : authors) {
+            if (!paperInput.getAuthors().contains(email)) {
+                AuthorEntity authorEntity = authorRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Author with email: " + email + " not found."));
+                existingPaper.getAuthors().remove(authorEntity);
+            }
+        }
+
         paperRepository.save(existingPaper);
     }
 
