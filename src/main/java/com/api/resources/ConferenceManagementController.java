@@ -7,6 +7,7 @@ import com.model.SectionInput;
 import com.output.EventJSON;
 import com.output.LocationJSON;
 import com.output.ProgramJSON;
+import com.output.SectionJSON;
 import com.service.ConferenceManagementService;
 import com.service.LocationService;
 import com.web.json.JsonResponse;
@@ -66,7 +67,7 @@ public class ConferenceManagementController {
     @Path("event/section/{eventId}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public SectionInput addSection(@PathParam("eventId") int eventId, SectionInput sectionInput) {
+    public SectionJSON addSection(@PathParam("eventId") int eventId, SectionInput sectionInput) {
 
         return conferenceService.addSection(eventId, sectionInput);
     }
@@ -81,7 +82,7 @@ public class ConferenceManagementController {
     @PUT
     @Path("event/section/supervisor/{sectionId}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SectionInput assignSupervisor(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
+    public SectionJSON assignSupervisor(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
         return conferenceService.assignSupervisor(sectionId, email);
     }
 

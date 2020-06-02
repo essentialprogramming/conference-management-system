@@ -18,45 +18,24 @@ public class ProgramCommitteeController {
     private UserService userService;
 
     @Autowired
-    public ProgramCommitteeController(ProgramCommitteeService pcService) {
+    public ProgramCommitteeController(ProgramCommitteeService pcService, UserService userService) {
         this.pcService = pcService;
+        this.userService = userService;
     }
 
 
     @POST
     @Path("/bid/{paperId}/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email, Status status) {
         userService.bidProposal(paperId, email, status);
     }
-//    @POST
-//    @Path("/recommendation")
-//    @Consumes("application/json")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Recommendation addRecommendation(Recommendation recommendation) {
-//        return pcService.addRecommendation(recommendation);
-//    }
-
 
     @PUT
     @Path("/user/paper/{paperId}/{email}")
     public String assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
         return pcService.assignPaper(paperId, email);
     }
-
-//    @PUT
-//    @Path("user/review/{paperId}/{email}")
-//    @Consumes("application/json")
-//    public String reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, Qualifier qualifier, @QueryParam("text") String recommendation) {
-//        return pcService.reviewPaper(paperId, email, qualifier, recommendation);
-//    }
-
-//    @PUT
-//    @Path("section/supervisor/{sectionId}/{email}")
-//    @Consumes("application/json")
-//    public void updateSectionSupervisor(@PathParam("sectionId") int sectionId, @PathParam("email") String email) {
-//        pcService.updateSectionSupervisor(sectionId, email);
-//    }
 
     @PUT
     @Path("/paper/section/{paperId}/{sectionId}")

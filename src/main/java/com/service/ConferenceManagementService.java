@@ -15,6 +15,7 @@ import com.model.SectionInput;
 import com.output.EventJSON;
 import com.output.LocationJSON;
 import com.output.ProgramJSON;
+import com.output.SectionJSON;
 import com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -81,9 +82,12 @@ public class ConferenceManagementService {
     // ------------------------------  Section management ------------------------------
 
     @Transactional
-    public SectionInput addSection(int eventId, SectionInput sectionInput) {
+    public SectionJSON addSection(int eventId, SectionInput sectionInput) {
         SectionEntity sectionEntity = SectionMapper.sectionToEntity(sectionInput);
+        CommitteeMemberEntity supervisor = pcMemberRepository.findById(sectionInput.getSupervisorEmail()).orElseThrow(()->new HttpClientErrorException(HttpStatus.NOT_FOUND, "Committee member "+sectionInput.getSupervisorEmail()+" not found."));
+
         sectionEntity.setEvent(eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!")));
+        sectionEntity.setSupervisor(supervisor);
 
         return SectionMapper.entityToSection(sectionRepository.save(sectionEntity));
     }
@@ -97,9 +101,9 @@ public class ConferenceManagementService {
 
 
     @Transactional
-    public SectionInput assignSupervisor(int sectionId, String email) {
+    public SectionJSON assignSupervisor(int sectionId, String email) {
         SectionEntity existingSection = sectionRepository.findById(sectionId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Section with id " + sectionId + " not found!"));
-        existingSection.setSupervisor(userRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "User not found!")));
+        existingSection.setSupervisor(pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Committee member "+email+" not found!")));
 
         sectionRepository.save(existingSection);
         return SectionMapper.entityToSection(existingSection);
