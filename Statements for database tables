@@ -10,7 +10,10 @@ DROP TABLE IF EXISTS account CASCADE ;
 DROP TABLE IF EXISTS paper_pcmember CASCADE ;
 DROP TYPE IF EXISTS qualifier;
 DROP TYPE IF EXISTS role;
+DROP TYPE IF EXISTS status;
 DROP TABLE IF EXISTS profile CASCADE ;
+DROP TABLE IF EXISTS paper_author CASCADE ;
+DROP TABLE IF EXISTS user_event CASCADE ;
 
 create table if not exists profile
 (
@@ -119,6 +122,12 @@ create table if not exists paper_author
 CREATE TYPE  qualifier AS ENUM
     ('WEAK_REJECT', 'WEAK_ACCEPT', 'STRONG_ACCEPT', 'REJECT', 'BORDERLINE_PAPER', 'ACCEPT', 'STRONG_REJECT');
 
+CREATE TYPE  role AS ENUM
+    ('AUTHOR', 'PC_MEMBER', 'CONFERENCE_CHAIR');
+
+CREATE TYPE  status AS ENUM
+    ('ACCEPT', 'REJECT');
+
 ALTER TABLE paper_author
 ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
 
@@ -145,7 +154,6 @@ ADD FOREIGN KEY (recommendation_id) REFERENCES recommendation(id);
 
 ALTER TABLE evaluation
 ADD FOREIGN KEY (reviewer) REFERENCES account(email);
-
 
 ALTER TABLE event
 ADD FOREIGN KEY (location_id) REFERENCES location(id);
