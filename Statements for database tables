@@ -139,8 +139,6 @@ CREATE TYPE  status AS ENUM
 ALTER TABLE paper_author
 ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
 
-ALTER TABLE paper_author
-ADD FOREIGN KEY (bid_id) REFERENCES bid(id);
 
 ALTER TABLE paper_author
 ADD FOREIGN KEY (email) REFERENCES account(email);
