@@ -94,7 +94,7 @@ const routes: Routes = [
         path: 'assignSupervisor', component: AssignSupervisorComponent, canActivate:[ChairGuardService]
       },
   {
-    path: 'assignReviewerPaper', component: AssignReviewerEventComponent, canActivate:[ChairGuardService]
+    path: 'assignReviewerEvent', component: AssignReviewerEventComponent, canActivate:[ChairGuardService]
   },
   {
     path: 'conferenceChair', component: ConferenceChairComponent, canActivate:[ChairGuardService]
