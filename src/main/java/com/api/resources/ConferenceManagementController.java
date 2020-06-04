@@ -4,6 +4,7 @@ import com.model.EventInput;
 import com.model.LocationInput;
 import com.model.ProgramInput;
 import com.model.SectionInput;
+import com.model.*;
 import com.output.EventJSON;
 import com.output.LocationJSON;
 import com.output.ProgramJSON;
@@ -33,9 +34,22 @@ public class ConferenceManagementController {
     @Path("event")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public EventJSON addEvent(EventInput eventInput) {
+    public EventJSON addEvent(EventInput event) {
+        return conferenceService.addEvent(event);
+    }
 
-        return conferenceService.addEvent(eventInput);
+    @PUT
+    @Path("event/update/{id}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public EventJSON updateEvent(@PathParam("id") int id, EventInput event) {
+        return conferenceService.updateEvent(id, event);
+    }
+
+    @DELETE
+    @Path("event/{id}")
+    public void deleteEvent(@PathParam("id") int id) {
+        conferenceService.deleteEvent(id);
     }
 
     @GET
@@ -50,8 +64,8 @@ public class ConferenceManagementController {
     @Path("event/program/{eventId}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public EventJSON updateProgram(@PathParam("eventId") int eventId, ProgramInput programInput) {
-        return conferenceService.updateEventProgram(eventId, programInput);
+    public EventJSON updateProgram(@PathParam("eventId") int eventId, ProgramInput program) {
+        return conferenceService.updateEventProgram(eventId, program);
     }
 
     @GET
@@ -61,15 +75,31 @@ public class ConferenceManagementController {
         return conferenceService.getAllEvents();
     }
 
+
+    // ----------------------- program --------------------------------
+
+
+
+
+
+    @PUT
+    @Path("event/program/postpone/{eventId}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ProgramJSON changeProposalDeadline(@PathParam("eventId") int eventId, String newDate) {
+        return conferenceService.changeProposalDeadline(eventId, newDate);
+    }
+
+
     // -------------------- section ---------------------------------
 
     @POST
     @Path("event/section/{eventId}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public SectionJSON addSection(@PathParam("eventId") int eventId, SectionInput sectionInput) {
+    public SectionJSON addSection(@PathParam("eventId") int eventId, SectionInput section) {
 
-        return conferenceService.addSection(eventId, sectionInput);
+        return conferenceService.addSection(eventId, section);
     }
 
     @DELETE
@@ -92,17 +122,36 @@ public class ConferenceManagementController {
     @Consumes("application/json")
     @Path("event/location/{eventId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public LocationJSON addLocation(@PathParam("eventId") int eventId, LocationInput locationInput) {
+    public LocationJSON addLocation(@PathParam("eventId") int eventId, LocationInput location) {
 
-        return locationService.addLocation(eventId, locationInput);
+        return locationService.addLocation(eventId, location);
     }
 
+
+
     @PUT
-    @Path("event/committee/{email}/{eventId}")
+    @Path("event/committee/{eventId}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public JsonResponse addProgramCommittee(@PathParam("email") String email, @PathParam("eventId") int eventId) {
         conferenceService.addProgramCommittee(email, eventId);
         return new JsonResponse().with("Response", "OK");
     }
 
+    // ----------------------- participants --------------------------------
+    @POST
+    @Consumes("application/json")
+    @Path("event/participants/{eventId}/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User addParticipant(@PathParam("eventId") int eventId, @PathParam("email") String email) {
+
+        return conferenceService.addParticipant(eventId, email);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("event/participants/{eventId}")
+    public List<User> getParticipants(@PathParam("eventId") int eventId)
+    {
+        return conferenceService.getParticipants(eventId);
+    }
 }

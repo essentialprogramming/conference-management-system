@@ -1,9 +1,9 @@
 package com.repository;
 
-import com.entities.ProfileEntity;
+import com.entities.ApplicationUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProfileRepository extends JpaRepository<ProfileEntity, String> {
+public interface ApplicationUserRepository extends JpaRepository<ApplicationUser, String> {
 }

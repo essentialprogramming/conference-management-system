@@ -11,11 +11,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfileInput {
+public class Authentication {
 
     private String username;
     private String password;
-    private String roles;
+    private Role role;
     private String firstName;
     private String lastName;
+
+    public String getUserName(){
+        return username;
+    }
 }

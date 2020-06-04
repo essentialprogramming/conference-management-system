@@ -1,18 +1,18 @@
 package com.mapper;
 
 import com.entities.UserEntity;
-import com.model.UserInput;
+import com.model.User;
 
 
 public class UserMapper {
 
-    public static UserInput entityToUser(UserEntity entity) {
-        return UserInput.builder()
+    public static User entityToUser(UserEntity entity) {
+        return User.builder()
                 .email(entity.getEmail())
                 .build();
     }
 
-    public static UserEntity userToEntity(UserInput userInput) {
+    public static UserEntity userToEntity(User userInput) {
         return UserEntity.builder()
                 .email(userInput.getEmail())
                 .build();

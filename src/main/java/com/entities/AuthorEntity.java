@@ -13,15 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "author")
 @DiscriminatorValue("author")
+
 public class AuthorEntity extends UserEntity {
 
     @ManyToMany(mappedBy = "authors")
     public List<PaperEntity> papers;
 
-    @Override
-    public @Email String getEmail() {
-        return super.getEmail();
-    }
 
     public AuthorEntity(@Email String email) {
         super(email);

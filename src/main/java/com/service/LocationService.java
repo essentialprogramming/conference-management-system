@@ -30,13 +30,13 @@ public class LocationService {
         this.eventRepository = eventRepository;
     }
 
-    public static String weather(LocationInput locationInput) {
+    public static String weather(LocationEntity location) {
         String REST_URI = "http://api.weatherstack.com/current?access_key=7d6080ab5727f0fe0479c1a898b780ec";
 
         Client client = ClientBuilder.newClient();
         Map result = client
                 .target(REST_URI)
-                .queryParam("query", locationInput.getCity())
+                .queryParam("query", location.getCity())
                 .request(MediaType.APPLICATION_JSON)
                 .get(Map.class);
 

@@ -1,51 +1,44 @@
 package com.api.resources;
 
+import com.model.EvaluationInput;
 import com.model.*;
 import com.output.EvaluationJSON;
 import com.output.PaperJSON;
+import com.output.ProgramCommitteeJSON;
 import com.service.ProgramCommitteeService;
-import com.service.UserService;
+import com.web.json.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 
 @Path("/programCommittee")
 public class ProgramCommitteeController {
 
     private ProgramCommitteeService pcService;
-    private UserService userService;
 
     @Autowired
-    public ProgramCommitteeController(ProgramCommitteeService pcService, UserService userService) {
+    public ProgramCommitteeController(ProgramCommitteeService pcService) {
         this.pcService = pcService;
-        this.userService = userService;
     }
 
 
-    @POST
-    @Path("/bid/{paperId}/{email}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email, Status status) {
-        userService.bidProposal(paperId, email, status);
-    }
-
-    @PUT
-    @Path("/user/paper/{paperId}/{email}")
-    public String assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
-        return pcService.assignPaper(paperId, email);
-    }
-
-    @PUT
-    @Path("/paper/section/{paperId}/{sectionId}")
+    @GET
+    @Path("/bid/{paperId}/{email}/{status}")
+    @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public PaperJSON setPaperSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
-        return pcService.setPaperSection(paperId, sectionId);
+    public JsonResponse bidProposal(@PathParam("paperId") int paperId, @PathParam("email") String email, @PathParam("status") Status status) {
+        if (pcService.bidProposal(paperId, email, status))
+            return new JsonResponse().with("response", "OK!");
+        else
+            return new JsonResponse().with("response", "Not OK!");
     }
 
+
     @PUT
-    @Path("user/review/{paperId}/{email}")
+    @Path("/review/paper/{paperId}/{email}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public EvaluationJSON reviewPaper(@PathParam("paperId") int paperId, @PathParam("email") String email, EvaluationInput evaluationInput) {
@@ -53,4 +46,41 @@ public class ProgramCommitteeController {
         return pcService.reviewPaper(paperId, email, evaluationInput);
     }
 
+
+    @PUT
+    @Path("assign/paper/to/section/{paperId}/{sectionId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public PaperJSON assignPaperToSection(@PathParam("paperId") int paperId, @PathParam("sectionId") int sectionId) {
+        return pcService.assignPaperToSection(paperId, sectionId);
+    }
+
+    @PUT
+    @Path("/assign/paper/to/review/{paperId}/{email}")
+    public String assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
+        return pcService.assignPaper(paperId, email);
+    }
+
+    @GET
+    @Path("/members/{paperId}")
+    @Consumes("application/json")//
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ProgramCommitteeJSON> getProgramCommittee(@PathParam("paperId") int paperId) {
+        return pcService.getProgramCommitteeMembersForPaper(paperId);
+    }
+
+    @GET
+    @Path("/members")
+    @Consumes("application/json")//
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> getProgramCommittee() {
+        return pcService.getAllProgramCommitteeMembers();
+    }
+
+    @GET
+    @Path("/papers/{email}")
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<PaperJSON> getPapersOfReviewer(@PathParam("email") String email) {
+        return pcService.getPapersOfReviewer(email);
+    }
 }

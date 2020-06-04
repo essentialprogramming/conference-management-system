@@ -22,6 +22,7 @@ public class PaperMapper {
                 .fileName(paperInput.getFileName())
                 .topics(paperInput.getTopics())
                 .keywords(paperInput.getKeywords())
+                .topics(paperInput.getTopics())
                 .build();
     }
 

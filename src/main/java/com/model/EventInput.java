@@ -15,6 +15,21 @@ import java.util.List;
 public class EventInput {
 
     private String name;
-    private ProgramInput programInput;
-    private LocationInput locationInput;
+    private ProgramInput program;
+    private LocationInput location;
+
+    public ProgramInput getProgram()
+    {
+        return program;
+    }
+
+    public LocationInput getLocation()
+    {
+        return location;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
 }
