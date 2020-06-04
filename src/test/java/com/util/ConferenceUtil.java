@@ -14,8 +14,8 @@ public class ConferenceUtil {
     public static EventInput getEvent() {
         return EventInput.builder()
                 .name("Event1")
-                .locationInput(getLocation())
-                .programInput(getProgram())
+                .location(getLocation())
+                .program(getProgram())
                 .build();
     }
 
