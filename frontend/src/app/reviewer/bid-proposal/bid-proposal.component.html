@@ -1,0 +1,43 @@
+<div class="big">
+<div class="container">
+  <div class="col-md-12">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+      <div class="card-body">
+        <br>
+        <h3 style="text-align: center; color: gray">{{title2}}</h3>
+        <br>
+        <br>
+          <table class="table table-hover">
+
+            <tr class="table-secondary" style="cursor: default;">
+              <th scope="col" style="color: gray;">Title</th>
+              <th scope="col" style="color: gray;">Description</th>
+              <th scope="col" style="color: gray;">Topics</th>
+              <th scope="col" style="color: gray;"></th>
+              <th scope="col" style="color: gray;"></th>
+            </tr>
+
+            <tbody>
+            <tr *ngFor="let paper of papers">
+              <td style="cursor: default;">{{ paper.title }}</td>
+              <td style="cursor: default;">{{ paper.description }}</td>
+              <td style="cursor: default;">{{ paper.topics }}</td>
+
+
+              <td>
+                <button class="btn btn-secondary" (click)="bidP( paper.id.toString(),'ACCEPT')" style="text-align: center;">Accept</button>
+              </td>
+              <td>
+                <button class="btn btn-secondary" (click)="bidP( paper.id.toString(),'REJECT')" style="text-align: center">Refuse</button>
+              </td>
+
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

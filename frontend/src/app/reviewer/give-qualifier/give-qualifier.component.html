@@ -1,0 +1,66 @@
+<div class="big">
+<div class="container">
+  <div class="col-md-12">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+      <div class="card-body">
+        <br>
+        <h3 style="text-align: center; color: gray">{{title2}}</h3>
+        <br>
+        <br>
+          <table class="table table-hover" style="cursor: default;">
+
+            <tr class="table-secondary" style="cursor: default;">
+
+              <th scope="col" style="color: gray;">Title</th>
+              <th scope="col" style="color: gray;">Description</th>
+              <th scope="col" style="color: gray;">Topics</th>
+            </tr>
+
+            <tbody>
+            <tr *ngFor="let paper of papers">
+              <td>{{ paper.title }}</td>
+              <td>{{ paper.description }}</td>
+              <td>{{ paper.topics }}</td>
+
+
+              <td style="text-align: center;">
+
+
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Choose qualifier
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+                      <option (click)="qualifier(paper.id.toString(),'STRONG_ACCEPT')" style="cursor:pointer"class="dropdown-item" value="Strong Accept"> Strong Accept</option>
+                      <option (click)="qualifier(paper.id.toString(),'ACCEPT')" style="cursor:pointer"class="dropdown-item" value="Accept">Accept</option>
+                      <option (change)="qualifier(paper.id.toString(),'WEAK_ACCEPT')" style="cursor:pointer"class="dropdown-item"value="Weak Accept">Weak Accept</option>
+                      <option (change)="qualifier(paper.id.toString(),'BORDERLINE_PAPER')" style="cursor:pointer"class="dropdown-item"value="Borderline Paper">Borderline Paper</option>
+                      <option (change)="qualifier(paper.id.toString(),'WEAK_REJECT')" style="cursor:pointer"class="dropdown-item"value="Weak Reject">Weak Reject</option>
+                      <option (change)="qualifier(paper.id.toString(),'REJECT')" style="cursor:pointer"class="dropdown-item"value="Reject">Reject</option>
+                      <option (change)="qualifier(paper.id.toString(),'STRONG_REJECT')" style="cursor:pointer"class="dropdown-item"value="Strong Reject">Strong Reject</option>
+                    </div>
+                  </div>
+<!--
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div> -->
+
+              </td>
+
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+</div>
+</div>

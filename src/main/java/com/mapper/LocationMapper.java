@@ -7,10 +7,10 @@ import com.service.LocationService;
 
 public class LocationMapper {
 
-    public static LocationEntity locationToEntity(LocationInput locationInput) {
+    public static LocationEntity locationToEntity(LocationInput location) {
         return LocationEntity.builder()
-                .country(locationInput.getCountry())
-                .city(locationInput.getCity())
+                .country(location.getCountry())
+                .city(location.getCity())
                 .build();
     }
 
@@ -19,15 +19,13 @@ public class LocationMapper {
                 .id(entity.getId())
                 .country(entity.getCountry())
                 .city(entity.getCity())
-                .weather(LocationService.weather(entityToInput(entity)))
+                .weather(LocationService.weather(entity))
                 .build();
     }
 
-    public static LocationInput entityToInput(LocationEntity entity) {
-        return LocationInput.builder()
-                .city(entity.getCity())
-                .country(entity.getCountry())
-                .build();
+    public static LocationEntity updateLocation(LocationEntity entity, LocationInput location){
+        entity.setCountry(location.getCountry());
+        entity.setCity(location.getCity());
+        return entity;
     }
-
 }

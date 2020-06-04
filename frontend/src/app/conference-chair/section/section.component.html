@@ -1,0 +1,27 @@
+<div class="big">
+<div class="container ">
+  <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card-body ">
+      <form (ngSubmit)="onSubmit()" #sectionForm="ngForm">
+        <div class="form-group">
+          <label for="Name" style="text-align: center;">Enter the name of the conference</label>
+          <br>
+          <input type="text" [(ngModel)]="section.name"
+                 class="form-control"
+                 id="Name"
+                 name="Name"
+                 placeholder="Name"
+                 required #Name="ngModel">
+        </div>
+        <div *ngIf="Name.invalid && Name.touched" class="alert alert-danger">Name is required</div>
+
+        <div class="col text-center">
+        <button type="submit" [disabled]="!sectionForm.form.valid"
+                class="btn btn-info">Submit</button>
+        </div>
+      </form>
+      <img src="assets\img\LogoZ.png" style="width:450px;height:500px;margin-left: 280px;" >
+    </div>
+  </div>
+</div>
+</div>

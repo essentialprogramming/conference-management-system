@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/style.css">
 </head>
 
 <body>
@@ -27,42 +25,57 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Log in</button>
         </div>
-        <span id="demo"/>
+        <span id="error"/>
     </form>
+
+
 </div>
 
 
 <script>
-
-function login(event) {
-
-    event.preventDefault();
-    const form = document.getElementById('loginForm');
-    let rawData = new FormData(form);
-
-    let data = {};
-    for(let pair of rawData.entries()) {
-     data[pair[0]] = pair[1];
+    function get(name){
+        if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+            return decodeURIComponent(name[1]);
     }
 
-    console.log(data);
-    let contactData = JSON.stringify(data);
 
-    new Promise((resolve, reject) => {
+    function login(event) {
+
+        event.preventDefault();
+        const form = document.getElementById('loginForm');
+        let rawData = new FormData(form);
+
+        let data = {};
+        for(let pair of rawData.entries()) {
+            data[pair[0]] = pair[1];
+        }
+
+        console.log(data);
+        let contactData = JSON.stringify(data);
+        let redirectUri = get("redirect_uri");
+        let loginPromise = new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-                    xhr.open('POST', '/api/login');
-                    xhr.setRequestHeader('Content-Type', 'application/json');
-                    xhr.onerror = () => reject(xhr.statusText);
-                    xhr.send(contactData);
-                    xhr.onreadystatechange = function() {
-                            if (this.readyState == 4 && this.status == 200) {
-                                    var response = JSON.parse(this.responseText);
-                                    alert(response["status"]);
-                                    document.getElementById("demo").innerHTML = response.status;
-                            }
-                     };
-             })
-}
+        xhr.open('POST', '/api/authenticate?redirect_uri=' + redirectUri);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = (response) => resolve(response.currentTarget.responseText);
+        xhr.onerror = () => reject(xhr.statusText);
+        xhr.send(contactData);
+    });
+
+        loginPromise
+            .then(responseText => {
+            let json = JSON.parse(responseText);
+        if (json.response.status != "Error"){
+            window.location.replace(json.response.redirectUrl);
+        } else{
+            document.getElementById("error").innerHTML = json.response.error;
+        }
+    })
+    .catch(function(error) {
+            console.log(error);
+        });
+
+    }
 
 
 </script>

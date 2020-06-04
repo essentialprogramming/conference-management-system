@@ -1,0 +1,100 @@
+
+<div class="container">
+<div class="card shadow-lg p-3 mb-5 bg-white rounded">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #conferenceForm="ngForm">
+      <div class="form-group">
+        <label for="interval">Interval</label>
+        <input type="text" [(ngModel)]="conference.program.interval"
+               class="form-control"
+               id="interval"
+               name="interval"
+               placeholder="Interval"
+               required #interval="ngModel">
+      </div>
+      <!-- <div *ngIf="interval.invalid && interval.touched" class="alert alert-danger">Interval is required</div> -->
+
+      <div class="form-group">
+        <label for="Date">Date</label>
+        <input type="text" [(ngModel)]="conference.program.date"
+               class="form-control"
+               id="Date"
+               name="Date"
+               placeholder="Date"
+               required #Date="ngModel">
+      </div>
+      <!-- <div *ngIf="Date.invalid && Date.touched" class="alert alert-danger">Date is required</div> -->
+
+
+      <div class="form-group">
+        <label for="Abstract">Abstract Deadline</label>
+        <input type="text" [(ngModel)]="conference.program.abstractDeadline"
+               class="form-control"
+               id="Abstract"
+               name="Abstract"
+               placeholder="Abstract Deadline"
+               required #Abstract="ngModel">
+        <!-- <div *ngIf="Abstract.invalid && Abstract.touched" class="alert alert-danger">Abstract Deadline are required</div> -->
+      </div>
+
+      <div class="form-group">
+        <label for="Proposal">Proposal Deadline</label>
+        <input type="text" [(ngModel)]="conference.program.proposalDeadline"
+               class="form-control"
+               id="Proposal"
+               name="Proposal"
+               placeholder="Proposal Deadline"
+               required #Proposal="ngModel">
+        <!-- <div *ngIf="Proposal.invalid && Proposal.touched" class="alert alert-danger">Proposal Deadline needed!</div> -->
+      </div>
+      <div class="form-group">
+        <label for="Bidding">Bidding Deadline</label>
+        <input type="text" [(ngModel)]="conference.program.biddingDeadline"
+               class="form-control"
+               id="Bidding"
+               name="Bidding"
+               placeholder="Bidding Deadline"
+               required #Bidding="ngModel">
+        <!-- <div *ngIf="Bidding.invalid && Bidding.touched" class="alert alert-danger">Bidding Deadline is required</div> -->
+      </div>
+      <div class="form-group">
+        <label for="event">Name</label>
+        <input type="text" [(ngModel)]="conference.name"
+               class="form-control"
+               id="event"
+               name="event"
+               placeholder="Name"
+               required #event="ngModel">
+        <!-- <div *ngIf="event.invalid && event.touched" class="alert alert-danger">Name is required</div> -->
+      </div>
+
+      <div class="form-group">
+        <label for="Country">Country</label>
+        <input type="text" [(ngModel)]="conference.location.country"
+               class="form-control"
+               id="Country"
+               name="Country"
+               placeholder="Country"
+               required #Country="ngModel">
+        <!-- <div *ngIf="Country.invalid && Country.touched" class="alert alert-danger">Country is required</div> -->
+      </div>
+      <div class="form-group">
+        <label for="City">City</label>
+        <input type="text" [(ngModel)]="conference.location.city"
+               class="form-control"
+               id="City"
+               name="City"
+               placeholder="City"
+               required #City="ngModel">
+        <!-- <div *ngIf="City.invalid && City.touched" class="alert alert-danger">City is required</div> -->
+      </div>
+
+      <br>
+      <div class="col text-center">
+      <button type="submit" [disabled]="!conferenceForm.form.valid"
+              class="btn btn-info">Edit</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>

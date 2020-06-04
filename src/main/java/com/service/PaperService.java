@@ -3,18 +3,18 @@ package com.service;
 
 import com.entities.AuthorEntity;
 import com.entities.PaperEntity;
-import com.mapper.PaperMapper;
 import com.model.PaperInput;
+import com.mapper.PaperMapper;
 import com.output.PaperJSON;
 import com.repository.AuthorRepository;
 import com.repository.PaperRepository;
+import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import javax.lang.model.util.AbstractElementVisitor7;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,12 +36,15 @@ public class PaperService {
     public PaperJSON submitPaper(PaperInput paperInput) {
 
         PaperEntity entity = PaperMapper.paperToEntity(paperInput);
-
-        for (String email : paperInput.getAuthors()) {
+        for(String email : paperInput.getAuthors())
+        {
             Optional<AuthorEntity> author = authorRepository.findById(email);
-            if (author.isPresent()) {
+            if(author.isPresent())
+            {
                 entity.addAuthor(author.get());
-            } else {
+            }
+            else
+            {
                 AuthorEntity newAuthor = new AuthorEntity(email);
                 authorRepository.save(newAuthor);
                 entity.addAuthor(newAuthor);
@@ -51,6 +54,7 @@ public class PaperService {
         paperRepository.save(entity);
         return PaperMapper.entityToPaper(entity);
     }
+
 
     @Transactional
     public PaperJSON findById(int id) {
@@ -99,5 +103,6 @@ public class PaperService {
 
         paperRepository.save(existingPaper);
     }
+
 
 }

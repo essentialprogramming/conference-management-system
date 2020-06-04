@@ -1,0 +1,10 @@
+.container{
+    margin-top: 100px;
+    height: 100%;
+}
+.row{
+    height: 100vh;
+}
+.card-body{
+  background-color: white;
+}
