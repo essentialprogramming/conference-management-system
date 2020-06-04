@@ -1,0 +1,62 @@
+<div class="big">
+<div class="container">
+    <div class="col-md-12">
+      <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+          <h3 style="text-align: center; color: gray">{{title1}}</h3>
+          <hr>
+          <br>
+          <table class="table table-hover" style="cursor: default;">
+
+            <tr class="table-secondary">
+              <th scope="col" style="color: gray;">Title</th>
+              <th scope="col" style="color: gray;">Description</th>
+              <th scope="col" style="color: gray;">Topics</th>
+
+            </tr>
+
+            <tbody>
+            <tr *ngFor="let paper of papers" (click)="RowSelected(paper)">
+              <td >{{ paper.title }}</td>
+              <td>{{paper.description}}</td>
+              <td>{{paper.topics}}</td>
+
+
+            </tr>
+            </tbody>
+          </table>
+            </div>
+          <hr>
+            <div class="col-md-6">
+          <h3 style="text-align: center; color: gray">{{title2}}</h3>
+          <hr>
+          <br>
+          <table class="table table-hover" style="cursor: default;">
+
+            <tr class="table-secondary">
+              <th scope="col" style="color: gray;">Name</th>
+            </tr>
+
+            <tbody>
+            <tr *ngFor="let section of sections"(click)="RowSelectedSection(section)">
+              <td>{{section.name}}</td>
+
+            </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <br>
+          <div class="col text-center">
+            <hr>
+
+          <button class="btn btn-info" (click)="assign()">Assign </button>
+          </div>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+</div>
+</div>

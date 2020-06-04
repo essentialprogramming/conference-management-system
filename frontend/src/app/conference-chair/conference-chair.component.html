@@ -1,0 +1,122 @@
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card bg-dark my-5">
+        <div class="card-body">
+          <h2 class="card-title text-center text-white py-3">{{ title }}</h2>
+          <ul class="text-center list-inline py-3">
+            <li class="list-inline-item">
+
+              <a routerLink="addConference" class="btn btn-info"> Add Conference</a>
+            </li>
+            <li class="list-inline-item">
+
+              <a routerLink="assignPapers" class="btn btn-info">Assign Papers</a>
+            </li>
+            <li class="list-inline-item">
+
+              <a routerLink="viewConferences" class="btn btn-info">View Conference</a>
+            </li>
+            <li class="list-inline-item">
+
+              <a routerLink="createSection" class="btn btn-info">Create Section</a>
+            </li>
+            <li class="list-inline-item">
+
+              <a routerLink="assignSection" class="btn btn-info">Assign Section</a>
+            </li>
+            <li class="list-inline-item">
+
+              <a routerLink="assignSupervisor" class="btn btn-info">Assign Supervisor</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="hero">
+  <div class="container">
+    <div class="hero__wrap">
+      <div class="row">
+        <div class="col-sm-6">
+          <h1 class="hero__title">
+            Hello {{title}}
+          </h1>
+          <p class="hero__text">
+              You are a Conference chair. Bellow are some shortcuts for your functionalities
+          </p>
+          <div class="hero__buttons">
+            <!-- <a href="" class="btn btn--alt btn--round btn--lg full-xs"><strong>Go Go Go</strong> <i class="fa fa-chevron-right"></i></a> -->
+            <a class="btn btn--alt btn--round btn--lg full-xs" routerLink="/addConference"  > Edit Conference</a>
+            <a class="btn btn--alt btn--round btn--lg full-xs" routerLink="/assignPapers"  > Assign Papers</a><br>
+            <a class="btn btn--alt btn--round btn--lg full-xs" routerLink="/createSection"  > Create Section</a><br>
+            <a class="btn btn--alt btn--round btn--lg full-xs" routerLink="/assignSection"  > Assign Section</a>
+            <a class="btn btn--alt btn--round btn--lg full-xs" routerLink="/assignSupervisor"  > Assign Supervisor</a><br>
+            <a class="btn btn--alt btn--round btn--lg full-xs" routerLink="/assignReviewerPaper"  > Assign Reviewer to paper</a><br>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <router-outlet></router-outlet>
+
+  <!-- <section class="section section--blue text-center section--xl section--light">
+    <div class="container container--sm">
+      <h1 class="section__title">Don't have an account yet?</h1>
+      <p class="text--md">
+        It's so easy to sign up with us. Let us help you!
+      </p>
+      <a href="/signin" class="btn btn--round btn--primary btn--lg">Choose how you want to register <i class="fa fa-chevron-right"></i></a>
+    </div>
+  </section> -->
+
+  <!-- <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Cover</h3>
+              <nav class="nav nav-masthead">
+                <a class="nav-link active" href="#">Home</a>
+                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="#">Contact</a>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <h1 class="cover-heading">Cover your page.</h1>
+            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+            <p class="lead">
+              <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Cover template for <a href="https://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+     Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+

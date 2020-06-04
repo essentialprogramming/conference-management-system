@@ -1,0 +1,128 @@
+td{
+  color: white;
+}
+.hero {
+  color: #fff;
+  height: 100%;
+  font-size: 24px;
+  overflow: hidden;
+  background: url(/assets/img/home.png) no-repeat 50% 50%;
+  background-size: auto;
+  background-color: #003459 !important;
+  padding-bottom: 25vh;
+}
+
+h1, .h1 {
+  font-size: 36px;
+  line-height: 1.1;
+  margin-bottom: 45px;
+}
+div {
+  display: block;
+}
+
+
+html {
+  overflow-x: hidden;
+
+}
+.hero__title {
+  padding-top: 305px;
+  font-size: 50px;
+  font-weight: 700;
+}
+.hero__text {
+  
+  font-weight: 300;
+}
+html {
+  font-size: 10px;
+}
+html {
+  font-family: sans-serif;
+
+}
+
+
+.hero__buttons a {
+  margin-top: 60px;
+  color: #fff;
+}
+a:visited, a:active, a:focus {
+  color: #02a6de;
+}
+.hero__buttons>* {
+  margin-right: 20px;
+}
+.btn--alt {
+  background-color: #fb601f;
+  color: #fff !important;
+}
+.btn--round {
+  border-radius: 25px;
+  padding: 0 35px;
+}
+.btn--lg {
+  font-weight: bold;
+  height: 60px;
+  line-height: 58px;
+}
+.btn, .btn:hover, .btn:active, .btn:focus {
+  text-decoration: none;
+}
+.btn--round.btn--lg {
+  border-radius: 30px;
+  font-size: 20px;
+} 
+
+/* get started section*/
+.text-center {
+  text-align: center !important;
+}
+
+.section--light {
+  background: url(/assets/img/joinNow.png) no-repeat center top;
+  background-repeat: no-repeat;
+}
+.section--blue {
+  background-color: #02a6de !important;
+  color: #fff;
+}
+.section--xl {
+  padding: 120px 0;
+}
+.section {
+  padding: 40px 0;
+}
+.text-center {
+  text-align: center;
+}
+.container--sm {
+  max-width: 700px !important;
+}
+
+
+
+.btn--round.btn--lg {
+  border-radius: 30px;
+  font-size: 20px;
+}
+a:visited, a:active, a:focus {
+  color: #02a6de;
+}
+.btn--primary {
+  background-color: #102e4a;
+  color: #fff !important;
+}
+.btn--round {
+  border-radius: 25px;
+  padding: 0 35px;
+}
+.btn--lg {
+  font-weight: bold;
+  height: 60px;
+  line-height: 58px;
+}
+.btn, .btn:hover, .btn:active, .btn:focus {
+  text-decoration: none;
+}

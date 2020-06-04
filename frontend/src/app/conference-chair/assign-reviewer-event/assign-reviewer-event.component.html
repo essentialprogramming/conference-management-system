@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="col-md-12">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 style="text-align: center; color: gray">{{title}}</h3>
+            <hr>
+            <br>
+
+            <table  class="table table-hover " style="cursor:initial">
+
+              <tr class="table-secondary">
+                <th scope="col" style="color: gray;">Email</th>
+                <th scope="col" style="color: gray;">Bid</th>
+
+              </tr>
+
+              <tbody>
+
+              <tr *ngFor="let pcMember of pcMembers" (click)="RowSelectedPcMembers(pcMember)">
+
+                <td style="cursor: default;" >{{ pcMember.email }}</td>
+                <td style="cursor: default;"> {{ pcMember.status }}</td>
+
+
+
+              </tr>
+
+
+
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6">
+            <h3 style="text-align: center; color: gray">{{title2}}</h3>
+            <hr>
+            <br>
+            <table class="table table-hover " style="cursor:initial" >
+
+              <tr class="table-secondary">
+
+
+                <th scope="col" style="color: gray;">Name</th>
+                <th scope="col" style="color: gray;">Date</th>
+                <th scope="col" style="color: gray;">City</th>
+
+              </tr>
+
+              <tbody>
+              <tr *ngFor="let event of events" (click)="RowSelectedEvent(event)">
+
+                <td style="cursor: default;" >{{ event.name }}</td>
+                <td style="cursor: default;" >{{event.program.date}}</td>
+                <td style="cursor: default;">{{event.location.city}}</td>
+
+
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <br>
+
+        <div class="col text-center">
+          <hr>
+          <button class="btn btn-info" style="text-align: center;" (click)="assign()" >Assign </button>
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="big">
+<div class="container">
+    <div class="col-md-12">
+      <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+          <br>
+          <h3 style="text-align: center; color: gray">{{title2}}</h3>
+          <br>
+          <br>
+          <table class="table table-hover" style="cursor: default;">
+
+            <tr class="table-secondary">
+              <th scope="col" style="color: gray;">Title</th>
+              <th scope="col" style="color: gray;">Description</th>
+              <th scope="col" style="color: gray;">Topics</th>
+              <th scope="col" style="color: gray;"></th>
+
+            </tr>
+
+            <tbody>
+            <tr *ngFor="let paper of papers" 
+                [class.selected]="paper === selectedPaper"
+>
+              <td style="color: gray;">{{paper.title }}</td>
+              <td style="color: gray;">{{paper.description}}</td>
+              <td style="color: gray;">{{paper.topics}}</td>
+              <td>
+                <button class="btn btn-secondary" style="text-align: center;" (click)="goEdit(paper)">Edit</button>
+              </td>
+
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+</div>
+</div>

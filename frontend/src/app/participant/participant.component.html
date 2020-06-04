@@ -1,0 +1,99 @@
+
+    <div class="big">
+    <div class="hero">
+      <div class="container">
+        <div class="hero__wrap">
+          <div class="row ">
+            <div class="col-sm-5 shadow-lg">
+
+              <h1 class="hero__title">
+                Welcome {{this.name}}
+              </h1>
+              <hr>
+              <p class="hero__text">
+                We are glad you subscribed to our news feed about the conferences we manage.<br><br>
+                 We are curently displaying details about the conference <strong>"{{this.conference.name}}"</strong><br><br>
+                  The conference is located in {{this.conference.location.city}}, {{this.conference.location.country}}
+                  and it began on {{this.conference.program.date}}.
+                  <br><br><br><br>
+                  
+              </p>
+              <hr>
+              <h1 class="hero__title">
+                Program
+              </h1>
+              <p class="hero__text">
+                The program is fairly simple as you can see:
+                  <br><br><br>
+                 I don't know what the interval is but this is it: {{this.conference.program.interval}}<br>
+                We manage proposals created by our authors. The deadline until all proposals can be submitted is {{this.conference.program.proposalDeadline}}.<br><br>
+                The program committee members choose if they want to review these papers. The deadLine for bidding proposals is {{this.conference.program.biddingDeadline}}
+              </p>
+
+<hr><br><br>
+<h1 class="hero__title">
+  People
+</h1>
+              <p class="hero__text">
+                 Bellow we are giving you the option to see this conference's members:<br><br>
+                 This people form the committee members team:
+                 <!-- <a> maybe parse them? -->
+                 {{this.conference.programCommittee}}
+                 <br>
+                 <br>
+                 And this talented writers represent the speakers:
+                 {{this.conference.speakers}}
+              </p>
+              <hr><br><br>
+<h1 class="hero__title">
+  Sections
+</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div> 
+
+
+      <!-- <body>
+
+        <div class="site-wrapper">
+    
+          <div class="site-wrapper-inner">
+    
+            <div class="cover-container">
+    
+              <div class="masthead clearfix">
+                <div class="inner">
+                  <h3 class="masthead-brand">Cover</h3>
+                  <nav class="nav nav-masthead">
+                    <a class="nav-link active" href="#">Home</a>
+                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#">Contact</a>
+                  </nav>
+                </div>
+              </div>
+    
+              <div class="inner cover">
+                <h1 class="cover-heading">Cover your page.</h1>
+                <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+                <p class="lead">
+                  <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+                </p>
+              </div>
+    
+              <div class="mastfoot">
+                <div class="inner">
+                  <p>Cover template for <a href="https://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+                </div>
+              </div>
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+         Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->

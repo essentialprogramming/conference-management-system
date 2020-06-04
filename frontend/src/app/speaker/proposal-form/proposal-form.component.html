@@ -1,0 +1,85 @@
+<div class="container ">
+<div class="card shadow-lg p-3 mb-5 bg-white rounded">
+  <div class="card-body ">
+    <form  #proposalForm="ngForm">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" [(ngModel)]="proposal.title"
+               class="form-control"
+               id="title"
+               name="title"
+               placeholder="Enter the title"
+               required #title="ngModel">
+      </div>
+      <div *ngIf="title.invalid && title.touched" class="alert alert-danger">Title is required</div>
+      <div class="form-group">
+        <label for="keywords">Keywords</label>
+        <input type="text" [(ngModel)]="proposal.keywords"
+               class="form-control"
+               id="keywords"
+               name="keywords"
+               placeholder="Keywords"
+               required #keywords="ngModel">
+        <div *ngIf="keywords.invalid && keywords.touched" class="alert alert-danger">Keywords are required</div>
+      </div>
+
+      <div class="form-group">
+        <label for="topics">Topics</label>
+        <input type="text" [(ngModel)]="proposal.topics"
+               class="form-control"
+               id="topics"
+               name="topics"
+               placeholder="Topics"
+               required #topics="ngModel">
+        <div *ngIf="topics.invalid && topics.touched" class="alert alert-danger">Topics needed!</div>
+      </div>
+
+      <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" [(ngModel)]="proposal.description"
+               class="form-control"
+               id="Description"
+               name="Description"
+               placeholder="Description"
+               required #Description="ngModel">
+        <div *ngIf="Description.invalid && Description.touched" class="alert alert-danger">Description is required</div>
+      </div>
+
+      <div class="form-group">
+        <label for="Authors">Authors</label>
+        <input type="text" [(ngModel)]="proposal.authors"
+               class="form-control"
+               id="Authors"
+               name="Authors"
+               placeholder="Authors"
+               required #Authors="ngModel">
+        <div *ngIf="Authors.invalid && Authors.touched" class="alert alert-danger">Authors are required</div>
+      </div>
+
+      <!-- <input type="file" *ngIf="flag"  id="myFile" name="filename" (change)="onFileSelected($event)"> -->
+
+      <div *ngIf="flag" class="form-group">
+        <input type="file"
+               id="file"
+               
+               (change)="handleFileInput($event.target.files)">
+      <button *ngIf="flag"  (click)="newFunciton()"
+              class="btn btn-info">Upload</button>
+      <button *ngIf="flag"  (click)="downloadFile()"
+              class="btn btn-info">DownLoad</button>
+      </div>
+
+      <hr>
+      <div class="col text-center">
+      <button *ngIf="flag"  (click)="EditNow()"
+              class="btn btn-info">Update</button>
+      <button type="submit"  *ngIf="!flag" [disabled]="!proposalForm.form.valid" (click)="onSubmit()"
+              class="btn btn-info">Submit</button>
+      </div>
+
+    </form>
+
+    <img src="assets\img\LogoZ.png" style="width:450px;height:500px;margin-left: 280px;" >
+  </div>
+</div>
+</div>
