@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -39,10 +40,20 @@ public class CommitteeMemberEntity extends UserEntity {
         super(email);
     }
 
-    public EvaluationEntity addReview(PaperEntity paper) {
-        EvaluationEntity review = new EvaluationEntity(this,  paper);
-        evaluations.add(review);
-        paper.getReviews().add(review);
-        return review;
+    public void addReview(PaperEntity paper) {
+
+        if (!evaluations.isEmpty()) {
+            for (EvaluationEntity evaluation : evaluations) {
+                if (!evaluation.getPaper().equals(paper)) {
+                    EvaluationEntity review = new EvaluationEntity(this, paper);
+                    evaluations.add(review);
+                    paper.getReviews().add(review);
+                }
+            }
+        } else {
+            EvaluationEntity review = new EvaluationEntity(this, paper);
+            evaluations.add(review);
+            paper.getReviews().add(review);
+        }
     }
 }
