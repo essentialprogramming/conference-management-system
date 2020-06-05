@@ -18,7 +18,7 @@
             </tr>
 
             <tbody>
-            <tr *ngFor="let paper of papers" (click)="RowSelected(paper)">
+            <tr *ngFor="let paper of papers;let i = index" (click)="RowSelected(paper)" (click)="setClickedRowPC(i)" [class.active]= "i == selectedRowPC">
               <td >{{ paper.title }}</td>
               <td>{{paper.description}}</td>
               <td>{{paper.topics}}</td>
@@ -40,7 +40,7 @@
             </tr>
 
             <tbody>
-            <tr *ngFor="let section of sections"(click)="RowSelectedSection(section)">
+            <tr *ngFor="let section of sections;let i = index"(click)="RowSelectedSection(section)" (click)="setClickedRowPaper(i)" [class.active]= "i == selectedRow">
               <td>{{section.name}}</td>
 
             </tr>

@@ -16,7 +16,7 @@
             </tr>
 
             <tbody>
-            <tr *ngFor="let pcMember of pcMembers" (click)="rowSelectedPcMember(pcMember)">
+            <tr *ngFor="let pcMember of pcMembers;let i = index" (click)="rowSelectedPcMember(pcMember)" (click)="setClickedRowPC(i)" [class.active]= "i == selectedRowPC" >
               <td>{{pcMember.email}}</td>
 
 
@@ -37,7 +37,7 @@
             </tr>
 
             <tbody>
-            <tr *ngFor="let section of sections" (click)="rowSelectedSections(section)">
+            <tr *ngFor="let section of sections;let i = index" (click)="rowSelectedSections(section)" (click)="setClickedRowPaper(i)" [class.active]= "i == selectedRow">
               <td>{{section.name}}</td>
 
             </tr>

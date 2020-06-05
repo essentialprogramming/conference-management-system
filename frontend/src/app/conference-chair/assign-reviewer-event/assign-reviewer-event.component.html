@@ -18,7 +18,7 @@
 
               <tbody>
 
-              <tr *ngFor="let pcMember of pcMembers" (click)="RowSelectedPcMembers(pcMember)">
+              <tr *ngFor="let pcMember of pcMembers;let i = index" (click)="RowSelectedPcMembers(pcMember)" (click)="setClickedRowPaper(i)" [class.active]= "i == selectedRow">
 
                 <td style="cursor: default;" >{{ pcMember.email }}</td>
                 <td style="cursor: default;"> {{ pcMember.status }}</td>
@@ -48,7 +48,7 @@
               </tr>
 
               <tbody>
-              <tr *ngFor="let event of events" (click)="RowSelectedEvent(event)">
+              <tr *ngFor="let event of events;let i = index" (click)="RowSelectedEvent(event)" (click)="setClickedRowPC(i)" [class.active]= "i == selectedRowPC">
 
                 <td style="cursor: default;" >{{ event.name }}</td>
                 <td style="cursor: default;" >{{event.program.date}}</td>

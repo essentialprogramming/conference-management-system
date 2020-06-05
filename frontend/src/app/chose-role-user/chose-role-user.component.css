@@ -3,9 +3,7 @@ td{
   }
   .hero {
     color: #fff;
-    height: 100vh;
     font-size: 24px;
-    overflow: hidden;
     background: url(/assets/img/home.png) no-repeat 50% 50%;
     background-size: auto;
     background-color: #003459 !important;
@@ -22,14 +20,9 @@ td{
   div {
     display: block;
   }
-  
-  
-  html {
-    overflow-x: hidden;
-  
-  }
+
   .hero__title {
-    padding-top: 280px;
+    padding-top: 300px;
     font-size: 50px;
     font-weight: 700;
   }

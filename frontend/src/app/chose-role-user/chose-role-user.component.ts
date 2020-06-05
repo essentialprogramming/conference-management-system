@@ -15,20 +15,20 @@ export class ChoseRoleUserComponent implements OnInit {
 
   heGoesSpeaker(){
 
-    this.auth.heWantsSpeaker("speaker");
+    this.auth.heWantsSpeaker('speaker');
     localStorage.setItem('role','speaker');
 
     window.location.replace('http://localhost:8080/api/login?redirect_uri=http://localhost:4200/home');
   }
   heGoesReviewer(){
 
-    this.auth.heWantsReviewer("reviewer");
+    this.auth.heWantsReviewer('reviewer');
     localStorage.setItem('role','reviewer');
     window.location.replace('http://localhost:8080/api/login?redirect_uri=http://localhost:4200/home');
   }
   heGoesConferenceChair(){
 
-    this.auth.heWantsConferenceChair("participant");
+    this.auth.heWantsConferenceChair('participant');
     localStorage.setItem('role','participant');
     window.location.replace('http://localhost:8080/api/login?redirect_uri=http://localhost:4200/home');
   }

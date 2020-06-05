@@ -19,7 +19,7 @@
 
             <tbody>
 
-            <tr *ngFor="let pcMember of pcMembers" (click)="RowSelectedPcMembers(pcMember)">
+            <tr *ngFor="let pcMember of pcMembers;let i = index" (click)="RowSelectedPcMembers(pcMember)" (click)="setClickedRowPC(i)" [class.active]= "i == selectedRowPC">
 
               <td style="cursor: default;" >{{ pcMember.email }}</td>
               <td style="cursor: default;"> {{ pcMember.status }}</td>
@@ -49,7 +49,7 @@
             </tr>
 
             <tbody>
-            <tr *ngFor="let paper of papers" (click)="RowSelected(paper)">
+            <tr *ngFor="let paper of papers;let i = index" (click)="RowSelected(paper,i)" (click)="setClickedRowPaper(i)" [class.active]= "i == selectedRow">
 
               <td style="cursor: default;" >{{ paper.title }}</td>
               <td style="cursor: default;" >{{paper.description}}</td>

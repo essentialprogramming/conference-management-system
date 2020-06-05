@@ -9,3 +9,7 @@
 .card-body{
 background-color: white;
 }
+.table tr.active td {
+  background-color: lightgray;
+  color: white;
+}

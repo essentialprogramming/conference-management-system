@@ -10,7 +10,7 @@ export class ReviewerServiceService {
   private paperURL: string;
   private paperUReL = 'http://localhost:8080/api/paper';
   private bidUrl = 'http://localhost:8080/api/programCommittee/bid';
-  private qualifierUrl = 'http://localhost:8080/api/programCommittee/review';
+  private qualifierUrl = 'http://localhost:8080/api/programCommittee/review/paper';
   private acceptedPapersURL = 'http://localhost:8080/api/programCommittee/papers';
   private paper: Paper;
   private qualifier: Qualifier;

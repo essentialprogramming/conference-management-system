@@ -3,7 +3,7 @@
     <div class="hero">
       <div class="container">
         <div class="hero__wrap">
-          <div class="row ">
+          <div class="row">
             <div class="col-sm-5 shadow-lg">
 
               <h1 class="hero__title">
@@ -25,7 +25,7 @@
               <p class="hero__text">
                 The program is fairly simple as you can see:
                   <br><br><br>
-                 I don't know what the interval is but this is it: {{this.conference.program.interval}}<br>
+                 The interval in which the conference will be held is: {{this.conference.program.interval}}<br>
                 We manage proposals created by our authors. The deadline until all proposals can be submitted is {{this.conference.program.proposalDeadline}}.<br><br>
                 The program committee members choose if they want to review these papers. The deadLine for bidding proposals is {{this.conference.program.biddingDeadline}}
               </p>
@@ -36,18 +36,50 @@
 </h1>
               <p class="hero__text">
                  Bellow we are giving you the option to see this conference's members:<br><br>
-                 This people form the committee members team:
+                 This people are part of the program committee:
                  <!-- <a> maybe parse them? -->
-                 {{this.conference.programCommittee}}
+                 </p>
+                 
+                 <div *ngFor="let pc of this.pcMembers;let i = index" >
+
+                    <p class="hero__text" >
+                      {{pc.email}}
+                   </p>   
+  
+                </div>
+                <!-- <p>
                  <br>
                  <br>
-                 And this talented writers represent the speakers:
+                 And these talented writers represent the speakers:
                  {{this.conference.speakers}}
-              </p>
+              </p> -->
               <hr><br><br>
-<h1 class="hero__title">
-  Sections
-</h1>
+              <h1 class="hero__title">
+                Sections
+              </h1>
+              <p class="hero__text">
+                These are the present sections for this conference:
+                <!-- <a> maybe parse them? -->
+                
+             </p>
+              <div *ngFor="let section of sections;let i = index" >
+                <div *ngIf="section.supervisiorEmail"> 
+                  <p class="hero__text" >
+                    <strong>"{{section.name}}"</strong> and it's supervisor {{section.supervisiorEmail}}
+                 </p>
+                </div>
+                
+
+              </div>
+              <div *ngFor="let section of sections;let i = index" >
+                <div *ngIf="!section.supervisiorEmail">
+                  <p class="hero__text" >
+                    <strong>"{{section.name}}"</strong> does not have a supervisor yet.
+                 </p>
+                </div>
+                
+
+              </div>
             </div>
           </div>
         </div>
