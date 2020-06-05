@@ -7,6 +7,7 @@ import com.model.Role;
 import com.security.TokenUtil;
 import com.service.AuthenticationService;
 import com.web.json.JsonResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,6 +45,7 @@ public class AuthenticationController {
 
     @GET
     @Path("authorize")
+    @Operation(hidden = true)
     public Response  authorize(@QueryParam("redirectUri") String redirectUri) throws UnsupportedEncodingException {
         // forward user to the login page with the desired redirect_uri as path param
         final URI url = UriComponentsBuilder
@@ -57,6 +59,7 @@ public class AuthenticationController {
 
     @GET
     @Path("login")
+    @Operation(hidden = true)
     public Response authenticate(@QueryParam("redirect_uri") String redirect_uri) {
         InputStream resource = context.getResourceAsStream("login.html");
         return null == resource ? Response.status(NOT_FOUND).build() : Response.ok().entity(resource).build();
@@ -65,6 +68,7 @@ public class AuthenticationController {
 
     @GET
     @Path("register")
+    @Operation(hidden = true)
     public Response register(@QueryParam("redirectUri") String redirectUri) throws UnsupportedEncodingException {
         // forward user to the login page with the desired redirect_uri as path param
         final URI url = UriComponentsBuilder
@@ -78,6 +82,7 @@ public class AuthenticationController {
 
     @GET
     @Path("registeraccount")
+    @Operation(hidden = true)
     public Response registerAccount(@QueryParam("redirect_uri") String redirect_uri) {
         InputStream resource = context.getResourceAsStream("index.html");
         return null == resource ? Response.status(NOT_FOUND).build() : Response.ok().entity(resource).build();
@@ -87,6 +92,7 @@ public class AuthenticationController {
     @Path("registerandauthenticate")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(hidden = true)
     public JsonResponse register(@QueryParam("redirect_uri") String redirectUri, Authentication profileInput) {
         authenticationService.register(profileInput);
         return new JsonResponse().with("redirectUrl", redirectUri).done();
@@ -96,6 +102,7 @@ public class AuthenticationController {
     @Path("authenticate")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(hidden = true)
     public JsonResponse authenticate(@QueryParam("redirect_uri") String redirectUri, Authentication profileInput) {
 
 
