@@ -18,4 +18,6 @@ public class SectionJSON {
     private int eventId;
     private String supervisorEmail;
     private List<String> attendees;
+    private List<String> papers;
+    private List<String> speakers;
 }

@@ -1,8 +1,6 @@
 package com.output;
 
 
-import com.model.LocationInput;
-import com.model.ProgramInput;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +21,5 @@ public class EventJSON {
     private List<String> programCommittee;
     private List<String> participants;
     private List<String> speakers;
+    private List<SectionJSON> sections;
 }

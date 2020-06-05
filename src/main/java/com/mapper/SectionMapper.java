@@ -1,7 +1,6 @@
 package com.mapper;
 
 import com.entities.SectionEntity;
-import com.entities.UserEntity;
 import com.model.SectionInput;
 import com.output.SectionJSON;
 
@@ -22,7 +21,11 @@ public class SectionMapper {
                 .name(entity.getName())
                 .eventId(entity.getEvent().getId())
                 .supervisorEmail(entity.getSupervisor() != null ? entity.getSupervisor().getEmail() : null)
-                .attendees(entity.getAttendees() != null ? entity.getAttendees().stream().map(UserEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
+                .papers(entity.getPapers() != null ? entity.getPapers()
+                        .stream()
+                        .map(p -> p.getTitle())
+                        .collect(Collectors.toList()) : new ArrayList<>())
+                .speakers(Utils.getSpeakers(entity))
                 .build();
     }
 }

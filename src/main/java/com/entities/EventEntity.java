@@ -54,5 +54,5 @@ public class EventEntity {
     private LocationEntity location;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<SectionEntity> section;
+    private List<SectionEntity> sections;
 }

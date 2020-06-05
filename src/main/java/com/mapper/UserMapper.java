@@ -1,5 +1,6 @@
 package com.mapper;
 
+import com.entities.ApplicationUser;
 import com.entities.UserEntity;
 import com.model.User;
 
@@ -18,5 +19,11 @@ public class UserMapper {
                 .build();
     }
 
+    public static User accountToUser(ApplicationUser appU)
+    {
+        return User.builder()
+                .email(appU.getUserName())
+                .build();
+    }
 
 }
