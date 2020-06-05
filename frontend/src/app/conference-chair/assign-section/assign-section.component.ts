@@ -11,6 +11,12 @@ import {Conference} from '../../models/conference';
   styleUrls: ['./assign-section.component.css']
 })
 export class AssignSectionComponent implements OnInit {
+
+  selectedRow : Number;
+  selectedRowPC: Number;
+  setClickedRowPaper : Function;
+  setClickedRowPC : Function;
+
   errorMessage: string;
 papers: Paper[];
 sections: Section[];
@@ -32,6 +38,12 @@ events: Conference[];
   ngOnInit() {
     this.getPapers();
     this.getConferences();
+    this.setClickedRowPaper = function(index){
+      this.selectedRow = index;
+    }
+    this.setClickedRowPC = function(index){
+      this.selectedRowPC = index;
+    }
 
   }
 

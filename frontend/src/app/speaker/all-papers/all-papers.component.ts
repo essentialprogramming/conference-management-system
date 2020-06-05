@@ -18,11 +18,13 @@ export class AllPapersComponent implements OnInit {
   papers: Paper[];
   selectedPaper: Paper;
   constructor(private speakerService: SpeakerServiceService, private router: Router) {
-    this.title = 'All papers';
-    this.title2 = 'All Papers';
+    this.title = 'Accepted papers';
+    this.title2 = 'Accepted Papers';
 
   }
 
+
+  
   ngOnInit() {
 
     this.getPapers();

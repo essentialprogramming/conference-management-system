@@ -1,7 +1,6 @@
  .hero {
     color: #fff;
     font-size: 24px;
-    height: 100%;
     overflow: hidden;
     background: url(/assets/img/paralax.png);
     background-color: #003459 !important;
@@ -13,8 +12,7 @@
     background-size: cover;
 }
 .row{
-    height: 100vh;
-    margin-bottom: 1500px;
+    height: 100%;
 }
 .col-sm-5{
     padding-bottom: 1500px;

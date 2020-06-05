@@ -12,6 +12,12 @@ import {PcMem} from '../../models/PcMem';
   styleUrls: ['./assign-supervisor.component.css']
 })
 export class AssignSupervisorComponent implements OnInit {
+
+  selectedRow : Number;
+  selectedRowPC: Number;
+  setClickedRowPaper : Function;
+  setClickedRowPC : Function;
+
   events : Conference[];
   pcMembers: PcMember[];
   pcMem: string[];
@@ -34,7 +40,12 @@ export class AssignSupervisorComponent implements OnInit {
   ngOnInit() {
 this.getPcMembers();
 this.getConferences();
-
+this.setClickedRowPaper = function(index){
+  this.selectedRow = index;
+}
+this.setClickedRowPC = function(index){
+  this.selectedRowPC = index;
+}
   }
 
   assign() {

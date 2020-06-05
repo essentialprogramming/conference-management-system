@@ -22,6 +22,7 @@ export class SpeakerServiceService {
   findAll(): Observable<Paper[]> {
     const email = localStorage.getItem('email');
     const url = `${this.authorPapers}/${email}`;
+    console.log(url);
     return this.http
     .get<Array<Paper>>(url);
   }
@@ -64,7 +65,7 @@ export class SpeakerServiceService {
     return this.http
       .post(url, formData, { headers: myHeadr })
       .map(() => { res => res.json()});
-     
+
 
   }
 

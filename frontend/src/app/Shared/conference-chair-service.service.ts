@@ -14,12 +14,14 @@ export class ConferenceChairServiceService {
   private paperURL = 'http://localhost:8080/api/papers';
   private  paperUReL = 'http://localhost:8080/api/paper';
   private conferenceUReL = 'http://localhost:8080/api/event';
+  private updateConferenceURL = 'http://localhost:8080/api/event/update';
   private pcmembersUReL = 'http://localhost:8080/api/programCommittee/members';
   private sectionURL = 'http://localhost:8080/api/event/section';
   private assignSupervisorSectionURL = 'http://localhost:8080/api/event/section/supervisor';
   private assignPaperURL = 'http://localhost:8080/api/programCommittee/assign/paper/to/review';
   private assignPaperToSectionURL = 'http://localhost:8080/api/programCommittee/assign/paper/to/section';
   private assignReviewerToEventURL = 'http://localhost:8080/api/event/committee';
+  private unnassignedPcMembersURL='http://localhost:8080/api/programCommittee/unassignedPCMembers';
   private conference: Conference;
   constructor(private http: HttpClient) {
     this.conferenceURL = 'http://localhost:8080/api/events';
@@ -38,6 +40,12 @@ export class ConferenceChairServiceService {
     return this.http
       .get<Array<PcMember>>(this.pcmembersUReL);
   }
+
+  unassignedPcMembers():Observable<PcMember[]>{
+    const url=`${this.unnassignedPcMembersURL}`;
+    return this.http.get<Array<PcMember>>(url);
+  }
+  
   findPcMembersForPaper(id): Observable<PcMember[]> {
     const url = `${this.pcmembersUReL}/${id}`;
     return this.http
@@ -51,10 +59,10 @@ export class ConferenceChairServiceService {
   }
 
 
-  updateConference(conference): Observable<Conference> {
+  updateConference(id,conference): Observable<Conference> {
 
-    const url = `${this.conferenceUReL}`;
-    return this.http.post<Conference>(url, conference);
+    const url = `${this.updateConferenceURL}/${id}`;
+    return this.http.put<Conference>(url, conference);
   }
   saveSection(id: string, section): Observable<SectionTest> {
     const url = `${this.sectionURL}/${id}`;

@@ -10,6 +10,12 @@ import {PcMem} from '../../models/PcMem';
   styleUrls: ['./assign-papers.component.css']
 })
 export class AssignPapersComponent implements OnInit {
+
+  selectedRow : Number;
+  selectedRowPC: Number;
+  setClickedRowPaper : Function;
+  setClickedRowPC : Function;
+
   title: string;
   ok: boolean;
   i: any;
@@ -28,6 +34,12 @@ export class AssignPapersComponent implements OnInit {
   ngOnInit() {
     this.getPapers();
     // this.getPcMembers();
+    this.setClickedRowPaper = function(index){
+      this.selectedRow = index;
+    }
+    this.setClickedRowPC = function(index){
+      this.selectedRowPC = index;
+    }
   }
 
   assign() {
@@ -55,11 +67,13 @@ export class AssignPapersComponent implements OnInit {
       );
   }
 
-  RowSelected(paper: Paper) {
+  RowSelected(paper: Paper,i) {
     this.getPcMembers(paper.id);
     this.selectedPaper = paper;
     console.log(this.selectedPaper);
   }
+
+
 
   RowSelectedPcMembers(pcMember: PcMember) {
     this.selectedPcMember = pcMember;

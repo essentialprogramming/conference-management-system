@@ -1,0 +1,15 @@
+.container{
+    margin-top: 100px;
+    height: 100vh;
+  }
+  .big{
+    height: 100%;
+  }
+  .card-body{
+  background-color: white;
+  }
+  
+  .table tr.active td {
+    background-color: lightgray;
+    color: white;
+  }
