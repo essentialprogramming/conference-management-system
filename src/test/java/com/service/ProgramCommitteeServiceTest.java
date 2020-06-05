@@ -74,4 +74,21 @@ public class ProgramCommitteeServiceTest {
 
     }
 
+    @Test
+    public void assignPaper(){
+        PaperEntity paper = ProgramCommitteeUtil.getPaper();
+        CommitteeMemberEntity pcMember = ProgramCommitteeUtil.getPcMember();
+        pcMember.setEvaluations(new ArrayList<>());
+
+        when(paperRepository.findById(1)).thenReturn(Optional.of(paper));
+        when(pcMemberRepository.findById(anyString())).thenReturn(Optional.of(pcMember));
+
+        pcMember.addReview(paper);
+
+        assertEquals(pcMember.getEvaluations().size(),1);
+        assertEquals(paper.getReviews().size(),1);
+        assertEquals(paper.getReviews().get(0).getReviewer().getEmail(),pcMember.getEmail());
+    }
+
+
 }
