@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 @EnableJpaRepositories({"com.repository"})
 public class JPAConfig {
 
+
    @Bean(name = "hikariDataSource")
    public HikariDataSource hikariDataSource(){
        HikariConfig config = new HikariConfig();
@@ -42,7 +43,7 @@ public class JPAConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(hikariDataSource());
-        factoryBean.setPackagesToScan("com");
+        factoryBean.setPackagesToScan("com.entities");
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(true);
         factoryBean.setJpaVendorAdapter(vendorAdapter);

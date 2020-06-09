@@ -22,7 +22,8 @@ import java.util.Optional;
 public class AuthenticationService {
 
     private ApplicationUserRepository applicationUserRepository;
-    private PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public AuthenticationService(ApplicationUserRepository applicationUserRepository) {

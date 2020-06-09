@@ -1,4 +1,4 @@
-package com.config;
+package com.api.resources.filter;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -22,7 +22,6 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
         // response filter method below.
         if (isPreflightRequest(request)) {
             request.abortWith(Response.ok().build());
-            return;
         }
     }
 

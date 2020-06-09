@@ -9,8 +9,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.servlet.ServletException;
 
-import com.config.ContextLoaderListenerInstanceFactory;
-import io.undertow.servlet.api.ListenerInfo;
+import com.api.resources.AuthenticationServlet;
+import io.undertow.servlet.api.*;
+import io.undertow.servlet.util.ImmediateInstanceFactory;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.config.ApplicationConfig;
@@ -25,19 +26,11 @@ import io.undertow.server.handlers.PathHandler;
 import io.undertow.server.handlers.StuckThreadDetectionHandler;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.server.handlers.resource.ResourceHandler;
-import io.undertow.servlet.api.DeploymentInfo;
-import io.undertow.servlet.api.DeploymentManager;
-import io.undertow.websockets.WebSocketConnectionCallback;
-import io.undertow.websockets.WebSocketProtocolHandshakeHandler;
-import io.undertow.websockets.core.AbstractReceiveListener;
-import io.undertow.websockets.core.BufferedTextMessage;
-import io.undertow.websockets.core.WebSocketChannel;
-import io.undertow.websockets.core.WebSockets;
-import io.undertow.websockets.spi.WebSocketHttpExchange;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.WebApplicationContext;
 
 import static com.util.cloud.DeploymentConfiguration.getProperty;
-import static io.undertow.Handlers.websocket;
+import static com.config.ApplicationContextFactory.getSpringApplicationContext;
 
 public final class UndertowServer {
 
@@ -55,17 +48,17 @@ public final class UndertowServer {
         this.deploymentName = deploymentName;
     }
 
-    private static ListenerInfo createContextLoaderListener() {
-        return new ListenerInfo(ContextLoaderListener.class,
-                new ContextLoaderListenerInstanceFactory());
 
+    private static ListenerInfo createContextLoaderListener(WebApplicationContext context) {
+        InstanceFactory<ContextLoaderListener> factory = new ImmediateInstanceFactory<>(new ContextLoaderListener(context));
+        return new ListenerInfo(ContextLoaderListener.class, factory);
     }
 
     private HttpHandler bootstrap() throws ServletException {
         final DeploymentInfo servletBuilder = deployment()
                 .setClassLoader(Server.class.getClassLoader())
                 .setContextPath("/")
-                .addListeners(createContextLoaderListener())
+                .addListeners(createContextLoaderListener(getSpringApplicationContext()))
                 .setResourceManager(new ClassPathResourceManager(Server.class.getClassLoader(), "webapp/resources"))
                 .addWelcomePage("index.html")
                 .setDeploymentName(deploymentName)
@@ -74,7 +67,11 @@ public final class UndertowServer {
                                 .addInitParam("javax.ws.rs.Application", ApplicationConfig.class.getName())
                                 .addMapping("/api/*")
                                 .setLoadOnStartup(1)
-                                .setAsyncSupported(true));
+                                .setAsyncSupported(true),
+                        servlet("authenticationServlet", AuthenticationServlet.class)
+                                .addMapping("/account/*")
+                                .setLoadOnStartup(1));
+
 
         final DeploymentManager manager = defaultContainer().addDeployment(servletBuilder);
         manager.deploy();

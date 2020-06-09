@@ -9,7 +9,7 @@ import java.util.function.Function;
  */
 public interface DeploymentConfiguration<T> {
 
-    final Function<String, String> ENV = (key) -> System.getenv().getOrDefault(key, System.getProperty(key));
+    Function<String, String> ENV = (key) -> System.getenv().getOrDefault(key, System.getProperty(key));
 
 
     @SuppressWarnings("unchecked")
