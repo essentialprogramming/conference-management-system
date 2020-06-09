@@ -37,34 +37,25 @@ public class AuthenticationService {
         if (!profile.isPresent()) {
             ApplicationUser profileEntity = ProfileMapper.profileToEntity(input);
 
-
-            if(profileEntity.getRoles()!=null)
-            {
-                profileEntity.getRoles().add(new RoleEntity(input.getRole()));
-            }
-            else
-            {
-                List<RoleEntity> newRoles = new ArrayList<>();
-                newRoles.add(new RoleEntity(input.getRole()));
-                profileEntity.setRoles(newRoles);
-            }
-
-
-            profileEntity.setPassword(bCryptPasswordEncoder.encode(input.getPassword()));
+            profileEntity.setRoles(new Role[1]);
+            profileEntity.getRoles()[0] = input.getRole();
+            profileEntity.setPassword(bCryptPasswordEncoder.encode(profileEntity.getPassword()));
             applicationUserRepository.save(profileEntity);
 
         } else {
+            if (profile.get().getRoles() == null) {
+                profile.get().setRoles(new Role[1]);
+                profile.get().getRoles()[0] = input.getRole();
+            } else {
+                Role[] roles = new Role[profile.get().getRoles().length + 1];
 
-            List<RoleEntity> roles = profile.get().getRoles();
-            if(!roles.contains(new RoleEntity(input.getRole())))
-            {
-
-                profile.get().getRoles().add(new RoleEntity(input.getRole()));
+                System.arraycopy(profile.get().getRoles(), 0, roles, 0, profile.get().getRoles().length);
+                roles[profile.get().getRoles().length] = input.getRole();
+                profile.get().setRoles(roles);
             }
 
             applicationUserRepository.save(profile.get());
         }
-
 
     }
 

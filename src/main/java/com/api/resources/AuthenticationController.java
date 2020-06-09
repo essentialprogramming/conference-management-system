@@ -116,13 +116,13 @@ public class AuthenticationController {
             cal.add(Calendar.DATE, 1);
 
             boolean isAuthor = false, isPc = false, isChair = false, isParticipant = false;
-            for(RoleEntity role : profile.get().getRoles())
+            for(Role role : profile.get().getRoles())
             {
-                if(role.getRole()==Role.AUTHOR)
+                if(role==Role.AUTHOR)
                     isAuthor = true;
-                if(role.getRole()==Role.PC_MEMBER)
+                if(role==Role.PC_MEMBER)
                     isPc = true;
-                if(role.getRole()==Role.CONFERENCE_CHAIR)
+                if(role==Role.CONFERENCE_CHAIR)
                     isChair = true;
             }
 
