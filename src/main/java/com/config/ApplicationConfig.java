@@ -2,6 +2,7 @@ package com.config;
 
 
 import com.api.resources.*;
+import com.api.resources.filter.CorsFilter;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;

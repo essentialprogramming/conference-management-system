@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AuthorEntity extends UserEntity {
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
     public List<PaperEntity> papers;
 
 

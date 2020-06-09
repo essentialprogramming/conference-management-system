@@ -9,21 +9,20 @@ import com.service.AuthenticationService;
 import com.web.json.JsonResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Path("/")
 public class AuthenticationController {
@@ -34,8 +33,17 @@ public class AuthenticationController {
     @Autowired
     private ServletContext context;
 
+    @Context
+    HttpServletRequest request;
+
+    @Context
+    HttpServletResponse response;
+
     private AuthenticationService authenticationService;
-    private PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
+
 
     @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
@@ -46,10 +54,12 @@ public class AuthenticationController {
     @GET
     @Path("authorize")
     @Operation(hidden = true)
-    public Response  authorize(@QueryParam("redirectUri") String redirectUri) throws UnsupportedEncodingException {
+    public Response  authorize(@QueryParam("redirect_uri") String redirectUri) throws MalformedURLException {
         // forward user to the login page with the desired redirect_uri as path param
+        final String protocol = uri.getBaseUri().toURL().getProtocol();
+        final String authority = uri.getBaseUri().getAuthority();
         final URI url = UriComponentsBuilder
-                .fromHttpUrl(uri.getBaseUri() + "login?redirect_uri=" + redirectUri)
+                .fromHttpUrl(String.format("%s://%s", protocol, authority) + "/account/login?redirect_uri=" + redirectUri)
                 .build()
                 .toUri();
         return Response.status(302)
@@ -57,22 +67,17 @@ public class AuthenticationController {
                 .build();
     }
 
-    @GET
-    @Path("login")
-    @Operation(hidden = true)
-    public Response authenticate(@QueryParam("redirect_uri") String redirect_uri) {
-        InputStream resource = context.getResourceAsStream("login.html");
-        return null == resource ? Response.status(NOT_FOUND).build() : Response.ok().entity(resource).build();
-    }
 
 
     @GET
     @Path("register")
     @Operation(hidden = true)
-    public Response register(@QueryParam("redirectUri") String redirectUri) throws UnsupportedEncodingException {
-        // forward user to the login page with the desired redirect_uri as path param
+    public Response register(@QueryParam("redirectUri") String redirectUri) throws MalformedURLException {
+        // forward user to the register page with the desired redirect_uri as path param
+        final String protocol = uri.getBaseUri().toURL().getProtocol();
+        final String authority = uri.getBaseUri().getAuthority();
         final URI url = UriComponentsBuilder
-                .fromHttpUrl(uri.getBaseUri() + "registeraccount?redirect_uri=" + redirectUri)
+                .fromHttpUrl(String.format("%s://%s", protocol, authority) + "/account/register?redirect_uri=" + redirectUri)
                 .build()
                 .toUri();
         return Response.status(302)
@@ -80,13 +85,6 @@ public class AuthenticationController {
                 .build();
     }
 
-    @GET
-    @Path("registeraccount")
-    @Operation(hidden = true)
-    public Response registerAccount(@QueryParam("redirect_uri") String redirect_uri) {
-        InputStream resource = context.getResourceAsStream("index.html");
-        return null == resource ? Response.status(NOT_FOUND).build() : Response.ok().entity(resource).build();
-    }
 
     @POST
     @Path("registerandauthenticate")
@@ -128,7 +126,9 @@ public class AuthenticationController {
 
             String token = TokenUtil.createToken("EssentialProgramming", profile.get().getUserName(), isAuthor, isPc, isChair, profile.get().getFirstName(), cal.getTime());
             final String url = redirectUri + "?token=" + token;
-            return new JsonResponse().with("redirectUrl", url).done();
+            return new JsonResponse()
+                    .with("status", "Redirect")
+                    .with("redirectUrl", url).done();
         }
 
         return new JsonResponse()

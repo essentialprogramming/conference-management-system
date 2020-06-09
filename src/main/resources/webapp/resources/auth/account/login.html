@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://localhost:8080/style.css">
+    <link rel="stylesheet" type="text/css" href="/auth/account/style.css">
 </head>
 
 <body>
@@ -65,7 +65,7 @@
         loginPromise
             .then(responseText => {
             let json = JSON.parse(responseText);
-        if (json.response.status != "Error"){
+        if (json.response.status !== "Error"){
             window.location.replace(json.response.redirectUrl);
         } else{
             document.getElementById("error").innerHTML = json.response.error;
