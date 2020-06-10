@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "author")
+@Entity
 @DiscriminatorValue("author")
 
 public class AuthorEntity extends UserEntity {

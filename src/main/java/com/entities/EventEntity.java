@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DiscriminatorFormula;
-import org.hibernate.annotations.DiscriminatorOptions;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -35,13 +33,13 @@ public class EventEntity {
     @Where(clause = "type= 'pcmember'")
     private List<CommitteeMemberEntity> programCommittee;
 
-    @ManyToMany(fetch = FetchType.LAZY )
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_event",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "email"))
     @Where(clause = "type= 'participant'")
-    private List<UserEntity> participants;
+    private List<ParticipantEntity> participants;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

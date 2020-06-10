@@ -22,19 +22,10 @@ import java.util.Objects;
 @AllArgsConstructor
 public class EvaluationEntity {
 
-    @EmbeddedId
-    private EvaluationKey id;
-
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("reviewer")
-    @JoinColumn(name = "reviewer")
-    private CommitteeMemberEntity reviewer;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("paperId")
-    @JoinColumn(name = "paper_id")
-    private PaperEntity paper;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    private int id;
 
     @Enumerated(EnumType.STRING)
     @Type(type = "pgsql_enum")
@@ -45,27 +36,28 @@ public class EvaluationEntity {
     @JoinColumn(name = "recommendation_id")
     private RecommendationEntity recommendation;
 
+    @Column(name = "reviewer")
+    private String reviewer;
+
+    @Column(name = "paper_id")
+    private int paper;
+
     public EvaluationEntity(CommitteeMemberEntity reviewer, PaperEntity paper) {
-        this.reviewer = reviewer;
-        this.paper = paper;
-        this.id = new EvaluationKey(paper.getId(), reviewer.getEmail());
+        this.reviewer = reviewer.getEmail();
+        this.paper = paper.getId();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof EvaluationEntity)) return false;
-        EvaluationEntity entity = (EvaluationEntity) o;
-        return
-                qualifier == entity.qualifier &&
-                        reviewer.equals(entity.reviewer) &&
-                        recommendation.equals(entity.recommendation) &&
-                        paper.equals(entity.paper);
+        EvaluationEntity that = (EvaluationEntity) o;
+        return paper == that.paper &&
+                reviewer.equals(that.reviewer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(qualifier, reviewer, recommendation, paper);
+        return Objects.hash(reviewer, paper);
     }
-
 }

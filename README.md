@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS account CASCADE ;
 DROP TABLE IF EXISTS paper_pcmember CASCADE ;
 DROP TYPE IF EXISTS qualifier;
 DROP TYPE IF EXISTS role;
-DROP TYPE IF EXISTS status;
 DROP TABLE IF EXISTS profile CASCADE ;
+DROP TYPE IF EXISTS status;
 DROP TABLE IF EXISTS paper_author CASCADE ;
 DROP TABLE IF EXISTS user_event CASCADE ;
 
@@ -87,6 +87,7 @@ create table if not exists paper
 
 create table if not exists evaluation
 (
+    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
     paper_id smallint,
     recommendation_id smallint,
     reviewer text,
@@ -102,14 +103,15 @@ create table if not exists recommendation
 
 create table if not exists bid
 (
-	id smallint NOT NULL GENERATED ALWAYS AS IDENTITY primary key,
-	status text
+	status text,
+	paper_id smallint,
+	bidder text
 );
 
 create table if not exists account
 (
 	email text NOT NULL primary key,
-	type VARCHAR (10),
+	type VARCHAR (20),
 	section_id smallint
 );
 
@@ -119,20 +121,17 @@ create table if not exists user_event
 	event_id smallint
 );
 
-
-
 create table if not exists paper_pcmember
 (
 	paper_id smallint,
-	bid_id smallint,
-        email text
+	evaluation_id smallint,
+    email text
 );
 
 create table if not exists paper_author
 (
 	paper_id smallint,
-	bid_id smallint,
-        email text
+    email text
 );
 
 CREATE TYPE  qualifier AS ENUM
@@ -144,11 +143,17 @@ CREATE TYPE  role AS ENUM
 CREATE TYPE  status AS ENUM
     ('ACCEPT', 'REJECT');
 
-ALTER TABLE paper_author
+
+
+ALTER TABLE bid
+ADD FOREIGN KEY (bidder) REFERENCES account(email);
+
+ALTER TABLE bid
 ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
 
 ALTER TABLE paper_author
-ADD FOREIGN KEY (bid_id) REFERENCES bid(id);
+ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
+
 
 ALTER TABLE paper_author
 ADD FOREIGN KEY (email) REFERENCES account(email);
@@ -157,19 +162,13 @@ ALTER TABLE paper_pcmember
 ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
 
 ALTER TABLE paper_pcmember
-ADD FOREIGN KEY (bid_id) REFERENCES bid(id);
+ADD FOREIGN KEY (evaluation_id) REFERENCES evaluation(id);
 
 ALTER TABLE paper_pcmember
 ADD FOREIGN KEY (email) REFERENCES account(email);
-
-ALTER TABLE evaluation
-ADD FOREIGN KEY (paper_id) REFERENCES paper(id);
 
 ALTER TABLE evaluation
 ADD FOREIGN KEY (recommendation_id) REFERENCES recommendation(id);
-
-ALTER TABLE evaluation
-ADD FOREIGN KEY (reviewer) REFERENCES account(email);
 
 ALTER TABLE event
 ADD FOREIGN KEY (location_id) REFERENCES location(id);

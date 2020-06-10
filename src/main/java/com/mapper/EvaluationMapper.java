@@ -9,8 +9,8 @@ public class EvaluationMapper {
         return EvaluationJSON.builder()
                 .qualifier(entity.getQualifier())
                 .recommendation(entity.getRecommendation().getText())
-                .reviewer(entity.getReviewer().getEmail())
-                .paperId(entity.getPaper().getId())
+                .reviewer(entity.getReviewer())
+                .paperId(entity.getPaper())
                 .build();
     }
 }

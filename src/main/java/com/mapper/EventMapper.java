@@ -1,9 +1,6 @@
 package com.mapper;
 
-import com.entities.AuthorEntity;
-import com.entities.CommitteeMemberEntity;
-import com.entities.EventEntity;
-import com.entities.UserEntity;
+import com.entities.*;
 import com.model.EventInput;
 import com.output.EventJSON;
 
@@ -23,7 +20,7 @@ public class EventMapper {
                 .id(entity.getId())
                 .name(entity.getName())
                 .programCommittee(entity.getProgramCommittee() != null ? entity.getProgramCommittee().stream().map(CommitteeMemberEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
-                .participants(entity.getParticipants() != null ? entity.getParticipants().stream().map(UserEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
+                .participants(entity.getParticipants() != null ? entity.getParticipants().stream().map(ParticipantEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
                 .speakers(entity.getSpeakers() != null ? entity.getSpeakers().stream().map(AuthorEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
                 .program(ProgramMapper.entityToProgram(entity.getProgram()))
                 .location(LocationMapper.entityToLocation(entity.getLocation()))

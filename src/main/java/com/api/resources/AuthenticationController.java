@@ -1,7 +1,6 @@
 package com.api.resources;
 
 import com.entities.ApplicationUser;
-import com.entities.RoleEntity;
 import com.model.Authentication;
 import com.model.Role;
 import com.security.TokenUtil;

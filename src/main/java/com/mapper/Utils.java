@@ -7,6 +7,7 @@ import com.output.PaperJSON;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 class Utils {
@@ -16,7 +17,7 @@ class Utils {
         return author.getPapers().stream()
                 .filter(paper -> {
 
-                    List<EvaluationEntity> evals = paper.getReviews();
+                    Set<EvaluationEntity> evals = paper.getReviews().keySet();
 
                     if(evals.size()<=2)
                         return false;

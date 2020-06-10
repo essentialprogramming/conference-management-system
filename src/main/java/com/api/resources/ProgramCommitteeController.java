@@ -56,6 +56,7 @@ public class ProgramCommitteeController {
 
     @PUT
     @Path("/assign/paper/to/review/{paperId}/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
     public JsonResponse assignPaper(@PathParam("paperId") int paperId, @PathParam("email") String email) {
         try {
             pcService.assignPaper(paperId, email);

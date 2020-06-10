@@ -1,35 +1,32 @@
 package com.entities;
 
-import com.model.Qualifier;
+import com.model.Status;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "pc_member")
+@Entity
 @DiscriminatorValue("pcmember")
 public class CommitteeMemberEntity extends UserEntity {
 
     @OneToOne(mappedBy = "supervisor")
     private SectionEntity section;
 
-    @ManyToMany(mappedBy = "bidders")
-    @MapKeyJoinColumn(name = "bid_id")
-    private Map<BidEntity, PaperEntity> papers;
-
-    @OneToMany(
-            mappedBy = "reviewer",
+    @OneToMany(mappedBy = "bidder",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<EvaluationEntity> evaluations;
+            orphanRemoval = true)
+    private List<BidEntity> bids;
+
+    @ManyToMany(mappedBy = "reviews")
+    @MapKeyJoinColumn(name = "evaluation_id")
+    private Map<EvaluationEntity, PaperEntity> evaluations;
 
     @Override
     public @Email String getEmail() {
@@ -40,20 +37,24 @@ public class CommitteeMemberEntity extends UserEntity {
         super(email);
     }
 
-    public void addReview(PaperEntity paper) {
-
-        if (!evaluations.isEmpty()) {
-            for (EvaluationEntity evaluation : evaluations) {
-                if (!evaluation.getPaper().equals(paper)) {
-                    EvaluationEntity review = new EvaluationEntity(this, paper);
-                    evaluations.add(review);
-                    paper.getReviews().add(review);
+    public boolean addBid(PaperEntity paper, Status status) {
+        if (!bids.isEmpty()) {
+            for (BidEntity bid : bids) {
+                if (!bid.getPaper().equals(paper)) {
+                    BidEntity bidEntity = new BidEntity(this, paper);
+                    bidEntity.setStatus(status);
+                    bids.add(bidEntity);
+                    paper.getBids().add(bidEntity);
                 }
             }
+            return true;
         } else {
-            EvaluationEntity review = new EvaluationEntity(this, paper);
-            evaluations.add(review);
-            paper.getReviews().add(review);
+            BidEntity bidEntity = new BidEntity(this, paper);
+            bidEntity.setStatus(status);
+            bids.add(bidEntity);
+            paper.getBids().add(bidEntity);
+            return true;
         }
     }
+
 }

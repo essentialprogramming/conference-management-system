@@ -1,12 +1,9 @@
 package com.entities;
 
-import com.model.Qualifier;
-import com.vladmihalcea.hibernate.type.array.EnumArrayType;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import java.util.*;
@@ -37,9 +34,6 @@ public class PaperEntity {
     @Column(name = "file_name")
     private String fileName;
 
-    @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
-    private List<EvaluationEntity> reviews;
-
     @Type(type = "list-array")
     @Column(name = "topics")
     private List<String> topics;
@@ -48,12 +42,15 @@ public class PaperEntity {
     @Column(name = "keywords")
     private List<String> keywords;
 
+    @OneToMany(mappedBy = "paper", fetch = FetchType.LAZY)
+    private List<BidEntity> bidders;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "paper_pcmember",
             joinColumns = {@JoinColumn(name = "paper_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "email", referencedColumnName = "email")})
-    @MapKeyJoinColumn(name = "bid_id")
-    private Map<BidEntity, CommitteeMemberEntity> bidders;
+    @MapKeyJoinColumn(name = "evaluation_id")
+    private Map<EvaluationEntity, CommitteeMemberEntity> reviews;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
@@ -65,7 +62,7 @@ public class PaperEntity {
             inverseJoinColumns = {@JoinColumn(name = "email", referencedColumnName = "email")})
     private List<AuthorEntity> authors;
 
-    public Map<BidEntity, CommitteeMemberEntity> getBids() {
+    public List<BidEntity> getBids() {
 
         return bidders;
     }
@@ -77,14 +74,14 @@ public class PaperEntity {
         authors.add(author);
     }
 
-    public void addReview(EvaluationEntity evaluationEntity) {
+    public void addReview(EvaluationEntity evaluationEntity, CommitteeMemberEntity committeeMemberEntity) {
         if (reviews == null) {
-            reviews = new ArrayList<>();
+            reviews = new HashMap<>();
         }
-        reviews.add(evaluationEntity);
+        reviews.put(evaluationEntity, committeeMemberEntity);
     }
 
-    public List<EvaluationEntity> getReviews() {
+    public Map<EvaluationEntity, CommitteeMemberEntity> getReviews() {
         return reviews;
     }
 

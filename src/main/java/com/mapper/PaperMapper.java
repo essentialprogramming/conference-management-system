@@ -34,9 +34,9 @@ public class PaperMapper {
                 .description(entity.getDescription())
                 .fileName(entity.getFileName())
                 .authors(entity.getAuthors() != null ? entity.getAuthors().stream().map(AuthorEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
-                .bidders(entity.getBids() != null ? entity.getBids().values().stream().map(CommitteeMemberEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
-                .reviewers(entity.getReviews() != null ? entity.getReviews().stream().map(input -> input.getReviewer().getEmail()).collect(Collectors.toList()) : new ArrayList<>())
-                .qualifiers(entity.getReviews() != null ? entity.getReviews().stream().map(EvaluationEntity::getQualifier).collect(Collectors.toList()) : new ArrayList<>())
+                .bidders(entity.getBids() != null ? entity.getBids().stream().map(input->input.getBidder().getEmail()).collect(Collectors.toList()) : new ArrayList<>())
+                .reviewers(entity.getReviews() != null ? entity.getReviews().values().stream().map(CommitteeMemberEntity::getEmail).collect(Collectors.toList()) : new ArrayList<>())
+                .qualifiers(entity.getReviews() != null ? entity.getReviews().keySet().stream().map(EvaluationEntity::getQualifier).collect(Collectors.toList()) : new ArrayList<>())
                 .topics(entity.getTopics())
                 .keywords(entity.getKeywords())
                 .build();

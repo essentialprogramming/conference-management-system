@@ -57,29 +57,7 @@ public class ProgramCommitteeService {
         PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
         CommitteeMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
 
-        List<CommitteeMemberEntity> pcMemberList = new ArrayList<>(paperEntity.getBids().values());
-        if (pcMemberList.size() == 0){
-            BidEntity bidEntity = new BidEntity();
-            bidEntity.setStatus(status);
-            bidRepository.save(bidEntity);
-
-            paperEntity.getBids().put(bidEntity, pcMemberEntity);
-            pcMemberEntity.getPapers().values().forEach(paper -> System.out.println(paper.getTitle()));
-            paperRepository.save(paperEntity);
-            return true;
-        }
-        for (CommitteeMemberEntity pcMember : pcMemberList)
-            if (!(pcMember.getEmail().equals(pcMemberEntity.getEmail()))) {
-                BidEntity bidEntity = new BidEntity();
-                bidEntity.setStatus(status);
-                bidRepository.save(bidEntity);
-
-                paperEntity.getBids().put(bidEntity, pcMemberEntity);
-                pcMemberEntity.getPapers().values().forEach(paper -> System.out.println(paper.getTitle()));
-                paperRepository.save(paperEntity);
-                return true;
-            }
-        return false;
+        return pcMemberEntity.addBid(paperEntity, status);
     }
 
 
@@ -88,9 +66,17 @@ public class ProgramCommitteeService {
         PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
         CommitteeMemberEntity committeeMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Program committee with email " + email + " not found!"));
 
+        Optional<EvaluationEntity> evaluation = evaluationRepository.findByPaperAndReviewer(paperEntity.getId(), committeeMemberEntity.getEmail());
         if (paperEntity.getReviews().size() < 4) {
 
-            committeeMemberEntity.addReview(paperEntity);
+            if (!evaluation.isPresent()) {
+                EvaluationEntity review = new EvaluationEntity(committeeMemberEntity, paperEntity);
+                evaluationRepository.save(review);
+                committeeMemberEntity.getEvaluations().put(review, paperEntity);
+                paperEntity.getReviews().put(review, committeeMemberEntity);
+                paperRepository.save(paperEntity);
+            }
+
             return "You are allowed to review this paper.";
         } else return "You are not allowed to review this paper.";
 
@@ -106,29 +92,23 @@ public class ProgramCommitteeService {
         RecommendationEntity recommendationEntity = new RecommendationEntity(evaluationInput.getRecommendation());
         recommendationRepository.save(recommendationEntity);
 
-        EvaluationJSON result = new EvaluationJSON();
+        Optional<EvaluationEntity> evaluationEntity = evaluationRepository.findByPaperAndReviewer(paperEntity.getId(), pcMemberEntity.getEmail());
 
-        for (EvaluationEntity evaluation : paperEntity.getReviews()) {
-            if (evaluation.getReviewer().equals(pcMemberEntity)) {
-                evaluation.setQualifier(evaluationInput.getQualifier());
-                evaluation.setRecommendation(recommendationEntity);
-                result = EvaluationMapper.entityToEvaluation(evaluation);
-            }
-        }
+        evaluationEntity.get().setQualifier(evaluationInput.getQualifier());
+        evaluationEntity.get().setRecommendation(recommendationEntity);
 
-        return result;
+        return EvaluationMapper.entityToEvaluation(evaluationEntity.get());
     }
 
     @Transactional
     public List<PaperJSON> getPapersOfReviewer(String email) {
         Optional<CommitteeMemberEntity> reviewer = pcMemberRepository.findById(email);
-        List<EvaluationEntity> evalList = evaluationRepository.findAll();
-        List<PaperEntity> paperList = new ArrayList<>();
+
+        Collection<PaperEntity> paperList = new ArrayList<>();
+
         if (reviewer.isPresent()) {
-            for (EvaluationEntity evaluation : evalList) {
-                if (evaluation.getReviewer().getEmail().equals(reviewer.get().getEmail()))
-                    paperList.add(evaluation.getPaper());
-            }
+            paperList = reviewer.get().getEvaluations().values();
+
         }
 
         return paperList.stream().map(PaperMapper::entityToPaper).collect(Collectors.toList());
@@ -140,11 +120,13 @@ public class ProgramCommitteeService {
         List<ProgramCommitteeJSON> programCommitteeJsons = new ArrayList<>();
         PaperEntity paper = paperRepository.findById(paperId).orElseThrow(() -> new RuntimeException("Paper does not exist!"));
         List<String> emailForMembersWithBids = new ArrayList<>();
-        paper.getBids().forEach((bid, member) ->
-        {
-            programCommitteeJsons.add(new ProgramCommitteeJSON(member.getEmail(), bid.getStatus().getValue()));
-            emailForMembersWithBids.add(member.getEmail());
+
+
+        paper.getBids().forEach(bid -> {
+            programCommitteeJsons.add(new ProgramCommitteeJSON(bid.getBidder().getEmail(), bid.getStatus().getValue()));
+            emailForMembersWithBids.add(bid.getBidder().getEmail());
         });
+
         pcMembers.forEach(pcMember -> {
             if (!emailForMembersWithBids.contains(pcMember.getEmail())) {
                 programCommitteeJsons.add(new ProgramCommitteeJSON(pcMember.getEmail(), "NO BID"));
@@ -159,8 +141,7 @@ public class ProgramCommitteeService {
     }
 
     @Transactional
-    public List<User> getAllProgramCommitteeMembers()
-    {
+    public List<User> getAllProgramCommitteeMembers() {
         return pcMemberRepository.findAll().stream().map(member ->
         {
             User memberJson = UserMapper.entityToUser(member);

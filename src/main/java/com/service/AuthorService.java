@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +56,7 @@ public class AuthorService {
             return (author.get().getPapers() != null ? author.get().getPapers().stream()
                     .filter(paper -> {
 
-                        List<EvaluationEntity> evals = paper.getReviews();
+                        Set<EvaluationEntity> evals = paper.getReviews().keySet();
 
                         if(evals.size()<=2)
                             return false;
