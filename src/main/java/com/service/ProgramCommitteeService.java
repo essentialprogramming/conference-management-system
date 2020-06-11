@@ -57,7 +57,21 @@ public class ProgramCommitteeService {
         PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Paper with id " + paperId + " not found!"));
         CommitteeMemberEntity pcMemberEntity = pcMemberRepository.findById(email).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "PC member " + email + " not found"));
 
-        return pcMemberEntity.addBid(paperEntity, status);
+        Optional<BidEntity> bidEntity = bidRepository.findByPaperAndBidder(paperEntity, pcMemberEntity);
+
+        if (bidEntity.isPresent()) {
+            bidEntity.get().setStatus(status);
+
+        } else {
+
+            BidEntity bid = new BidEntity(pcMemberEntity, paperEntity);
+            bid.setStatus(status);
+            pcMemberEntity.getBids().add(bid);
+            paperEntity.getBids().add(bid);
+
+            return true;
+        }
+        return false;
     }
 
 

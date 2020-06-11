@@ -37,24 +37,4 @@ public class CommitteeMemberEntity extends UserEntity {
         super(email);
     }
 
-    public boolean addBid(PaperEntity paper, Status status) {
-        if (!bids.isEmpty()) {
-            for (BidEntity bid : bids) {
-                if (!bid.getPaper().equals(paper)) {
-                    BidEntity bidEntity = new BidEntity(this, paper);
-                    bidEntity.setStatus(status);
-                    bids.add(bidEntity);
-                    paper.getBids().add(bidEntity);
-                }
-            }
-            return true;
-        } else {
-            BidEntity bidEntity = new BidEntity(this, paper);
-            bidEntity.setStatus(status);
-            bids.add(bidEntity);
-            paper.getBids().add(bidEntity);
-            return true;
-        }
-    }
-
 }
