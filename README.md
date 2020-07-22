@@ -8,8 +8,12 @@ Now you can start the application by running Server class in your IDE or by runn
 `java -jar uber-conference-management-system-1.0-SNAPSHOT.jar`
 
 ### ❄ Project structure
-We have twelve entities and two enums. Here is the class diagram that contain relations between them:
-![Class diagram](src/main/resources/img/CMS-Class-Diagram.png)
+Domain model :
+![Domain model diagram](src/main/resources/img/CMS-Domain-Model-Diagram_1.png)
+
+Domain driven design : 
+
+![DDD diagram](src/main/resources/img/DDD_for_conference_management_1.png)
 
 ### 💎 Database schema
 
