@@ -1,9 +1,9 @@
 # Conference-management-system
 
-In this project we will show how spring data jpa can be used to integrate with postgresql. 
+In this project we will show how to use Spring Data Jpa together with Postgresql. 
 
 ### 🌀 Build and run
-Build the application by running clean command followed by install from the maven tool window or run the following command from terminal : `mvn clea install` .
+Build the application by running maven clean command followed by install from the maven tool window or run the following command from terminal : `mvn clean install` .
 Now you can start the application by running Server class in your IDE or by running :
 `java -jar uber-conference-management-system-1.0-SNAPSHOT.jar`
 
@@ -207,17 +207,17 @@ ADD FOREIGN KEY (section_id) REFERENCES section(id);
 ![DB table diagram](src/main/resources/img/CMS-Database-Diagram.png)
 
 ### 🚀 Use Postman to test the REST apis
-There are 4 main request URLs, depending on which controller is responsible to handle the request : 
+There are 4 main API URLs, depending on which controller is responsible to handle the request : 
 
-- `http://localhost:8080/api/conference` for `ConferenceManagementController.class`
-- `http://localhost:8080/api/paper` for `PaperController.class`
-- `http://localhost:8080/api/programCommittee` for `ProgramCommitteeController.class`
-- `http://localhost:8080/api/user` for `UserController.class`
+- `http://localhost:8080/api/conference` for `ConferenceManagementController`
+- `http://localhost:8080/api/paper` for `PaperController`
+- `http://localhost:8080/api/programCommittee` for `ProgramCommitteeController`
+- `http://localhost:8080/api/user` for `UserController`
 
-The `ConferenceManagementController.class` is used to handle requests for conference information, like adding an event, a program, a location and multiple sections for a certain event. Also we can update event's program, postpone date for program, get all events or sections.
+The `ConferenceManagementController` is used to handle requests for conference information, like adding an event, a program, a location and multiple sections for a certain event. Also we can update event's program, postpone date for program, get all events or sections.
 
-The `PaperController.class` is used to handle requests regarding papers. We can submit a paper, update papers's content, get all papers.
+The `PaperController` is used to handle requests regarding papers. We can submit a paper, update papers's content, get all papers.
 
-The `ProgramCommitteeController.class` contain requests that are used to organize the participants. For example we can update users role, assign paper to a user, review a paper, update supervisor for specific section, add recommendation for a paper.
+The `ProgramCommitteeController` contain requests that are used to organize the participants. For example we can update users role, assign paper to a user, review a paper, update supervisor for specific section, add recommendation for a paper.
 
-The `UserController.class` is used to manage users actions: register, bid proposal if the user want to write a review for that paper. Also we can update the section in which the user wants to participate.
+The `UserController` is used to manage users actions: register, bid proposal if the user want to write a review for that paper. Also we can update the section in which the user wants to participate.
