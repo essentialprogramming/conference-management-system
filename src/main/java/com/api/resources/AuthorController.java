@@ -13,8 +13,8 @@ import java.util.List;
 @Path("/author")
 public class AuthorController {
 
-    private UserService userService;
-    private AuthorService authorService;
+    private final UserService userService;
+    private final AuthorService authorService;
 
     @Autowired
     public AuthorController(UserService userService, AuthorService authorService) {

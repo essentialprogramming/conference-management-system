@@ -13,7 +13,7 @@ import java.io.InputStream;
 @Path("/")
 public class UploadController {
 
-    private UploadService uploadService;
+    private final UploadService uploadService;
 
     @Autowired
     public UploadController(UploadService uploadService)

@@ -17,7 +17,7 @@ import java.util.List;
 @Path("/programCommittee")
 public class ProgramCommitteeController {
 
-    private ProgramCommitteeService pcService;
+    private final ProgramCommitteeService pcService;
 
     @Autowired
     public ProgramCommitteeController(ProgramCommitteeService pcService) {

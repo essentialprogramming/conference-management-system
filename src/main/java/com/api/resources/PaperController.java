@@ -12,7 +12,7 @@ import java.util.List;
 @Path("/")
 public class PaperController {
 
-    private PaperService paperService;
+    private final PaperService paperService;
 
     @Autowired
     public PaperController(PaperService paperService) {

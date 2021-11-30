@@ -21,8 +21,8 @@ import java.util.List;
 @Path("/")
 public class ConferenceManagementController {
 
-    private ConferenceManagementService conferenceService;
-    private LocationService locationService;
+    private final ConferenceManagementService conferenceService;
+    private final LocationService locationService;
 
     @Autowired
     public ConferenceManagementController(ConferenceManagementService conferenceService, LocationService locationService) {
