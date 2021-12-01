@@ -19,40 +19,31 @@ import java.util.stream.Collectors;
 @Service
 public class AuthorService {
 
-    private AuthorRepository authorRepository;
-    private EvaluationRepository evaluationRepository;
+    private final AuthorRepository authorRepository;
+    private final EvaluationRepository evaluationRepository;
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository) {
+    public AuthorService(AuthorRepository authorRepository, EvaluationRepository evaluationRepository) {
         this.authorRepository = authorRepository;
+        this.evaluationRepository = evaluationRepository;
     }
 
     @Transactional
-    public List<PaperJSON> getPapersOfAuthor(String email)
-    {
+    public List<PaperJSON> getPapersOfAuthor(String email) {
 
         Optional<AuthorEntity> author = authorRepository.findById(email);
-        if(author.isPresent())
-        {
-
-            return (author.get().getPapers() != null ? author.get().getPapers().stream()
-                 .map(PaperMapper::entityToPaper)
-                 .collect(Collectors.toList()) : new ArrayList<>());
-        }
-        else{
-            return new ArrayList<>();
-        }
+        return author.filter(authorEntity -> authorEntity.getPapers() != null).map(authorEntity -> authorEntity.getPapers().stream()
+                .map(PaperMapper::entityToPaper)
+                .collect(Collectors.toList())).orElseGet(ArrayList::new);
 
     }
 
     @Transactional
-    public List<PaperJSON> getAcceptedPapersOfAuthor(String email)
-    {
+    public List<PaperJSON> getAcceptedPapersOfAuthor(String email) {
 
         Optional<AuthorEntity> author = authorRepository.findById(email);
         if(author.isPresent())
         {
-
             return (author.get().getPapers() != null ? author.get().getPapers().stream()
                     .filter(paper -> {
 

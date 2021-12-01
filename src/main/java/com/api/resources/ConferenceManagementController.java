@@ -140,15 +140,13 @@ public class ConferenceManagementController {
     @Path("event/participants/{eventId}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public User addParticipant(@PathParam("eventId") int eventId, @PathParam("email") String email) {
-
         return conferenceService.addParticipant(eventId, email);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("event/participants/{eventId}")
-    public List<User> getParticipants(@PathParam("eventId") int eventId)
-    {
+    public List<User> getParticipants(@PathParam("eventId") int eventId) {
         return conferenceService.getParticipants(eventId);
     }
 }

@@ -1,6 +1,5 @@
 package com.service;
 
-
 import com.entities.*;
 import com.model.EventInput;
 import com.model.LocationInput;
@@ -12,7 +11,6 @@ import com.output.ProgramJSON;
 import com.output.SectionJSON;
 import com.model.User;
 import com.repository.*;
-import com.web.json.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,12 +26,12 @@ import java.util.stream.Collectors;
 @Service
 public class ConferenceManagementService {
 
-    private ConferenceRepository eventRepository;
-    private UserRepository userRepository;
-    private LocationRepository locationRepository;
-    private SectionRepository sectionRepository;
-    private PCMemberRepository pcMemberRepository;
-    private ParticipantRepository participantRepository;
+    private final ConferenceRepository eventRepository;
+    private final UserRepository userRepository;
+    private final LocationRepository locationRepository;
+    private final SectionRepository sectionRepository;
+    private final PCMemberRepository pcMemberRepository;
+    private final ParticipantRepository participantRepository;
 
     @Autowired
     public ConferenceManagementService(ConferenceRepository eventRepository, UserRepository userRepository, LocationRepository locationRepository, SectionRepository sectionRepository, PCMemberRepository pcMemberRepository, ParticipantRepository participantRepository) {
@@ -179,7 +177,7 @@ public class ConferenceManagementService {
     {
         EventEntity existingEvent = eventRepository.findById(eventId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Event not found!"));
         return existingEvent.getParticipants().stream()
-                .map(participant -> UserMapper.entityToUser(participant))
+                .map(UserMapper::entityToUser)
                 .collect(Collectors.toList());
     }
 }

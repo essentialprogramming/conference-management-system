@@ -13,14 +13,14 @@ public enum Role {
     CONFERENCE_CHAIR("CONFERENCE_CHAIR");
 
     @JsonProperty("value")
-    private String value;
+    private final String value;
 
     Role(String value) {
         this.value = value;
     }
 
     @JsonCreator
-    public static Role fromJson(@JsonProperty("role") String role) {
+    public static Role fromString(String role) {
         return valueOf(role);
     }
 }

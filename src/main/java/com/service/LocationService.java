@@ -21,8 +21,8 @@ import java.util.Map;
 @Service
 public class LocationService {
 
-    private LocationRepository locationRepository;
-    private ConferenceRepository eventRepository;
+    private final LocationRepository locationRepository;
+    private final ConferenceRepository eventRepository;
 
     @Autowired
     public LocationService(LocationRepository locationRepository, ConferenceRepository eventRepository) {

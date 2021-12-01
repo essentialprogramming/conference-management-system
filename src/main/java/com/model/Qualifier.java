@@ -27,7 +27,7 @@ public enum Qualifier {
     }
 
     @JsonCreator
-    public static Qualifier fromJson(@JsonProperty("qualifier") String qualifier) {
+    public static Qualifier fromString(String qualifier) {
         return valueOf(qualifier);
     }
 }

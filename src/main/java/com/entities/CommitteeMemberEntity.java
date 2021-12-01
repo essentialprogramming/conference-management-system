@@ -1,6 +1,5 @@
 package com.entities;
 
-import com.model.Status;
 import lombok.*;
 
 import javax.persistence.*;

@@ -12,14 +12,14 @@ public enum Status {
     REJECT("REJECT");
 
     @JsonProperty("value")
-    private String value;
+    private final String value;
 
     Status(String value) {
         this.value = value;
     }
 
     @JsonCreator
-    public static Status fromJson(@JsonProperty("status") String status) {
+    public static Status fromString(String status) {
         return valueOf(status);
     }
 }

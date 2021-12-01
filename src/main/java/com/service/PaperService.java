@@ -1,6 +1,5 @@
 package com.service;
 
-
 import com.entities.AuthorEntity;
 import com.entities.PaperEntity;
 import com.model.PaperInput;
@@ -8,7 +7,6 @@ import com.mapper.PaperMapper;
 import com.output.PaperJSON;
 import com.repository.AuthorRepository;
 import com.repository.PaperRepository;
-import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,8 +21,8 @@ import java.util.stream.Collectors;
 @Service
 public class PaperService {
 
-    private PaperRepository paperRepository;
-    private AuthorRepository authorRepository;
+    private final PaperRepository paperRepository;
+    private final AuthorRepository authorRepository;
 
     @Autowired
     public PaperService(PaperRepository paperRepository, AuthorRepository authorRepository) {

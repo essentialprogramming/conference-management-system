@@ -83,7 +83,6 @@ public class AuthenticationController {
     @Path("registerandauthenticate")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(hidden = true)
     public JsonResponse register(@QueryParam("redirect_uri") String redirectUri, Authentication profileInput) {
         authenticationService.register(profileInput);
         return new JsonResponse().with("redirectUrl", redirectUri).done();

@@ -12,8 +12,8 @@ import org.springframework.web.client.HttpClientErrorException;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    private SectionRepository sectionRepository;
+    private final UserRepository userRepository;
+    private final SectionRepository sectionRepository;
 
 
     @Autowired

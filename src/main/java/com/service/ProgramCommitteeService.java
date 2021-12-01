@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
 @Service
 public class ProgramCommitteeService {
 
-    private RecommendationRepository recommendationRepository;
-    private PaperRepository paperRepository;
-    private UserRepository userRepository;
-    private SectionRepository sectionRepository;
-    private EvaluationRepository evaluationRepository;
-    private PCMemberRepository pcMemberRepository;
-    private BidRepository bidRepository;
+    private final RecommendationRepository recommendationRepository;
+    private final PaperRepository paperRepository;
+    private final UserRepository userRepository;
+    private final SectionRepository sectionRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final PCMemberRepository pcMemberRepository;
+    private final BidRepository bidRepository;
 
     @Autowired
     public ProgramCommitteeService(RecommendationRepository recommendationRepository, PaperRepository paperRepository, UserRepository userRepository, SectionRepository sectionRepository, EvaluationRepository evaluationRepository, PCMemberRepository pcmmemberRepository, BidRepository bidRepository) {

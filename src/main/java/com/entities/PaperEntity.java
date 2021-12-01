@@ -63,7 +63,6 @@ public class PaperEntity {
     private List<AuthorEntity> authors;
 
     public List<BidEntity> getBids() {
-
         return bidders;
     }
 
