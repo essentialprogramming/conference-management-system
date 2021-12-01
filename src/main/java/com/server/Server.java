@@ -6,8 +6,6 @@ import com.undertow.standalone.UndertowServer;
 
 import static com.util.cloud.DeploymentConfiguration.getProperty;
 
-import java.util.concurrent.locks.Condition;
-
 
 public class Server {
 
@@ -19,15 +17,8 @@ public class Server {
 
         final UndertowServer server = new UndertowServer(host, port, "undertow-spring-persistence.war");
 
-        final Condition newCondition = server.LOCK.newCondition();
-
         server.start();
-        try {
-            while (true)
-                newCondition.awaitNanos(1);
-        } catch (InterruptedException cause) {
-            server.stop();
-        }
+
     }
 
 }

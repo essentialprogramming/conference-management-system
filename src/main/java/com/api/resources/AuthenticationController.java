@@ -10,8 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
@@ -29,24 +27,20 @@ public class AuthenticationController {
     @Context
     private UriInfo uri;
 
-    @Autowired
-    private ServletContext context;
-
     @Context
     HttpServletRequest request;
 
     @Context
     HttpServletResponse response;
 
-    private AuthenticationService authenticationService;
-
-    @Autowired
-    private PasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationService authenticationService;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
 
     @Autowired
-    public AuthenticationController(AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService, PasswordEncoder bCryptPasswordEncoder) {
         this.authenticationService = authenticationService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
 
@@ -99,10 +93,7 @@ public class AuthenticationController {
     @Path("authenticate")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(hidden = true)
     public JsonResponse authenticate(@QueryParam("redirect_uri") String redirectUri, Authentication profileInput) {
-
-
 
         String password = profileInput.getPassword();
         Optional<ApplicationUser> profile = authenticationService.login(profileInput);

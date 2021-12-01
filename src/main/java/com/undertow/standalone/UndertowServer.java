@@ -108,6 +108,8 @@ public final class UndertowServer {
                 .build();
 
         server.start();
+
+        LOCK.unlock();
     }
 
 

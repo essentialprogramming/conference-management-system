@@ -20,7 +20,7 @@ public enum Qualifier {
     STRONG_REJECT("STRONG_REJECT");
 
     @JsonProperty("value")
-    private String value;
+    private final String value;
 
     Qualifier(String value) {
         this.value = value;

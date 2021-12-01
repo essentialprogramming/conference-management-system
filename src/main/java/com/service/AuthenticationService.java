@@ -15,13 +15,13 @@ import java.util.Optional;
 @Service
 public class AuthenticationService {
 
-    private ApplicationUserRepository applicationUserRepository;
-    @Autowired
-    private PasswordEncoder bCryptPasswordEncoder;
+    private final ApplicationUserRepository applicationUserRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public AuthenticationService(ApplicationUserRepository applicationUserRepository) {
+    public AuthenticationService(ApplicationUserRepository applicationUserRepository, PasswordEncoder bCryptPasswordEncoder) {
         this.applicationUserRepository = applicationUserRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Transactional
@@ -56,7 +56,6 @@ public class AuthenticationService {
 
 
     public Optional<ApplicationUser> login(Authentication profileInput) {
-
         return applicationUserRepository.findById(profileInput.getUserName());
     }
 }

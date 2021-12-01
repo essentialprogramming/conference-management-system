@@ -78,10 +78,6 @@ public class ConferenceManagementController {
 
     // ----------------------- program --------------------------------
 
-
-
-
-
     @PUT
     @Path("event/program/postpone/{eventId}")
     @Consumes(MediaType.TEXT_PLAIN)
@@ -91,6 +87,7 @@ public class ConferenceManagementController {
     }
 
 
+
     // -------------------- section ---------------------------------
 
     @POST
@@ -98,7 +95,6 @@ public class ConferenceManagementController {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public SectionJSON addSection(@PathParam("eventId") int eventId, SectionInput section) {
-
         return conferenceService.addSection(eventId, section);
     }
 
@@ -116,6 +112,7 @@ public class ConferenceManagementController {
         return conferenceService.assignSupervisor(sectionId, email);
     }
 
+
     // -------------------- location ---------------------------------
 
     @POST
@@ -128,7 +125,6 @@ public class ConferenceManagementController {
     }
 
 
-
     @PUT
     @Path("event/committee/{eventId}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -136,6 +132,7 @@ public class ConferenceManagementController {
         conferenceService.addProgramCommittee(email, eventId);
         return new JsonResponse().with("Response", "OK");
     }
+
 
     // ----------------------- participants --------------------------------
     @POST

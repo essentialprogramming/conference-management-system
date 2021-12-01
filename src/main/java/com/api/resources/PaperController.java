@@ -24,7 +24,6 @@ public class PaperController {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     public PaperJSON submitPaper(PaperInput paperInput) {
-
         return paperService.submitPaper(paperInput);
     }
 
@@ -39,7 +38,6 @@ public class PaperController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("papers")
     public List<PaperJSON> getAll() {
-
         return paperService.getAll();
     }
 
