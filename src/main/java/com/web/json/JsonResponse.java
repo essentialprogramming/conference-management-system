@@ -6,28 +6,33 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ *
  * Example Usage:
- * <p>
+ *
  * return new JsonResponse()
- * .with("status", "ok")
- * .with("shouldRefresh", true)
- * .done();
+ *     .with("status", "ok")
+ *     .with("shouldRefresh", true)
+ *     .done();
+ *
  */
-public class JsonResponse {
+public class JsonResponse extends LinkedHashMap<String, Object>{
 
-    protected Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-    public JsonResponse() {
-    }
+    public JsonResponse() {}
 
     public JsonResponse with(String key, Object value) {
-        map.put(key, value);
+        this.putIfAbsent(key, value);
+        return this;
+    }
+
+    public JsonResponse with(String key, JsonResponse value) {
+        this.putIfAbsent(key, value);
         return this;
     }
 
     public JsonResponse done() {
         try {
-            new ObjectMapper().writeValueAsString(map);
+            new ObjectMapper().writeValueAsString(this);
             return this;
         } catch (Exception e) {
             return new JsonResponse().with("Error", "Well, this is embarrassing, we are having trouble generating the response for you !");
@@ -35,7 +40,7 @@ public class JsonResponse {
     }
 
     public Map<String, Object> getResponse() {
-        return map;
+        return this;
     }
 
 }

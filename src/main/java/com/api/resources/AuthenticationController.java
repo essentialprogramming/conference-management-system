@@ -52,7 +52,7 @@ public class AuthenticationController {
         final String protocol = uri.getBaseUri().toURL().getProtocol();
         final String authority = uri.getBaseUri().getAuthority();
         final URI url = UriComponentsBuilder
-                .fromHttpUrl(String.format("%s://%s", protocol, authority) + "/account/login?redirect_uri=" + redirectUri)
+                .fromHttpUrl(String.format("%s://%s", protocol, authority) + "/account/sign-in?redirect_uri=" + redirectUri)
                 .build()
                 .toUri();
         return Response.status(302)

@@ -82,10 +82,10 @@
         registerPromise
             .then(responseText => {
             let json = JSON.parse(responseText);
-        if (json.response.status !== "Error"){
-            window.location.replace(json.response.redirectUrl);
+        if (json.status !== "Error"){
+            window.location.replace(json.redirectUrl);
         } else{
-            document.getElementById("error").innerHTML = json.response.error;
+            document.getElementById("error").innerHTML = json.error;
         }
     })
     .catch(function(error) {

@@ -19,7 +19,7 @@ public enum Role {
         this.value = value;
     }
 
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static Role fromString(String role) {
         return valueOf(role);
     }

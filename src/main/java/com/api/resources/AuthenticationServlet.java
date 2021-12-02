@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebServlet("account/*")
 public class AuthenticationServlet extends HttpServlet{
 
-    private static final String LOGIN = "login";
+    private static final String LOGIN = "sign-in";
     private static final String REGISTER = "register";
 
     @Inject
@@ -26,8 +26,6 @@ public class AuthenticationServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //request.getRequestURL();
-        //response.sendRedirect();
         handleRequest(request, response);
     }
 
@@ -35,9 +33,9 @@ public class AuthenticationServlet extends HttpServlet{
     @Override
     public void init(final ServletConfig config) throws ServletException {
         super.init(config);
-        //WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
-        //final AutowireCapableBeanFactory beanFactory = springContext.getAutowireCapableBeanFactory();
-       // beanFactory.autowireBean(this);
+        // WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+        // final AutowireCapableBeanFactory beanFactory = springContext.getAutowireCapableBeanFactory();
+        // beanFactory.autowireBean(this);
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 

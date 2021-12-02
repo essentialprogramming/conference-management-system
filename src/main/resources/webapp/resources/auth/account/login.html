@@ -15,7 +15,7 @@
 
 <div class="login-form">
     <form id="loginForm" onsubmit="login(event)">
-        <h2 class="text-center">Log in</h2>
+        <h2 class="text-center">Welcome</h2>
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Username" required="required" name="username">
         </div>
@@ -23,7 +23,7 @@
             <input type="password" class="form-control" placeholder="Password" required="required" name="password">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
         </div>
         <span id="error"/>
     </form>
@@ -65,10 +65,10 @@
         loginPromise
             .then(responseText => {
             let json = JSON.parse(responseText);
-        if (json.response.status !== "Error"){
-            window.location.replace(json.response.redirectUrl);
+        if (json.status !== "Error"){
+            window.location.replace(json.redirectUrl);
         } else{
-            document.getElementById("error").innerHTML = json.response.error;
+            document.getElementById("error").innerHTML = json.error;
         }
     })
     .catch(function(error) {
