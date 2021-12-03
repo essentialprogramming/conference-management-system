@@ -7,13 +7,14 @@ import com.output.PaperJSON;
 import com.output.ProgramCommitteeJSON;
 import com.service.ProgramCommitteeService;
 import com.web.json.JsonResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-
+@Tag(description = "Author API", name = "Author Services")
 @Path("/programCommittee")
 public class ProgramCommitteeController {
 

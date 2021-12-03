@@ -3,12 +3,14 @@ package com.api.resources;
 import com.model.PaperInput;
 import com.output.PaperJSON;
 import com.service.PaperService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+@Tag(description = "Paper API", name = "Paper Services")
 @Path("/")
 public class PaperController {
 

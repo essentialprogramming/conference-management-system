@@ -7,6 +7,7 @@ import com.security.TokenUtil;
 import com.service.AuthenticationService;
 import com.web.json.JsonResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -20,7 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
-
+@Tag(description = "Authorization API", name = "Authorization")
 @Path("/")
 public class AuthenticationController {
 

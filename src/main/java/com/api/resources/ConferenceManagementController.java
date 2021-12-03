@@ -12,12 +12,14 @@ import com.output.SectionJSON;
 import com.service.ConferenceManagementService;
 import com.service.LocationService;
 import com.web.json.JsonResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+@Tag(description = "Conference Management API", name = "Conference Management Services")
 @Path("/")
 public class ConferenceManagementController {
 

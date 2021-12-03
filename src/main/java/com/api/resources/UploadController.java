@@ -2,6 +2,7 @@ package com.api.resources;
 
 import com.service.UploadService;
 import com.web.json.JsonResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.InputStream;
 
+@Tag(description = "Paper API", name = "Paper Services")
 @Path("/")
 public class UploadController {
 
