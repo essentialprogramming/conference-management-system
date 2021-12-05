@@ -120,14 +120,14 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "front-cmsserve:production"
+              "devServerTarget": "front-cms:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "cms",
+  "defaultProject": "front-cms",
   "cli": {
     "analytics": "abb4d9a6-3493-4239-998d-db9391385538"
   }
