@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Paper} from '../../models/paper';
-import {ReviewerServiceService} from '../../Shared/reviewer-service.service';
+import {Paper} from '../../models/Paper';
+import {ReviewerServiceService} from '../../shared/reviewer-service.service';
 import {Qualifier} from '../../models/Qualifier';
 
 @Component({

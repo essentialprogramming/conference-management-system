@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Conference} from '../../models/conference';
+import {Conference} from '../../models/Conference';
 import {ActivatedRoute, Router} from '@angular/router';
 import {pTest} from '../../models/pTest';
 import {ConferenceTest} from '../../models/ConferenceTest';
-import {ConferenceChairServiceService} from '../../Shared/conference-chair-service.service';
+import {ConferenceChairServiceService} from '../../shared/conference-chair-service.service';
 import {Location} from '../../models/Location';
 import {Program} from '../../models/Program';
 import {SectionTest} from '../../models/SectionTest';
-import {Section} from '../../models/section';
+import {Section} from '../../models/Section';
 import {LocationUpdate} from '../../models/LocationUpdate';
 import {ProgramUpdate} from '../../models/ProgramUpdate';
 

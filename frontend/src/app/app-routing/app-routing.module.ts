@@ -13,12 +13,12 @@ import {BidProposalComponent} from '../reviewer/bid-proposal/bid-proposal.compon
 import {AddConferenceComponent} from '../conference-chair/add-conference/add-conference.component';
 import {AssignPapersComponent} from '../conference-chair/assign-papers/assign-papers.component';
 import { HomePageComponent } from '../home-page/home-page.component';
-import { AuthGuardService } from '../Guards/auth-guard.service';
+import { AuthGuardService } from '../guards/auth-guard.service';
 import {SectionComponent} from '../conference-chair/section/section.component';
 import {AssignSectionComponent} from '../conference-chair/assign-section/assign-section.component';
 import {AssignSupervisorComponent} from '../conference-chair/assign-supervisor/assign-supervisor.component';
-import { SpeakerGuardService } from '../Guards/speaker-guard.service';
-import { ChairGuardService } from '../Guards/chair-guard.service';
+import { SpeakerGuardService } from '../guards/speaker-guard.service';
+import { ChairGuardService } from '../guards/chair-guard.service';
 import { ChoseRoleUserComponent } from '../chose-role-user/chose-role-user.component';
 import { ParticipantComponent } from '../participant/participant.component';
 import { AllPapersComponent } from '../speaker/all-papers/all-papers.component';

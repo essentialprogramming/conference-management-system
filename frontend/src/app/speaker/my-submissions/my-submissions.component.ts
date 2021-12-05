@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Paper} from '../../models/paper';
-import { SpeakerServiceService } from '../../Shared/speaker-service.service';
+import {Paper} from '../../models/Paper';
+import { SpeakerServiceService } from '../../shared/speaker-service.service';
 import { Router } from '@angular/router';
 
 @Component({

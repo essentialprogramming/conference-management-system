@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Paper } from '../models/paper';
-import { Conference } from '../models/conference';
+import { Paper } from '../models/Paper';
+import { Conference } from '../models/Conference';
 import { Program } from '../models/Program';
 import { Location } from '../models/Location';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConferenceChairServiceService } from '../Shared/conference-chair-service.service';
-import { Section } from '../models/section';
+import { ConferenceChairServiceService } from '../shared/conference-chair-service.service';
+import { Section } from '../models/Section';
 import { PcMember } from '../models/pcmember';
 
 @Component({
@@ -28,7 +28,7 @@ export class ParticipantComponent implements OnInit {
     private route: ActivatedRoute,
               private router: Router,
               private service: ConferenceChairServiceService
-  ) { 
+  ) {
     this.location = new Location(null,null,null,null);
     this.program = new Program(null,null,null,null,null,null);
     this.conference = new Conference(null,null,this.location,null,this.program,null,null,this.sectiones);

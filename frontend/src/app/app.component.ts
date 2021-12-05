@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { AuthService } from './AuthentificatrionService/auth.service';
+import { AuthService } from './AuthentificationService/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import { AuthService } from './AuthentificatrionService/auth.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private auth:AuthService) {
+  constructor(public auth:AuthService) {
   }
 
   ngOnInit() {

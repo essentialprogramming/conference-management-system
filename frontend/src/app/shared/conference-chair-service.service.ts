@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Paper} from '../models/paper';
+import {Paper} from '../models/Paper';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {Conference} from '../models/conference';
+import {Observable} from 'rxjs';
+import {Conference} from '../models/Conference';
 import {PcMember} from '../models/pcmember';
 import {ConferenceTest} from '../models/ConferenceTest';
 import {SectionTest} from '../models/SectionTest';
@@ -45,7 +45,7 @@ export class ConferenceChairServiceService {
     const url=`${this.unnassignedPcMembersURL}`;
     return this.http.get<Array<PcMember>>(url);
   }
-  
+
   findPcMembersForPaper(id): Observable<PcMember[]> {
     const url = `${this.pcmembersUReL}/${id}`;
     return this.http

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Paper } from '../../models/paper';
-import { SpeakerServiceService } from '../../Shared/speaker-service.service';
+import { Paper } from '../../models/Paper';
+import { SpeakerServiceService } from '../../shared/speaker-service.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,7 +24,7 @@ export class AllPapersComponent implements OnInit {
   }
 
 
-  
+
   ngOnInit() {
 
     this.getPapers();
@@ -46,6 +46,6 @@ export class AllPapersComponent implements OnInit {
 
   listClick(event, newValue, cell) {
     cell.isSelected = !cell.isSelected;
-} 
+}
 
 }

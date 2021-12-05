@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Conference} from '../../models/conference';
+import {Conference} from '../../models/Conference';
 import {PcMember} from '../../models/pcmember';
-import {ConferenceChairServiceService} from '../../Shared/conference-chair-service.service';
+import {ConferenceChairServiceService} from '../../shared/conference-chair-service.service';
 
 @Component({
   selector: 'app-assign-reviewer-event',
@@ -9,6 +9,7 @@ import {ConferenceChairServiceService} from '../../Shared/conference-chair-servi
   styleUrls: ['./assign-reviewer-event.component.css']
 })
 export class AssignReviewerEventComponent implements OnInit {
+  title: String;
 
   selectedRow : Number;
   selectedRowPC: Number;
@@ -20,7 +21,9 @@ export class AssignReviewerEventComponent implements OnInit {
   selectedPcMember: PcMember;
   selectedEvent: Conference;
   errorMessage: string;
-  constructor(private service: ConferenceChairServiceService) { }
+  constructor(private service: ConferenceChairServiceService) {
+    this.title = 'Conference Chair';
+  }
 
   ngOnInit() {
     this.getPcMembers();

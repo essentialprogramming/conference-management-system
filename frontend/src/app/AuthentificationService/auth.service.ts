@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as jwt_decode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
 
 @Injectable()

@@ -15,8 +15,4 @@ export class pTest {
      this.fileName = filename;
      this.description = description;
    }
-
-   contructor() {
-
-   }
- }
+}

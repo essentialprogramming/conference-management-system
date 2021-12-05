@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PcMember} from '../../models/pcmember';
-import {Paper} from '../../models/paper';
-import {ConferenceChairServiceService} from '../../Shared/conference-chair-service.service';
+import {Paper} from '../../models/Paper';
+import {ConferenceChairServiceService} from '../../shared/conference-chair-service.service';
 import {PcMem} from '../../models/PcMem';
 
 @Component({

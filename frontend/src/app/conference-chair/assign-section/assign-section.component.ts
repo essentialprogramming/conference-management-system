@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Paper} from '../../models/paper';
-import {Section} from '../../models/section';
-import {subscriptionLogsToBeFn} from 'rxjs/testing/TestScheduler';
-import {ConferenceChairServiceService} from '../../Shared/conference-chair-service.service';
-import {Conference} from '../../models/conference';
+import {Paper} from '../../models/Paper';
+import {Section} from '../../models/Section';
+import {ConferenceChairServiceService} from '../../shared/conference-chair-service.service';
+import {Conference} from '../../models/Conference';
 
 @Component({
   selector: 'app-assign-section',

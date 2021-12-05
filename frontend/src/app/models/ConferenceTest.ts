@@ -1,4 +1,4 @@
-import {Section} from './section';
+import {Section} from './Section';
 import {Program} from './Program';
 import {Location} from './Location';
 import {LocationUpdate} from './LocationUpdate';

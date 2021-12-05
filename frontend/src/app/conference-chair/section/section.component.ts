@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Section} from '../../models/section';
+import {Section} from '../../models/Section';
 import {pTest} from '../../models/pTest';
 import {ConferenceTest} from '../../models/ConferenceTest';
 import {SectionTest} from '../../models/SectionTest';
-import {ConferenceChairServiceService} from '../../Shared/conference-chair-service.service';
+import {ConferenceChairServiceService} from '../../shared/conference-chair-service.service';
 
 @Component({
   selector: 'app-section',

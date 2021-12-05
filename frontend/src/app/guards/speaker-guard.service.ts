@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '../AuthentificatrionService/auth.service';
+import { AuthService } from '../AuthentificationService/auth.service';
 import { Router, CanActivate } from '@angular/router';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class SpeakerGuardService implements CanActivate {
       console.log('true')
       return true
     } else {
-      console.log('false')            
+      console.log('false')
       this._router.navigate(['home'])
       return false
     }

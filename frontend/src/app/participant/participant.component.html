@@ -16,7 +16,7 @@
                   The conference is located in {{this.conference.location.city}}, {{this.conference.location.country}}
                   and it began on {{this.conference.program.date}}.
                   <br><br><br><br>
-                  
+
               </p>
               <hr>
               <h1 class="hero__title">
@@ -39,13 +39,13 @@
                  This people are part of the program committee:
                  <!-- <a> maybe parse them? -->
                  </p>
-                 
+
                  <div *ngFor="let pc of this.pcMembers;let i = index" >
 
                     <p class="hero__text" >
                       {{pc.email}}
-                   </p>   
-  
+                   </p>
+
                 </div>
                 <!-- <p>
                  <br>
@@ -60,41 +60,41 @@
               <p class="hero__text">
                 These are the present sections for this conference:
                 <!-- <a> maybe parse them? -->
-                
+
              </p>
               <div *ngFor="let section of sections;let i = index" >
-                <div *ngIf="section.supervisiorEmail"> 
+                <div *ngIf="section.supervisorEmail">
                   <p class="hero__text" >
-                    <strong>"{{section.name}}"</strong> and it's supervisor {{section.supervisiorEmail}}
+                    <strong>"{{section.name}}"</strong> and it's supervisor {{section.supervisorEmail}}
                  </p>
                 </div>
-                
+
 
               </div>
               <div *ngFor="let section of sections;let i = index" >
-                <div *ngIf="!section.supervisiorEmail">
+                <div *ngIf="!section.supervisorEmail">
                   <p class="hero__text" >
                     <strong>"{{section.name}}"</strong> does not have a supervisor yet.
                  </p>
                 </div>
-                
+
 
               </div>
             </div>
           </div>
         </div>
       </div>
-      </div> 
+      </div>
 
 
       <!-- <body>
 
         <div class="site-wrapper">
-    
+
           <div class="site-wrapper-inner">
-    
+
             <div class="cover-container">
-    
+
               <div class="masthead clearfix">
                 <div class="inner">
                   <h3 class="masthead-brand">Cover</h3>
@@ -105,7 +105,7 @@
                   </nav>
                 </div>
               </div>
-    
+
               <div class="inner cover">
                 <h1 class="cover-heading">Cover your page.</h1>
                 <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
@@ -113,19 +113,19 @@
                   <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
                 </p>
               </div>
-    
+
               <div class="mastfoot">
                 <div class="inner">
                   <p>Cover template for <a href="https://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
                 </div>
               </div>
-    
+
             </div>
-    
+
           </div>
-    
+
         </div>
-    
+
          Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->

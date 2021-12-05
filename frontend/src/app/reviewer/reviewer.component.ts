@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Paper} from '../models/paper';
-import { AuthService } from '../AuthentificatrionService/auth.service';
+import {Paper} from '../models/Paper';
+import { AuthService } from '../AuthentificationService/auth.service';
 
 @Component({
   selector: 'app-reviewer',

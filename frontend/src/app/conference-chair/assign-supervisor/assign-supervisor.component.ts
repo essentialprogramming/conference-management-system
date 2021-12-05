@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {PcMember} from '../../models/pcmember';
-import {Section} from '../../models/section';
-import {ConferenceChairServiceService} from '../../Shared/conference-chair-service.service';
-import {forEach} from '@angular/router/src/utils/collection';
-import {Conference} from '../../models/conference';
+import {Section} from '../../models/Section';
+import {ConferenceChairServiceService} from '../../shared/conference-chair-service.service';
+import {Conference} from '../../models/Conference';
 import {PcMem} from '../../models/PcMem';
 
 @Component({

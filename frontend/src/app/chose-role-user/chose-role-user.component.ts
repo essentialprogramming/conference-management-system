@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../AuthentificatrionService/auth.service';
+import { AuthService } from '../AuthentificationService/auth.service';
 
 @Component({
   selector: 'app-chose-role-user',

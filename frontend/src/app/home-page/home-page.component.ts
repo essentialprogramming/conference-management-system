@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../AuthentificatrionService/auth.service';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {AuthService} from '../AuthentificationService/auth.service';
 
 @Component({
   selector: 'app-home-page',
@@ -9,21 +9,21 @@ import { AuthService } from '../AuthentificatrionService/auth.service';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private router: ActivatedRoute, private auth: AuthService) { }
+  constructor(private router: ActivatedRoute, private auth: AuthService) {
+  }
 
   ngOnInit() {
     console.log(localStorage.getItem('role'));
-    if(localStorage.getItem("token") === null && this.router.snapshot.queryParams['token']) {
+    if (localStorage.getItem("token") === null && this.router.snapshot.queryParams['token']) {
+      // var tok="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6InNwZWFrZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.f_r1Qr232o_7ZZrbdBLuvrhXjA2hEiq8jaaPBucSSB0"
+      const token = this.router.snapshot.queryParamMap.get('token');
+      this.auth.setToken(token);
 
-    var tok = this.router.snapshot.queryParamMap.get('token');
-    // var tok="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6InNwZWFrZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.f_r1Qr232o_7ZZrbdBLuvrhXjA2hEiq8jaaPBucSSB0"
-    this.auth.setToken(tok);
-      
-    window.location.reload();
+      window.location.reload();
+
+    }
 
   }
-
-}
 
 
 }

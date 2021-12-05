@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Paper} from '../models/paper';
+import {Paper} from '../models/Paper';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Qualifier} from '../models/Qualifier';
 import {QualifierResponse} from '../models/QualifierResponse';
 

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import {Paper} from '../../models/paper';
-import { SpeakerServiceService } from '../../Shared/speaker-service.service';
+import {Paper} from '../../models/Paper';
+import { SpeakerServiceService } from '../../shared/speaker-service.service';
 import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { pTest } from '../../models/pTest';
-import 'rxjs/Rx' ;
+
 @Component({
   selector: 'app-proposal-form',
   templateUrl: './proposal-form.component.html',
