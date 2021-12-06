@@ -4,7 +4,7 @@
       <div class="card shadow-lg p-3 mb-5 bg-white rounded">
         <div class="card-body">
           <br>
-          <h3 style="text-align: center; color: gray">{{title2}}</h3>
+          <h3 style="text-align: center; color: gray">{{title}}</h3>
           <br>
           <br>
           <table class="table table-hover" style="cursor: default;">
@@ -18,7 +18,7 @@
             </tr>
 
             <tbody>
-            <tr *ngFor="let paper of papers" 
+            <tr *ngFor="let paper of papers"
                 [class.selected]="paper === selectedPaper"
 >
               <td style="color: gray;">{{paper.title }}</td>

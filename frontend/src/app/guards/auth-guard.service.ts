@@ -5,8 +5,7 @@ import { Router, CanActivate } from '@angular/router';
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
-  constructor(private _authService: AuthService,
-    private _router: Router) { }
+  constructor(private _authService: AuthService, private _router: Router) { }
 
   canActivate(): boolean {
     if (this._authService.isLoggedIn() && this._authService.getRole() === "reviewer" || this._authService.getRole() === "chair") {

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Paper } from '../../models/Paper';
-import { SpeakerServiceService } from '../../shared/speaker-service.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Paper} from '../../models/Paper';
+import {SpeakerServiceService} from '../../shared/speaker-service.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-all-papers',
@@ -11,24 +11,21 @@ import { Router } from '@angular/router';
 export class AllPapersComponent implements OnInit {
 
   errorMessage: string;
-  selectedRow : Number;
-    setClickedRow : Function;
+  selectedRow: Number;
+  setClickedRow: Function;
   title: string;
-  title2: string;
   papers: Paper[];
   selectedPaper: Paper;
+
   constructor(private speakerService: SpeakerServiceService, private router: Router) {
-    this.title = 'Accepted papers';
-    this.title2 = 'Accepted Papers';
-
+    this.title = 'Accepted Papers';
   }
-
 
 
   ngOnInit() {
 
     this.getPapers();
-    this.setClickedRow = function(index){
+    this.setClickedRow = function (index) {
       this.selectedRow = index;
     }
   }
@@ -43,9 +40,8 @@ export class AllPapersComponent implements OnInit {
   }
 
 
-
   listClick(event, newValue, cell) {
     cell.isSelected = !cell.isSelected;
-}
+  }
 
 }

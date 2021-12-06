@@ -10,6 +10,7 @@ import {ConferenceChairServiceService} from '../../shared/conference-chair-servi
 })
 export class AssignReviewerEventComponent implements OnInit {
   title: String;
+  title2: String;
 
   selectedRow : Number;
   selectedRowPC: Number;
@@ -22,7 +23,8 @@ export class AssignReviewerEventComponent implements OnInit {
   selectedEvent: Conference;
   errorMessage: string;
   constructor(private service: ConferenceChairServiceService) {
-    this.title = 'Conference Chair';
+    this.title = 'Reviewer';
+    this.title2 = 'Conference';
   }
 
   ngOnInit() {

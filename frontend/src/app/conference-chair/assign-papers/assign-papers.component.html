@@ -49,7 +49,7 @@
             </tr>
 
             <tbody>
-            <tr *ngFor="let paper of papers;let i = index" (click)="RowSelected(paper,i)" (click)="setClickedRowPaper(i)" [class.active]= "i == selectedRow">
+            <tr *ngFor="let paper of papers;let i = index" (click)="RowSelected(paper,i)"  [class.active]= "i == selectedRow">
 
               <td style="cursor: default;" >{{ paper.title }}</td>
               <td style="cursor: default;" >{{paper.description}}</td>

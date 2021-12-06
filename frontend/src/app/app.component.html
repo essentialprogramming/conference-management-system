@@ -1,79 +1,95 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow p-1 mb-5 bg-white rounded">
-  <a class="navbar-brand" routerLink=""><img src="assets\img\LogoZ2.png" style="width:170px;height:40px;" ></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand" routerLink=""><img src="assets\img\LogoZ2.png" style="width:170px;height:40px;"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link"  routerLink="" >Home</a>
+        <a class="nav-link" routerLink="">Home</a>
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link" *ngIf="this.auth.getRole() === 'speaker' && auth.isLoggedIn()" routerLink="/speaker" >Author</a>
       </li> -->
       <li class="nav-item">
 
-        <a class="nav-link" *ngIf="this.auth.getRole() === 'participant' && auth.isLoggedIn()" routerLink="Event" > Event</a>
+        <a class="nav-link" *ngIf="this.auth.getRole() === 'participant' && auth.isLoggedIn()" routerLink="Event">
+          Event</a>
       </li>
-          <li class="nav-item">
+      <li class="nav-item">
 
-            <a class="nav-link" *ngIf="this.auth.getRole() === 'speaker'&& auth.isLoggedIn()" routerLink="submitProposal" > Submit Proposal</a>
-          </li>
-          <li class="nav-item">
+        <a class="nav-link" *ngIf="this.auth.getRole() === 'speaker'&& auth.isLoggedIn()" routerLink="submitProposal">
+          Submit Proposal</a>
+      </li>
+      <li class="nav-item">
 
-            <a class="nav-link" *ngIf="this.auth.getRole() === 'speaker' && auth.isLoggedIn()" routerLink="mysubmissions" >My Submissions</a>
-          </li>
-          <li class="nav-item">
+        <a class="nav-link" *ngIf="this.auth.getRole() === 'speaker' && auth.isLoggedIn()" routerLink="mysubmissions">My
+          Submissions</a>
+      </li>
+      <li class="nav-item">
 
-            <a class="nav-link" *ngIf="this.auth.getRole() === 'speaker' && auth.isLoggedIn()" routerLink="allPapers" >Accepted submissions</a>
-          </li>
+        <a class="nav-link" *ngIf="this.auth.getRole() === 'speaker' && auth.isLoggedIn()" routerLink="allPapers">Accepted
+          submissions</a>
+      </li>
       <!-- <li class="nav-item">
         <a class="nav-link" *ngIf="this.auth.getRole() === 'reviewer' && auth.isLoggedIn()" routerLink="Procgram Committee" >Reviewer</a>
       </li> -->
-          <li class="nav-item">
-
-            <a class="nav-link" routerLink="giveQualifier" *ngIf="this.auth.getRole() === 'chair' || this.auth.getRole() === 'reviewer' && auth.isLoggedIn()" > Give Qualifier</a>
-          </li>
-          <li class="nav-item">
-
-            <a class="nav-link" routerLink="bidProposal" *ngIf="this.auth.getRole() === 'chair' || this.auth.getRole() === 'reviewer' && auth.isLoggedIn()" >Bid Proposal</a>
-          </li>
-
-            <!-- <li class="nav-item">
-        <a class="nav-link " *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" routerLink="/conferenceChair" >Conference Chair</a>
-      </li> -->
-          <li class="nav-item">
-
-            <a routerLink="addConference" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link"> Edit Conference</a>
-          </li>
-          <li class="nav-item">
-
-            <a routerLink="assignPapers" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">Assign Papers</a>
-          </li>
-
-          <li class="nav-item">
-
-            <a routerLink="createSection" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link"> Create Section</a>
-          </li>
-          <li class="nav-item">
-
-            <a routerLink="assignSection" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">Assign Section</a>
-          </li>
-          <li class="nav-item">
-
-            <a routerLink="assignSupervisor" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">Assign Supervisor</a>
-          </li>
       <li class="nav-item">
 
-        <a routerLink="assignReviewerEvent" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">Assign Reviewer to Event</a>
+        <a class="nav-link" routerLink="giveQualifier"
+           *ngIf="this.auth.getRole() === 'chair' || this.auth.getRole() === 'reviewer' && auth.isLoggedIn()"> Give
+          Qualifier</a>
+      </li>
+      <li class="nav-item">
+
+        <a class="nav-link" routerLink="bidProposal"
+           *ngIf="this.auth.getRole() === 'chair' || this.auth.getRole() === 'reviewer' && auth.isLoggedIn()">Bid
+          Proposal</a>
+      </li>
+
+      <!-- <li class="nav-item">
+  <a class="nav-link " *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" routerLink="/conferenceChair" >Conference Chair</a>
+</li> -->
+      <li class="nav-item">
+
+        <a routerLink="addConference" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">
+          Edit Conference</a>
+      </li>
+      <li class="nav-item">
+
+        <a routerLink="assignPapers" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">Assign
+          Papers</a>
+      </li>
+
+      <li class="nav-item">
+
+        <a routerLink="createSection" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">
+          Create Section</a>
+      </li>
+      <li class="nav-item">
+
+        <a routerLink="assignSection" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">Assign
+          Section</a>
+      </li>
+      <li class="nav-item">
+
+        <a routerLink="assignSupervisor" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()" class="nav-link">Assign
+          Supervisor</a>
+      </li>
+      <li class="nav-item">
+
+        <a routerLink="assignReviewerEvent" *ngIf="this.auth.getRole() === 'chair' && auth.isLoggedIn()"
+           class="nav-link">Assign Reviewer to Event</a>
       </li>
 
     </ul>
     <ul class="navbar-nav">
-        <a class="nav-link" *ngIf="!auth.isLoggedIn()" routerLink="logIn" style="cursor:pointer">Login</a>
-        <a class="nav-link" *ngIf="!auth.isLoggedIn()" href="http://localhost:8080/api/register?redirectUri=http://localhost:4200/logIn" routerLinkActive="active">Register</a>
-        <a class="nav-link" style="cursor:pointer" *ngIf="auth.isLoggedIn()" (click)="auth.logoutUser()">Logout</a>
+      <a class="nav-link" *ngIf="!auth.isLoggedIn()" routerLink="logIn" style="cursor:pointer">Login</a>
+      <a class="nav-link" *ngIf="!auth.isLoggedIn()"
+         href="http://localhost:8080/api/register?redirectUri=http://localhost:4200/logIn" routerLinkActive="active">Register</a>
+      <a class="nav-link" style="cursor:pointer" *ngIf="auth.isLoggedIn()" (click)="auth.logoutUser()">Logout</a>
     </ul>
   </div>
 </nav>
@@ -81,12 +97,12 @@
 
 
 <footer class="page-footer font-small blue ">
-<div class="footer-copyright text-center py-3">© 2020 Copyright:
-<div> Essential Programming</div>
-<div> All rights reserved</div>
-</div>
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <div> Essential Programming</div>
+    <div> All rights reserved</div>
+  </div>
 
 </footer>
 
 <!-- href="http://localhost:8080/api/authorize?redirect_uri=http://localhost:4200/home" -->
-            <!--to do some login stuff, i got it-->
+<!--to do some login stuff, i got it-->

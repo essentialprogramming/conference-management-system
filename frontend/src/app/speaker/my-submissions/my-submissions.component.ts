@@ -12,12 +12,10 @@ export class MySubmissionsComponent implements OnInit {
   errorMessage: string;
 
   title: string;
-  title2: string;
   papers: Paper[];
   selectedPaper: Paper;
   constructor(private speakerService: SpeakerServiceService, private router: Router) {
-    this.title = 'My Submissions';
-    this.title2 = 'My Papers';
+    this.title = 'My Papers';
 
   }
 

@@ -13,7 +13,6 @@ export class AssignPapersComponent implements OnInit {
 
   selectedRow : Number;
   selectedRowPC: Number;
-  setClickedRowPaper : Function;
   setClickedRowPC : Function;
 
   title: string;
@@ -34,9 +33,7 @@ export class AssignPapersComponent implements OnInit {
   ngOnInit() {
     this.getPapers();
     // this.getPcMembers();
-    this.setClickedRowPaper = function(index){
-      this.selectedRow = index;
-    }
+
     this.setClickedRowPC = function(index){
       this.selectedRowPC = index;
     }
@@ -67,7 +64,8 @@ export class AssignPapersComponent implements OnInit {
       );
   }
 
-  RowSelected(paper: Paper,i) {
+  RowSelected(paper: Paper,index) {
+    this.selectedRow = index;
     this.getPcMembers(paper.id);
     this.selectedPaper = paper;
     console.log(this.selectedPaper);

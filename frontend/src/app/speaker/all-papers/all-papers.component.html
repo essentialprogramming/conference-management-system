@@ -4,19 +4,19 @@
         <div class="card shadow-lg p-3 mb-5 bg-white rounded">
           <div class="card-body">
             <br>
-            <h3 style="text-align: center; color: gray">{{title2}}</h3>
+            <h3 style="text-align: center; color: gray">{{title}}</h3>
             <br>
             <br>
             <table class="table table-hover" style="cursor: default;">
-  
+
               <tr class="table-secondary">
                 <th scope="col" style="color: gray;">Title</th>
                 <th scope="col" style="color: gray;">Description</th>
                 <th scope="col" style="color: gray;">Topics</th>
 
-  
+
               </tr>
-  
+
               <tbody>
               <tr *ngFor="let paper of papers;let i = index" (click)="setClickedRow(i)" [class.active]= "i == selectedRow"
                   >
@@ -24,8 +24,8 @@
                 <td >{{paper.description}}</td>
                 <td >{{paper.topics}}</td>
 
-  
-  
+
+
               </tr>
               </tbody>
             </table>
@@ -39,4 +39,3 @@
   <script>
 
   </script>
-  
