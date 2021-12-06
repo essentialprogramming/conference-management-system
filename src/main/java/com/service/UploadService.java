@@ -1,30 +1,35 @@
 package com.service;
 import com.entities.PaperEntity;
 import com.repository.PaperRepository;
+import com.util.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 @Service
-public class UploadService
-{
-    private PaperRepository paperRepository;
-    private static final String FILE_PATH = "C:\\Papers\\";
+public class UploadService {
+
+    public static final String FILE_PATH = FileUtils.getResourceBasePath() + File.separator +  "papers";
+
+
+    private final PaperRepository paperRepository;
+
 
     @Autowired
-    public UploadService(PaperRepository paperRepository)
-    {
+    public UploadService(PaperRepository paperRepository){
         this.paperRepository = paperRepository;
     }
 
     @Transactional
-    public void upload(InputStream uploadedInputStream, FormDataContentDisposition fileDetails, int paperId)
-    {
-        //destination folder: "C:\Papers\"
-        String uploadedFileLocation = FILE_PATH + fileDetails.getFileName();
+    public void upload(InputStream uploadedInputStream, FormDataContentDisposition fileDetails, int paperId) {
+
+        String uploadedFileLocation = FILE_PATH +  File.separator + fileDetails.getFileName();
         writeToFile(uploadedInputStream, uploadedFileLocation);
         PaperEntity paperEntity = paperRepository.findById(paperId).orElseThrow(() -> new RuntimeException("Paper does not exist!\n"));
         if(paperEntity.getFileName() != null)
@@ -35,20 +40,12 @@ public class UploadService
         paperEntity.setFileName(fileDetails.getFileName());
     }
 
-    private void writeToFile(InputStream uploadedInputStream,
-                             String uploadedFileLocation) {
+    private void writeToFile(InputStream uploadedInputStream, String uploadedFileLocation) {
         try {
-            OutputStream out = new FileOutputStream(new File(
-                    uploadedFileLocation));
-            int read = 0;
-            byte[] bytes = new byte[1024];
+            Path targetFile = FileUtils.getPath(uploadedFileLocation, true);
+            Files.copy(uploadedInputStream, targetFile, StandardCopyOption.REPLACE_EXISTING);
 
-            out = new FileOutputStream(new File(uploadedFileLocation));
-            while ((read = uploadedInputStream.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-            out.flush();
-            out.close();
+            uploadedInputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
